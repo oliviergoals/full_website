@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>AngularJS App</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+
+    <body>
+        <div class="main" ng-app="myList" ng-controller="myListController">
+            <img src="res/logo_rainbow.png" alt="Simply Easy Learning" class="center" width="200"
+            height="200">
+            <div  class = "addItem" ng-repeat="i in items">
+                <input ng-model ="newItem" class="addText" type="text" placeholder={{i}} >
+            </div>
+            <div  class = "addDropdown" >
+                <select ng-model ="newChat" class="addChat" ng-options="i for i in chat">
+                    <option value="" selected="selected">{{dropdown[0]}}</option>
+                </select>
+                <select ng-model ="newProblem" class="addProblem" ng-options="i for i in problem">
+                    <option value="" selected="selected">{{dropdown[1]}}</option>
+                </select>
+
+            </div>
+            <br>
+            <button ng-click="submit()">Submit</button>
+            <ul>
+                             
+            </ul>
+
+        </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
+    <script src="script.js"></script>
+    </body>
+</html>
+
