@@ -1,0 +1,104 @@
+<div class="connectionCmp-area">
+	<div class="connectionCmp-title">Connection</div>
+	<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="200" height="200">
+
+
+	<form id="form" name="form" autocomplete="off" novalidate class="connectionCmp-form">
+		<!-- <input id="username" name="username" type="text"  ng-model="user.name" placeholder="Your login" required
+			autofocus />
+		<input id="password" name="password" type="password" ng-model="user.password"  placeholder="Your password"
+			required /> -->
+
+		<!---------------------------------------------------------------------  -->
+
+		<!-- Name -->
+		<div class="form-group">
+			<label id="label">Name: </label>
+			<input id="username" class="form-control" type="text" name="username" ng-model="user.firstname" placeholder="Enter First Name"
+				autocomplete="off" required />
+		</div>
+		
+		<!-- Department -->
+		<div class="form-group">
+			<label id="label">Select Department</label>
+			<select id="department" class="form-control" ng-model="user.department" name="department" required>
+				<option>Graduate Office</option>
+				<option>Student Administration Office</option>
+			</select>
+			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
+		</div>
+
+		<!-- Chat type -->
+		<div class="form-group">
+			<label id="label">Select chat type</label>
+			<select id="type" class="form-control" ng-model="user.communication" name="communication" required>
+				<option>Chat</option>
+				<option>Audio</option>
+				<option>Video</option>
+			</select>
+			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
+		</div>
+
+		<!-- Problem -->
+		<div class="form-group">
+			<label id="label" class="form-control" class="control-label">Select problem category</label>
+			<select id="problem" ng-model="user.problem" name="problem" required>
+				<option>problem 1</option>
+				<option>problem 2</option>
+				<option>problem 3</option>
+			</select>
+			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
+		</div>
+
+		<button class="connectionCmp-btn" ng-disabled="form.$invalid && !isConnected " ng-click="signin();">Submit
+		</button>
+
+
+		<!-- ------------------------------------------------------------------- -->
+
+		<!-- <button class="connectionCmp-btn" ng-disabled="isConnected" ng-click="signin()">Sign In
+		</button> -->
+
+		<button class="connectionCmp-btn" ng-disabled="!isConnected" ng-click="signout()">Sign Out
+		</button>
+		
+		<img class="connectionCmp-loader" src="./res/progress.gif" ng-if="isLoading" />
+	</form>
+
+
+	<!--code to show values after clicking pn submit button-->
+	<!-- <div>
+        <div class="col-md-offset-1 col-md-4 col-sm-12">
+            <div class="alert1" ng-show="submit_success" style="word-wrap:break-word;">
+                <h2 class="text-center"> <strong>Submited Values:</strong> </h2>
+                <div class="row">
+                    <div class="col-md-5 headname">
+                        <b>FirstName:</b> </div>
+                    <div class="col-md-7"> {{server.firstname}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 headname"><b>Selected department: </b></div>
+                    <div class="col-md-7"> {{server.department}}<br></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 headname"><b>Selected chat type: </b></div>
+                    <div class="col-md-7"> {{server.communication}}<br></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 headname"><b>Selected problem: </b></div>
+                    <div class="col-md-7"> {{server.problem}}<br></div>
+                </div>
+
+                <b>JSON Data: </b> {{server}}
+            </div>
+		</div>
+	</div> -->
+
+
+
+
+
+	<div class="connectionCmp-state-result">
+		<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
+	</div>
+</div>
