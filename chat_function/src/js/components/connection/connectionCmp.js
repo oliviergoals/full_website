@@ -86,12 +86,10 @@ angular.module("sample").component("rbxConnection", {
           // Successfully signed to Rainbow and the SDK is started completely. Rainbow data can be retrieved.
           console.log("ZW, Successfully signed to Rainbow and the SDK is started completely");
 
-
           var contactJId = "4c33fa55637949768b4d2dbc417c69da";
           var contactId = "5e3cd9e59f17bb3096c6a0c9";
 
 
-          var associatedConversation = null;
           var selectedContact = await rainbowSDK.contacts.searchById(contactId);
           // var selectedContact = await rainbowSDK.contacts.getContactById(contactId);
 
