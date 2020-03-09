@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Rainbow-CPaaS/Rainbow-Web-SDK-Samples#readme",
   "dependencies": {
+    "angularjs-livechat": "0.0.4",
     "rainbow-web-sdk": "^1.64.3"
   },
   "devDependencies": {
