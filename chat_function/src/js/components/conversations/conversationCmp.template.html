@@ -5,6 +5,11 @@
 		<rbx-contact item="contact"></rbx-contact>
 	</div>
 
+
+	<div>
+		<span>Please wait while you are connected...</span>
+	</div>
+
 	<div class="conversationCmp-messages conversation-{{$ctrl.item.dbId}}">
 		<rbx-message ng-repeat="item in $ctrl.item.messages" item="item"></rbx-message>
 	</div>
