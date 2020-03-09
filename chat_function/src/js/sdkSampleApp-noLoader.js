@@ -3,7 +3,7 @@ var sample = angular.module("sample", ["sdk"]);
 sample.controller("sampleController", [
   "$rootScope",
   "rainbowSDK",
-  function($rootScope, sdk) {
+  function($rootScope, sdk, $mdDialog, $scope) {
     "use strict";
 
     /*********************************************************/
@@ -30,6 +30,24 @@ sample.controller("sampleController", [
         .catch(function() {
           console.log("[DEMO] :: Something went wrong with the SDK...");
         });
+    };
+
+    $scope.showAdvanced = function() {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'rainbow.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+      .then(function(answer) {
+        $scope.status = 'You said the information was "' + answer + '".';
+        console.log("pass");
+      }, function() {
+        $scope.status = 'You cancelled the dialog.';
+        console.log("close");
+      });
     };
 
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
