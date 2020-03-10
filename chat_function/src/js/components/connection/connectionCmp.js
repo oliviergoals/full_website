@@ -137,7 +137,17 @@ angular.module("sample").component("rbxConnection", {
         console.log("ZW success");
         // this function will be called when the request is success
         console.log("ZW sent and then received: " + response.data.result);
-        contactJId = response.data.result;
+        // does logical check for queing status
+        if (response.queueNumber != 0 && response.jid == null)
+        {
+         // means in waiting queue
+        }
+        else{
+          // proceed to connect
+          let allocatedCsaAgent = response.jid;
+          // do your connecting things here ... 
+
+        }
       
 
       }, function error(response) {
