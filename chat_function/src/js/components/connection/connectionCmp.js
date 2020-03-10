@@ -56,33 +56,33 @@ angular.module("sample").component("rbxConnection", {
 
 //-------------------------- Retrieving post  -------------------------------
 
-      $http({
-        method: 'POST',
-        url: 'http://10.12.128.232:3000/getRequiredCSA',
-        dataType: 'json',
-        data: 
-        {
-          name: $scope.user.name,
-          email: $scope.user.email,
-          department: $scope.user.department,
-          communication: $scope.user.communication,
-          problem: $scope.user.problem
-        }
-        ,
-        headers: { "Content-Type": "application/json" }
+      // $http({
+      //   method: 'POST',
+      //   url: 'http://10.12.128.232:3000/getRequiredCSA',
+      //   dataType: 'json',
+      //   data: 
+      //   {
+      //     name: $scope.user.name,
+      //     email: $scope.user.email,
+      //     department: $scope.user.department,
+      //     communication: $scope.user.communication,
+      //     problem: $scope.user.problem
+      //   }
+      //   ,
+      //   headers: { "Content-Type": "application/json" }
 
-      }).then(function success(response) {
+      // }).then(function success(response) {
 
-        console.log("ZW success");
-        // this function will be called when the request is success
-        console.log("ZW sent and then received: " + response.data.result);
-        contactJId = response.data.result;
+      //   console.log("ZW success");
+      //   // this function will be called when the request is success
+      //   console.log("ZW sent and then received: " + response.data.result);
+      //   contactJId = response.data.result;
 
-      }, function error(response) {
-        // this function will be called when the request returned error status
-        console.log("ZW failed in posting json");
+      // }, function error(response) {
+      //   // this function will be called when the request returned error status
+      //   console.log("ZW failed in posting json");
 
-      });
+      // });
 
     }
     //-----------------------------------------------
@@ -117,34 +117,34 @@ angular.module("sample").component("rbxConnection", {
       saveToStorage();
     // ---------------------------------------------------------------------------
 
-      // $http({
-      //   method: 'POST',
-      //   url: 'http://10.12.128.232:3000/getRequiredCSA',
-      //   dataType: 'json',
-      //   data:
-      //   {
-      //     name: $scope.user.name,
-      //     email: $scope.user.email,
-      //     department: $scope.user.department,
-      //     communication: $scope.user.communication,
-      //     problem: $scope.user.problem
-      //   }
-      //   ,
-      //   headers: { "Content-Type": "application/json" }
+      $http({
+        method: 'POST',
+        url: 'http://10.12.128.232:3000/getRequiredCSA',
+        dataType: 'json',
+        data:
+        {
+          name: $scope.user.name,
+          email: $scope.user.email,
+          department: $scope.user.department,
+          communication: $scope.user.communication,
+          problem: $scope.user.problem
+        }
+        ,
+        headers: { "Content-Type": "application/json" }
 
-      // }).then(function success(response) {
+      }).then(function success(response) {
 
-      //   console.log("ZW success");
-      //   // this function will be called when the request is success
-      //   console.log("ZW sent and then received: " + response.data.result);
-      //   contactJId = response.data.result;
+        console.log("ZW success");
+        // this function will be called when the request is success
+        console.log("ZW sent and then received: " + response.data.result);
+        contactJId = response.data.result;
       
 
-      // }, function error(response) {
-      //   // this function will be called when the request returned error status
-      //   console.log("ZW failed in posting json")
+      }, function error(response) {
+        // this function will be called when the request returned error status
+        console.log("ZW failed in posting json")
 
-      // });
+      });
 
 
       

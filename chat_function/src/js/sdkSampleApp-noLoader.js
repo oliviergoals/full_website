@@ -32,23 +32,23 @@ sample.controller("sampleController", [
         });
     };
 
-    $scope.showAdvanced = function() {
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'rainbow.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-      })
-      .then(function(answer) {
-        $scope.status = 'You said the information was "' + answer + '".';
-        console.log("pass");
-      }, function() {
-        $scope.status = 'You cancelled the dialog.';
-        console.log("close");
-      });
-    };
+    // $scope.showAdvanced = function() {
+    //   $mdDialog.show({
+    //     controller: DialogController,
+    //     templateUrl: 'rainbow.html',
+    //     parent: angular.element(document.body),
+    //     targetEvent: ev,
+    //     clickOutsideToClose:true,
+    //     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    //   })
+    //   .then(function(answer) {
+    //     $scope.status = 'You said the information was "' + answer + '".';
+    //     console.log("pass");
+    //   }, function() {
+    //     $scope.status = 'You cancelled the dialog.';
+    //     console.log("close");
+    //   });
+    // };
 
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
 
