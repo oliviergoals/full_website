@@ -19,6 +19,7 @@ angular.module("sample").component("rbxConversation", {
 
     var onConversationChanged = function onConversationChanged() {
       setTimeout(function() {
+        
         var containerHeight = $(".conversation-" + ctrl.conversation.dbId)[0]
           .scrollHeight;
         var container = angular.element(
