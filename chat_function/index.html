@@ -45,16 +45,16 @@
 	</style>
 	<body>
 
-	
-		<!-- Demo specific part -->
 		<!-- <div class="app-contacts">
 			<rbx-contacts name="rbxContacts"></rbx-contacts>
 		</div> -->
-	<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center"  >
-		<!-- <md-button class="md-primary md-raised" ng-click="showAdvanced()">
-			Open Chat
-		  </md-button> -->
-		  	<button class = "open_chat_button" ng-click = "butt_val_changer()" >
+	
+		<!-- Demo specific part -->
+		<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center"  >
+			<!-- <md-button class="md-primary md-raised" ng-click="showAdvanced()">
+				Open Chat
+			</md-button> -->
+			<button class = "open_chat_button" ng-click = "butt_val_changer()" >
 				  {{chat_val}}
 			  </button>
 
@@ -64,7 +64,7 @@
 				<rbx-presence name="rbxPresence"></rbx-presence>
 			</div>
 
-				<div class="app-container">
+				<div class="app-container" ng-if ="open_chat">
 					<rbx-conversations name="rbxConversations"></rbx-conversations>
 			</div>
 		<!-- <div ng-if="status" id="status">

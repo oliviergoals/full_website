@@ -42,7 +42,7 @@ body {
 
 .app-container {
 	float: right;
-	width: 200px;
+	width: 350px;
 }
 
 .app-user {
@@ -58,6 +58,7 @@ body {
 
 .open_chat_button{
 	position: fixed;
+	margin-right: 5px;
 	bottom: 0px;
 	right: 0px;
 	width: 350px;
@@ -65,4 +66,5 @@ body {
 	font-size: larger;
 	color: #fff;
 	background-color: #0087cf ;
+	border-radius: 12px;
 }
