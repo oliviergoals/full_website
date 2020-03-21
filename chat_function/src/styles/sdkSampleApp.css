@@ -41,16 +41,28 @@ body {
 }
 
 .app-container {
-	margin-left: 320px;
+	float: right;
+	width: 200px;
 }
 
 .app-user {
 	float: right;
-	width: 200px;
+	width: 350px;
 }
 
 .app-contacts {
 	float: left;
 	width: 300px;
 	height: calc(100% - 75px);
+}
+
+.open_chat_button{
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 350px;
+	height: 50pX;
+	font-size: larger;
+	color: #fff;
+	background-color: #0087cf ;
 }

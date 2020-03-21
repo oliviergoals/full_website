@@ -35,23 +35,37 @@
         <script src="./src/js/components/conversations/messageCmp.js"></script>
 	</head>
 
+	<style>
+		body {
+		  background-image: url('./res/sutd_background.png');
+		  background-size: cover;
+		  background-repeat: no-repeat;
+  		  background-attachment: fixed;
+		}
+	</style>
 	<body>
+
+	
 		<!-- Demo specific part -->
 		<!-- <div class="app-contacts">
 			<rbx-contacts name="rbxContacts"></rbx-contacts>
 		</div> -->
-	<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center" >
-		<md-button class="md-primary md-raised" ng-click="showAdvanced()">
+	<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center"  >
+		<!-- <md-button class="md-primary md-raised" ng-click="showAdvanced()">
 			Open Chat
-		  </md-button>
-			<div class="app-user">
+		  </md-button> -->
+		  	<button class = "open_chat_button" ng-click = "butt_val_changer()" >
+				  {{chat_val}}
+			  </button>
+
+			<div class="app-user" ng-if ="open_chat">
 				<rbx-connection name="rbxConnection"></rbx-connection>
 				<rbx-user name="rbxUser"></rbx-user>
 				<rbx-presence name="rbxPresence"></rbx-presence>
 			</div>
 
 				<div class="app-container">
-					<rbx-conversations name="rbxConversations"></rbx-conversations> -->
+					<rbx-conversations name="rbxConversations"></rbx-conversations>
 			</div>
 		<!-- <div ng-if="status" id="status">
 			<b layout="row" layout-align="center center" class="md-padding">

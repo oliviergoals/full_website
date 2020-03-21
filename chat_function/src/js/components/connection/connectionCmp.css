@@ -1,8 +1,9 @@
 div.connectionCmp-area {
-    position: relative;
+    position: fixed;
+    height: calc(100% - 75px);
+    width: 350px;
     overflow: hidden;
     border: 1px solid #E9E9E9;
-    width: 350px;
     margin-top: 10px;
     margin-right: 10px;
     background: #fff;
@@ -54,7 +55,7 @@ button.connectionCmp-btn:disabled {
 }
 
 input#username, input#password, input#email {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     width: 80%;
     height: 24px;
     padding: 5px;
@@ -68,9 +69,9 @@ input#username, input#password, input#email {
 }
 
 select#department, select#type, select#problem{
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     width: 82%;
-    height: 35px;
+    height: 40px;
     padding: 5px;
     border: 1px solid rgba(73, 98, 171, 0.22);
     color: #656565;
