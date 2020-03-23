@@ -10,7 +10,8 @@ sample.controller("sampleController", [
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
     $rootScope.chat_val = "Open Chat" 
-    $rootScope.open_chat = false; 
+    $rootScope.open_chat = false;
+    $rootScope.open_form = false;  
     console.log("[DEMO] :: Rainbow IM Application");
 
     var appId = "792b0db04b6b11ea819a43cb4a9dae9b";
@@ -34,6 +35,7 @@ sample.controller("sampleController", [
     };
 
     $rootScope.butt_val_changer = function(){
+      //$rootScope.open_form = !$rootScope.open_form;
       $rootScope.open_chat = !$rootScope.open_chat;
       if ($rootScope.open_chat == true){
         $rootScope.chat_val = "Close Chat";
