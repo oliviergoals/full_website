@@ -51,7 +51,10 @@ angular.module("sample").component("rbxConnection", {
             console.log("[DEMO] :: Successfully signed!");
             $scope.isLoading = false;
             $scope.isConnected = true;
-            //$rootScope.open_form = false;
+            $rootScope.open_form = false;
+            console.log("form removed");
+            $rootScope.open_chat = true;
+            console.log("chat open");
             console.log("ZW, Successfully signed to Rainbow and the SDK is started completely");
 
 
