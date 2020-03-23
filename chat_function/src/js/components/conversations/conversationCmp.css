@@ -1,11 +1,13 @@
 div.conversationCmp-area {
-    position: fixed;
-    height: calc(100% - 75px);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     width: 350px;
     overflow: hidden;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-bottom: 60px;
+    margin-right: 5px;
     background: #fff;
     padding: 4px;
     margin-left:0px ;
