@@ -34,7 +34,7 @@ sample.controller("sampleController", [
           console.log("[DEMO] :: Something went wrong with the SDK...");
         });
     };
-
+    // TODO: Shake
     $rootScope.butt_val_changer = function(){      
       if ($rootScope.open_form==false && $rootScope.open_chat==false){
         $rootScope.open_form = true;
