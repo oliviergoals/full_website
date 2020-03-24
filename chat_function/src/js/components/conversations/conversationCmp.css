@@ -49,15 +49,15 @@ div.conversationCmp-state-result {
 
 div.conversationCmp-messages {
     margin: 8px;
-    height: 500px;
+    height: 80%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .conversationCmp-editor {
-    margin: 10px 8px 5px 8px;
-    width: 270px;
-    height: 16px;
+    margin: 10px 8px 0px 8px;
+    width: 70%;
+    height: 12%;
     padding: 5px;
     border: 1px solid rgba(73, 98, 171, 0.22);
     color: #656565;
