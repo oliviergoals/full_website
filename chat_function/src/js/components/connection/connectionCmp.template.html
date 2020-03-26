@@ -3,19 +3,26 @@
 	<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="200" height="200">
 
 
-	<form id="form" name="form" autocomplete="off" novalidate class="connectionCmp-form">
+	<form id="form" name="form" autocomplete="off" class="connectionCmp-form" novalidate >
 		<!-- Name -->
 		<div class="form-group">
 			<label id="label">Name: </label>
-			<input id="username" class="form-control" type="text" name="username" ng-model="user.name" placeholder="Enter First Name"
-				autocomplete="off" required />
+			<input id="username" class="form-control" type="text" name="user" ng-model="user.name"  placeholder="Enter First Name" required>
+			<span class="msg" ng-show="form.user.$dirty && form.user.$invalid">
+				<span ng-show="form.user.$error.required">Name is required.</span>
+				<!-- <span ng-show="form.user.$dirty && form.user.$error.pattern">Please enter valid name.</span> -->
+				<!-- pattern="/^[a-zA-Z0-9.\-\s]+$/i" -->
+			</span>
 		</div>
 
 		<!-- Email -->
 		<div class="form-group">
-			<label id="label">Email: </label>
-			<input id="email" class="form-control" ng-model="user.email" name="email" placeholder="Enter Email Address" autocomplete="off" required>
-			<span class="msg" ng-show="form.email.$dirty && form.email.$invalid"> Email Address is not valid</span>
+			<label id="label">Email:</label>
+			<input id="email" class="form-control" ng-model="user.email" type="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email" placeholder="Enter Email Address" required/>
+			<span class="msg" ng-show="form.email.$dirty && form.email.$invalid">
+				<span class="msg" ng-show="form.email.$error.required"> Email is required. </span>
+				<span class="msg" ng-show="form.email.$dirty && form.email.$error.pattern">Please enter valid email.</span>
+			</span>
 		</div>
 		
 		<!-- Department -->
@@ -50,52 +57,17 @@
 			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
 		</div>
 
-		<button class="connectionCmp-btn" ng-disabled="form.$invalid && !isConnected " ng-click="call(); signin()">Submit
+		<button class="connectionCmp-btn" ng-disabled="form.$invalid && !isConnected " ng-click="signin()">Submit
 		</button>
-
-
 		<!-- ------------------------------------------------------------------- -->
-
-		<!-- <button class="connectionCmp-btn" ng-disabled="isConnected" ng-click="signin()">Sign In
-		</button> -->
 
 		<!-- <button class="connectionCmp-btn" ng-disabled="!isConnected" ng-click="signout()">Sign Out
 		</button> -->
 		
 		<img class="connectionCmp-loader" src="./res/progress.gif" ng-if="isLoading" />
-	</form>
-
-
-	<!--code to show values after clicking pn submit button-->
-	<div>
-        <div class="col-md-offset-1 col-md-4 col-sm-12">
-            <div class="alert1" ng-show="submit_success" style="word-wrap:break-word;">
-                <h2 class="text-center"> <strong>Submited Values:</strong> </h2>
-                <div class="row">
-                    <div class="col-md-5 headname">
-                        <b>Name:</b> </div>
-                    <div class="col-md-7"> {{server.name}}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 headname"><b>Selected department: </b></div>
-                    <div class="col-md-7"> {{server.department}}<br></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 headname"><b>Selected chat type: </b></div>
-                    <div class="col-md-7"> {{server.communication}}<br></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 headname"><b>Selected problem: </b></div>
-                    <div class="col-md-7"> {{server.problem}}<br></div>
-                </div>
-
-                <b>JSON Data: </b> {{server}}
-            </div>
+		<div class="connectionCmp-state-result">
+			<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
 		</div>
-	</div>
-
-
-	<div class="connectionCmp-state-result">
-		<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
-	</div>
+	</form>
+	
 </div>

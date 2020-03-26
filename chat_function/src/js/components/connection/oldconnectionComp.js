@@ -7,7 +7,8 @@ angular.module("sample").component("rbxConnection", {
   
       $scope.isLoading = false;
   
-      $scope.state = rainbowSDK.connection.getState();
+      // $scope.state = rainbowSDK.connection.getState();
+      $scope.state = "Filling details";
   
       var userAcc
       var userPw;

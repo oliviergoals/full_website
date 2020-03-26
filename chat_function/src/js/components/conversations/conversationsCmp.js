@@ -74,4 +74,3 @@ angular.module("sample").component("rbxConversations", {
   templateUrl:
     "./src/js/components/conversations/conversationsCmp.template.html"
 });
-

@@ -55,8 +55,8 @@ button.connectionCmp-btn:disabled {
     background: #656565;
 }
 
-input#username, input#password, input#email {
-    margin-bottom: 15px;
+input#username, input#email {
+    margin-bottom: 10px;
     width: 80%;
     height: 24px;
     padding: 5px;
@@ -81,12 +81,10 @@ select#department, select#type, select#problem{
     transition: all 0.30s ease-in-out;
     border-radius: 6px;
     margin-left: 20px;
-
 }
 
 
 span.msg{
-    margin-top:15px;
     color:red;
 }
 

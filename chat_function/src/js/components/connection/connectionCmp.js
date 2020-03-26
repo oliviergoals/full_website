@@ -7,7 +7,9 @@ angular.module("sample").component("rbxConnection", {
 
     $scope.isLoading = false;
 
+    // $scope.state = rainbowSDK.connection.getState();
     $scope.state = rainbowSDK.connection.getState();
+
 
     function rigorousPolling(queueValue){
       $http({
