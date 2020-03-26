@@ -4,8 +4,9 @@ angular.module("sample").component("rbxConnection", {
   },
   controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval) {
     $scope.isConnected = false;
-
     $scope.isLoading = false;
+    $scope.queueInFront = "none";
+    $scope.queueStatus = "none";
 
     // $scope.state = rainbowSDK.connection.getState();
     $scope.state = rainbowSDK.connection.getState();
@@ -15,6 +16,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'POST',
         url: 'http://localhost:3000/checkQueueStatusbeta/',
+        // url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
         dataType: 'json',
         data:
         {
@@ -68,6 +70,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'GET',
         url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
+        //url: 'http://10.12.205.128:3000/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
         // this function will be called when the request is success
@@ -81,14 +84,13 @@ angular.module("sample").component("rbxConnection", {
             console.log("[DEMO] :: Successfully signed!");
             $scope.isLoading = false;
             $scope.isConnected = true;
-            $rootScope.open_form = false;
-            $rootScope.open_chat = true;
 
             console.log("ZW, Successfully signed to Rainbow and the SDK is started completely. Proceeding to retrieve CSA");
             /* ---------------------- Retireving the right CSA via POST request --------------*/
             $http({
               method: 'POST',
               url: 'http://localhost:3000/getRequiredCSAbeta',
+              //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
               dataType: 'json',
               data:
               {
@@ -104,10 +106,18 @@ angular.module("sample").component("rbxConnection", {
               // does logical check for queuingstatus and JID returned
               let contactJID = result.data.jid;
               let queueStatus = result.data.queueNumber;
+              $scope.queueStatus = result.data.queueNumber;
+              console.log("this is queue status" + $rootScope.queueStatus );
               if (contactJID != null)
               {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
+                $scope.queueInFront = "It's You're Turn!"
+                console.log("this is queue status" + $rootScope.queueInFront );
+                
                 rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
+                  //setTimeout(function(){$rootScope.open_form = false},5000);
+                  $rootScope.open_chat = false;
+                  $rootScope.open_chat = true;
                   rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
                   console.log("ZW Sent messgage");
             
@@ -124,6 +134,7 @@ angular.module("sample").component("rbxConnection", {
                     $http({
                       method: 'POST',
                       url: 'http://localhost:3000/checkQueueStatusbeta/',
+                      //url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
                       dataType: 'json',
                       data:
                       {
@@ -138,11 +149,12 @@ angular.module("sample").component("rbxConnection", {
                     }).then(async function(result){
                        if (result.data.jid != null)
                        {
-                         let newjid = result.data.jid;
+                         let newjid = result.data.jid;                        
                          let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
                          rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
+                          $rootScope.open_form = false;
+                          $rootScope.open_chat = true;
                           rainbowSDK.im.sendMessageToConversation(conversation1, "Request support and this is queueed!!!!!");
-                         
                    
                          }).catch(function (err) {
                            //Something when wrong with the server. Handle the trouble here
@@ -153,6 +165,7 @@ angular.module("sample").component("rbxConnection", {
 
                        }
                        else{
+                         $scope.queueInFront = result.data.position;
                          console.log("OMG PLS WORK FFS");
                          console.log(result.data.position);
                          // this part is where queue number update happens

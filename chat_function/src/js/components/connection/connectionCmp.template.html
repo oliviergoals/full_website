@@ -59,15 +59,19 @@
 
 		<button class="connectionCmp-btn" ng-disabled="form.$invalid && !isConnected " ng-click="signin()">Submit
 		</button>
+
+		<img class="connectionCmp-loader" src="./res/progress.gif" ng-if="isLoading" />
+	</form>
+	
+	<div class="connectionCmp-state-result">
+		<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
+		<div class="connectionCmp-state">Queue Number: <b class="connectionCmp-state-value">{{queueStatus}}</b></div>
+		<div class="connectionCmp-state">Queue Position: <b class="connectionCmp-state-value">{{queueInFront}}</b></div>
+	</div>
+</div>
+
+
 		<!-- ------------------------------------------------------------------- -->
 
 		<!-- <button class="connectionCmp-btn" ng-disabled="!isConnected" ng-click="signout()">Sign Out
 		</button> -->
-		
-		<img class="connectionCmp-loader" src="./res/progress.gif" ng-if="isLoading" />
-		<div class="connectionCmp-state-result">
-			<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
-		</div>
-	</form>
-	
-</div>

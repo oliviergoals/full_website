@@ -1,0 +1,5 @@
+.conversationsCmp-area {
+    /* display: flex; */
+    /* flex-flow: row wrap; */
+    position: fixed;
+}
