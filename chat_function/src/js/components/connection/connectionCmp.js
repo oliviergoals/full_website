@@ -15,8 +15,8 @@ angular.module("sample").component("rbxConnection", {
     function rigorousPolling(queueValue){
       $http({
         method: 'POST',
-        url: 'http://localhost:3000/checkQueueStatusbeta/',
-        // url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
+        // url: 'http://localhost:3000/checkQueueStatusbeta/',
+        url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
         dataType: 'json',
         data:
         {
@@ -69,8 +69,8 @@ angular.module("sample").component("rbxConnection", {
       // The following code should be commented out WHEN TESTING AND NOT IN SCHOOL!
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
-        //url: 'http://10.12.205.128:3000/createguestdynamic?name=' + $scope.user.name,
+        // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
+        url: 'http://10.12.205.128:3000/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
         // this function will be called when the request is success
@@ -89,8 +89,8 @@ angular.module("sample").component("rbxConnection", {
             /* ---------------------- Retireving the right CSA via POST request --------------*/
             $http({
               method: 'POST',
-              url: 'http://localhost:3000/getRequiredCSAbeta',
-              //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+              // url: 'http://localhost:3000/getRequiredCSAbeta',
+              url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
               dataType: 'json',
               data:
               {
@@ -116,6 +116,13 @@ angular.module("sample").component("rbxConnection", {
                 console.log("this is queue status" + $rootScope.queueInFront );
                 
                 rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
+
+                  console.log("zzzzzz");
+                  console.log(conversation);
+                  $rootScope.convoID_global = conversation.id;
+
+                  // $rootScope.convoID_Global = conversation.id;
+
                   setTimeout(function(){$rootScope.open_form = false},5000);
                   $rootScope.open_chat = true;
                   rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
@@ -133,8 +140,8 @@ angular.module("sample").component("rbxConnection", {
                   function() {
                     $http({
                       method: 'POST',
-                      url: 'http://localhost:3000/checkQueueStatusbeta/',
-                      //url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
+                      // url: 'http://localhost:3000/checkQueueStatusbeta/',
+                      url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
                       dataType: 'json',
                       data:
                       {
@@ -155,6 +162,12 @@ angular.module("sample").component("rbxConnection", {
                          rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
                           $rootScope.open_form = false;
                           $rootScope.open_chat = true;
+
+                          console.log("zzzzzz");
+                          console.log(conversation1);
+                          $rootScope.convoID_global = conversation1.id;
+
+                          
                           rainbowSDK.im.sendMessageToConversation(conversation1, "Request support and this is queueed!!!!!");
                    
                          }).catch(function (err) {
@@ -162,8 +175,6 @@ angular.module("sample").component("rbxConnection", {
                            console.log("ZW Error in opening conversation and sending")
                          });
                          $interval.cancel(cassimir);
-                         
-
                        }
                        else{
                          $scope.queueInFront = result.data.position;

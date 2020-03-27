@@ -4,7 +4,9 @@ sample.controller("sampleController", [
   "$rootScope",
   "rainbowSDK",
   "$http",
-  function($rootScope, sdk, $http) {
+  "$window",
+  "$scope",
+  function($rootScope, sdk, $http, $window, $scope) {
     "use strict";    
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
@@ -56,20 +58,32 @@ sample.controller("sampleController", [
         $rootScope.chat_val = "Close Chat";
       }
       else if($rootScope.open_chat == true){
-        $http({
-          method: 'POST',
-          url: 'http://localhost:3000/endChatInstance',
-          //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
-          dataType: 'json',
-          data:
-          {
-            department: $rootScope.user.department,
-            jidOfAgent: $rootScope.contactJID
-          },
-          headers: { "Content-Type": "application/json" }
-        }).then(async function(result){
-            console.log("Status of Chat Closing " + result.data.status);
-        });
+
+
+        let blabla = sdk.conversations.getConversationById($rootScope.convoID_global);
+
+        // console.log(convoHist);
+
+         $http({
+            method: 'POST',
+            url: 'http://10.12.205.128:3000/endChatInstance',
+            //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+            dataType: 'json',
+            data:
+            {
+              department: $rootScope.user.department,
+              jid: $rootScope.contactJID,
+              queueNumber: $rootScope.queueStatus,
+              convoID: $rootScope.convoID_global,
+              // sheep_sheep: blabla
+            },
+            headers: { "Content-Type": "application/json" }
+          }).then(async function(result){
+              console.log("Status of Chat Closing " + result.data.status);
+          });
+        
+// ----------------------------------------------------------------  
+
         $rootScope.open_chat = false;
         console.log("closing chat");
 
@@ -100,11 +114,24 @@ sample.controller("sampleController", [
     //   });
     // };
 
+
+    $scope.onExit = function() {
+      return ('bye bye');
+    };
+
+   
+
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
 
     document.addEventListener(sdk.RAINBOW_ONLOADED, onLoaded);
 
+
+    // document.addEventListener(sdk.RAINBOW_ONSTOPPED, $scope.onExit);
+
     sdk.load();
+    // $window.onbeforeunload =  $scope.onExit;
+    $window.onunload =  $scope.onExit;
+
 
     return true;
   }
