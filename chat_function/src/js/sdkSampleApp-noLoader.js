@@ -3,9 +3,9 @@ var sample = angular.module("sample", ["sdk"]);
 sample.controller("sampleController", [
   "$rootScope",
   "rainbowSDK",
-  function($rootScope, sdk, $mdDialog, $http ) {
-    "use strict";
-
+  "$http",
+  function($rootScope, sdk, $http) {
+    "use strict";    
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
@@ -35,7 +35,22 @@ sample.controller("sampleController", [
         });
     };
     // TODO: Shake
-    $rootScope.butt_val_changer = function(){      
+    $rootScope.butt_val_changer = function(){  
+      console.log("button pressed");    
+      // $http({
+      //   method: 'POST',
+      //   url: 'http://localhost:3000/endChatInstance',
+      //   //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+      //   dataType: 'json',
+      //   data:
+      //   {
+      //     department: "hi",
+      //     jidOfAgent: "asdfasdad"
+      //   },
+      //   headers: { "Content-Type": "application/json" }
+      // }).then(async function(result){
+      //     console.log("Status of Chat Closing " + result.data.status);
+      // });
       if ($rootScope.open_form==false && $rootScope.open_chat==false){
         $rootScope.open_form = true;
         $rootScope.chat_val = "Close Chat";
