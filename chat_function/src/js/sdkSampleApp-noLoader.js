@@ -3,7 +3,7 @@ var sample = angular.module("sample", ["sdk"]);
 sample.controller("sampleController", [
   "$rootScope",
   "rainbowSDK",
-  function($rootScope, sdk, $mdDialog ) {
+  function($rootScope, sdk, $mdDialog, $http ) {
     "use strict";
 
     /*********************************************************/
@@ -41,8 +41,23 @@ sample.controller("sampleController", [
         $rootScope.chat_val = "Close Chat";
       }
       else if($rootScope.open_chat == true){
+        $http({
+          method: 'POST',
+          url: 'http://localhost:3000/endChatInstance',
+          //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+          dataType: 'json',
+          data:
+          {
+            department: $rootScope.user.department,
+            jidOfAgent: $rootScope.contactJID
+          },
+          headers: { "Content-Type": "application/json" }
+        }).then(async function(result){
+            console.log("Status of Chat Closing " + result.data.status);
+        });
         $rootScope.open_chat = false;
         console.log("closing chat");
+
         $rootScope.chat_val = "Open Chat";
       }
       else{

@@ -22,7 +22,7 @@ angular.module("sample").component("rbxConnection", {
         {
           name: $scope.user.name,
           email: $scope.user.email,
-          department: $scope.user.department,
+          department: $rootScope.user.department,
           communication: $scope.user.communication,
           problem: $scope.user.problem,
           queueNumber: queueValue
@@ -96,7 +96,7 @@ angular.module("sample").component("rbxConnection", {
               {
                 name: $scope.user.name,
                 email: $scope.user.email,
-                department: $scope.user.department,
+                department: $rootScope.user.department,
                 communication: $scope.user.communication,
                 problem: $scope.user.problem
               },
@@ -107,6 +107,7 @@ angular.module("sample").component("rbxConnection", {
               let contactJID = result.data.jid;
               let queueStatus = result.data.queueNumber;
               $scope.queueStatus = result.data.queueNumber;
+              $rootScope.contactJID = result.data.jid;
               console.log("this is queue status" + $rootScope.queueStatus );
               if (contactJID != null)
               {
@@ -115,8 +116,7 @@ angular.module("sample").component("rbxConnection", {
                 console.log("this is queue status" + $rootScope.queueInFront );
                 
                 rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
-                  //setTimeout(function(){$rootScope.open_form = false},5000);
-                  $rootScope.open_chat = false;
+                  setTimeout(function(){$rootScope.open_form = false},5000);
                   $rootScope.open_chat = true;
                   rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
                   console.log("ZW Sent messgage");
@@ -140,7 +140,7 @@ angular.module("sample").component("rbxConnection", {
                       {
                         name: $scope.user.name,
                         email: $scope.user.email,
-                        department: $scope.user.department,
+                        department: $rootScope.user.department,
                         communication: $scope.user.communication,
                         problem: $scope.user.problem,
                         queueNumber: queueStatus
@@ -149,7 +149,8 @@ angular.module("sample").component("rbxConnection", {
                     }).then(async function(result){
                        if (result.data.jid != null)
                        {
-                         let newjid = result.data.jid;                        
+                         let newjid = result.data.jid; 
+                         $scope.contactJID = result.data.jid;                       
                          let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
                          rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
                           $rootScope.open_form = false;
@@ -193,8 +194,9 @@ angular.module("sample").component("rbxConnection", {
         
     };
 
-    $scope.signout = function () {
+    $rootScope.signout = function () {
       $scope.isLoading = true;
+
       rainbowSDK.connection.signout().then(function () {
         $scope.isLoading = false;
         $scope.isConnected = false;
