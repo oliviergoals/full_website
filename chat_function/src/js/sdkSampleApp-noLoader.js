@@ -1,4 +1,5 @@
 var sample = angular.module("sample", ["sdk"]);
+// const {parse, stringify} = require('flatted/cjs');
 
 sample.controller("sampleController", [
   "$rootScope",
@@ -59,14 +60,25 @@ sample.controller("sampleController", [
       }
       else if($rootScope.open_chat == true){
 
+// @ZiWei or @Sean how the fuck do i import a module into this file. Wah fuck me man i spent 2 hours so far and I still cant get the 
+//import of it to work. I just wanna un the 'json-stringify-safe' from `package.json` and flaten the circular data here as such: 
+        // let convoSession = stringify(sdk.conversations.getConversationById($rootScope.convoID_global));
+        let convoSession = sdk.conversations.getConversationById($rootScope.convoID_global);
+        // these are the fields that are required...
+        // let fuckCircularJson = {
+        //     id : convoSession.id,
+        //     messages: [convoSession.messages],
+        //     convoStartTime: convoSession.creationDate,
+        //     convoEndTime: convoSession.lastModification
+        // };
+        console.log(convoSession);
 
-        let blabla = sdk.conversations.getConversationById($rootScope.convoID_global);
 
         // console.log(convoHist);
 
          $http({
             method: 'POST',
-            url: 'http://10.12.205.128:3000/endChatInstance',
+            url: 'http://localhost:3000/endChatInstance',
             //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
             dataType: 'json',
             data:
@@ -75,7 +87,7 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               queueNumber: $rootScope.queueStatus,
               convoID: $rootScope.convoID_global,
-              // sheep_sheep: blabla
+              detailsOfConvo: fuckCircularJson
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function(result){

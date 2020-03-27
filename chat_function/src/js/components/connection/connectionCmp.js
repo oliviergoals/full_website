@@ -16,7 +16,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'POST',
         // url: 'http://localhost:3000/checkQueueStatusbeta/',
-        url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
+        url: 'http://localhost:3000/checkQueueStatusbeta/',
         dataType: 'json',
         data:
         {
@@ -70,7 +70,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'GET',
         // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
-        url: 'http://10.12.205.128:3000/createguestdynamic?name=' + $scope.user.name,
+        url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
         // this function will be called when the request is success
@@ -90,7 +90,7 @@ angular.module("sample").component("rbxConnection", {
             $http({
               method: 'POST',
               // url: 'http://localhost:3000/getRequiredCSAbeta',
-              url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+              url: 'http://localhost:3000/getRequiredCSAbeta',
               dataType: 'json',
               data:
               {
@@ -141,7 +141,7 @@ angular.module("sample").component("rbxConnection", {
                     $http({
                       method: 'POST',
                       // url: 'http://localhost:3000/checkQueueStatusbeta/',
-                      url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
+                      url: 'http://localhost:3000/checkQueueStatusbeta/',
                       dataType: 'json',
                       data:
                       {
