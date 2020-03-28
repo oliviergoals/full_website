@@ -36,6 +36,8 @@ sample.controller("sampleController", [
           console.log("[DEMO] :: Something went wrong with the SDK...");
         });
     };
+
+
     // TODO: Shake
     $rootScope.butt_val_changer = function(){  
       console.log("button pressed");    
@@ -59,12 +61,15 @@ sample.controller("sampleController", [
       }
       else if($rootScope.open_chat == true){
 
+        //------------------- When Chat is open and press close chat, alert will be displayed   ---------------------------------
+        const confirmedClose = $window.confirm("Are u sure you want to close the chat?\nClosing will end your chat with CAS!")
+        if (confirmedClose) {
+          console.log("pressed wanna close");
 
-        let blabla = sdk.conversations.getConversationById($rootScope.convoID_global);
-
-        // console.log(convoHist);
-
-         $http({
+          //------------------------------- Post JSON to drop queue-----------------------------
+          let blabla = sdk.conversations.getConversationById($rootScope.convoID_global);
+          // console.log(convoHist);
+          $http({
             method: 'POST',
             url: 'http://10.12.205.128:3000/endChatInstance',
             //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
@@ -78,16 +83,20 @@ sample.controller("sampleController", [
               // sheep_sheep: blabla
             },
             headers: { "Content-Type": "application/json" }
-          }).then(async function(result){
-              console.log("Status of Chat Closing " + result.data.status);
+          }).then(async function (result) {
+            console.log("Status of Chat Closing " + result.data.status);
           });
+          // ----------------------------------------------------------------  
+
+          $rootScope.open_chat = false;
+          console.log("closing chat");
+          $rootScope.chat_val = "Open Chat";
+        }
+        else{
+          console.log("wanna stay");
+        }       
+        //--------------------------------------------------------------------------
         
-// ----------------------------------------------------------------  
-
-        $rootScope.open_chat = false;
-        console.log("closing chat");
-
-        $rootScope.chat_val = "Open Chat";
       }
       else{
         $rootScope.open_form = false;
@@ -96,28 +105,14 @@ sample.controller("sampleController", [
       }
       
     }
-    // $scope.showAdvanced = function() {
-    //   $mdDialog.show({
-    //     controller: DialogController,
-    //     templateUrl: 'rainbow.html',
-    //     parent: angular.element(document.body),
-    //     targetEvent: ev,
-    //     clickOutsideToClose:true,
-    //     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-    //   })
-    //   .then(function(answer) {
-    //     $scope.status = 'You said the information was "' + answer + '".';
-    //     console.log("pass");
-    //   }, function() {
-    //     $scope.status = 'You cancelled the dialog.';
-    //     console.log("close");
-    //   });
+    
+
+
+    // $scope.onExit = function() {
+    //   return ('bye bye');
     // };
 
 
-    $scope.onExit = function() {
-      return ('bye bye');
-    };
 
    
 
@@ -126,11 +121,13 @@ sample.controller("sampleController", [
     document.addEventListener(sdk.RAINBOW_ONLOADED, onLoaded);
 
 
-    // document.addEventListener(sdk.RAINBOW_ONSTOPPED, $scope.onExit);
 
     sdk.load();
     // $window.onbeforeunload =  $scope.onExit;
-    $window.onunload =  $scope.onExit;
+    // $window.onbeforeunload = function (event) {
+    //   return 'Are you sure you want to leave without saving?';
+    // }
+    
 
 
     return true;
