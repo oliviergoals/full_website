@@ -12,7 +12,7 @@ angular.module("sample").component("rbxConnection", {
     $scope.state = rainbowSDK.connection.getState();
 
 
-    function rigorousPolling(queueValue){
+    function rigorousPolling(queueValue) {
       $http({
         method: 'POST',
         // url: 'http://localhost:3000/checkQueueStatusbeta/',
@@ -28,11 +28,11 @@ angular.module("sample").component("rbxConnection", {
           queueNumber: queueValue
         },
         headers: { "Content-Type": "application/json" }
-      }).then(function(result){
+      }).then(function (result) {
         return result;
       });
     }
-    
+
 
     var userAcc
     var userPw;
@@ -108,36 +108,45 @@ angular.module("sample").component("rbxConnection", {
               let queueStatus = result.data.queueNumber;
               $scope.queueStatus = result.data.queueNumber;
               $rootScope.contactJID = result.data.jid;
-              console.log("this is queue status" + $rootScope.queueStatus );
-              if (contactJID != null)
-              {
+              console.log("this is queue status" + $rootScope.queueStatus);
+              if (contactJID != null) {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 $scope.queueInFront = "It's You're Turn!"
-                console.log("this is queue status" + $rootScope.queueInFront );
-                
-                rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
+                console.log("this is queue status" + $rootScope.queueInFront);
 
-                  console.log("zzzzzz");
-                  console.log(conversation);
-                  $rootScope.convoID_global = conversation.id;
+                if (choiceOfChat == "Chat") {
+                  rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
+                    console.log("zzzzzz");
+                    console.log(conversation);
+                    $rootScope.convoID_global = conversation.id;
 
-                  // $rootScope.convoID_Global = conversation.id;
+                    // $rootScope.convoID_Global = conversation.id;
 
-                  setTimeout(function(){$rootScope.open_form = false},5000);
-                  $rootScope.open_chat = true;
-                  rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
-                  console.log("ZW Sent messgage");
-            
+                    setTimeout(function () { $rootScope.open_form = false }, 5000);
+                    $rootScope.open_chat = true;
+                    rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
+                    console.log("ZW Sent messgage");
+
                   }).catch(function (err) {
                     //Something when wrong with the server. Handle the trouble here
                     console.log("ZW Error in opening conversation and sending")
                   });
+                }
+                else if(choiceOfChat == "Audio"){
+                  if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
+                    rainbowSDK.webRTC.callInAudio(selectedContact);
+                  } else {
+                    console.log("DEMO :: Your browser can't make audio and video call!");
+                  }
+                }
+
+            //---------------------------------------------------------------------    
+
               }
               // if no jid -> means not ready and on queue. So we do circular post ddos style
-              else
-              {
+              else {
                 let cassimir = $interval(
-                  function() {
+                  function () {
                     $http({
                       method: 'POST',
                       // url: 'http://localhost:3000/checkQueueStatusbeta/',
@@ -153,56 +162,66 @@ angular.module("sample").component("rbxConnection", {
                         queueNumber: queueStatus
                       },
                       headers: { "Content-Type": "application/json" }
-                    }).then(async function(result){
-                       if (result.data.jid != null)
-                       {
-                         let newjid = result.data.jid; 
-                         $scope.contactJID = result.data.jid;                       
-                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
-                         rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
-                          $rootScope.open_form = false;
-                          $rootScope.open_chat = true;
+                    }).then(async function (result) {
+                      if (result.data.jid != null) {
+                        let newjid = result.data.jid;
+                        $scope.contactJID = result.data.jid;
+                        let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
 
-                          console.log("zzzzzz");
-                          console.log(conversation1);
-                          $rootScope.convoID_global = conversation1.id;
+                        if (choiceOfChat == "Chat") {
+                          rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
+                            $rootScope.open_form = false;
+                            $rootScope.open_chat = true;
 
-                          
-                          rainbowSDK.im.sendMessageToConversation(conversation1, "Request support and this is queueed!!!!!");
-                   
-                         }).catch(function (err) {
-                           //Something when wrong with the server. Handle the trouble here
-                           console.log("ZW Error in opening conversation and sending")
-                         });
-                         $interval.cancel(cassimir);
-                       }
-                       else{
-                         $scope.queueInFront = result.data.position;
-                         console.log("OMG PLS WORK FFS");
-                         console.log(result.data.position);
-                         // this part is where queue number update happens
-                       }
+                            console.log("zzzzzz");
+                            console.log(conversation1);
+                            $rootScope.convoID_global = conversation1.id;
+
+                            rainbowSDK.im.sendMessageToConversation(conversation1, "Request support and this is queueed!!!!!");
+
+                          }).catch(function (err) {
+                            //Something when wrong with the server. Handle the trouble here
+                            console.log("ZW Error in opening conversation and sending")
+                          });
+                        }
+                        else if(choiceOfChat == "Audio"){
+                          if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
+                            rainbowSDK.webRTC.callInAudio(selectedContact);
+                          } else {
+                            console.log("DEMO :: Your browser can't make audio and video call!");
+                          }
+                        }
+
+
+                        $interval.cancel(cassimir);
+                      }
+                      else {
+                        $scope.queueInFront = result.data.position;
+                        console.log("OMG PLS WORK FFS");
+                        console.log(result.data.position);
+                        // this part is where queue number update happens
+                      }
                     });
-                  },10000);
-                  
+                  }, 10000);
+
 
               }
 
-          }).catch(async function (err){
-            console.log("[DEMO] :: Error when posting for CSA", err);
-            // $scope.isLoading = false;
-            // $scope.isConnected = false;
-          })
-          .catch(function (err) {
-            console.log("[DEMO] :: Error when sign-in", err);
-            // $scope.isLoading = false;
-            // $scope.isConnected = false;
+            }).catch(async function (err) {
+              console.log("[DEMO] :: Error when posting for CSA", err);
+              // $scope.isLoading = false;
+              // $scope.isConnected = false;
+            })
+              .catch(function (err) {
+                console.log("[DEMO] :: Error when sign-in", err);
+                // $scope.isLoading = false;
+                // $scope.isConnected = false;
+              });
           });
-        });
-      }).catch(function(err){
+      }).catch(function (err) {
         console.log("[DEMO] :: Error when getting login credentials", err);
       });
-        
+
     };
 
     $rootScope.signout = function () {

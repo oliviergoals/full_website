@@ -88,7 +88,6 @@ sample.controller("sampleController", [
             console.log("Status of Chat Closing " + result.data.status);
           });
           // ----------------------------------------------------------------  
-
           $rootScope.open_chat = false;
           console.log("closing chat");
           $rootScope.chat_val = "Open Chat";
@@ -97,7 +96,6 @@ sample.controller("sampleController", [
           console.log("wanna stay");
         }       
         //--------------------------------------------------------------------------
-        
       }
       else{
         $rootScope.open_form = false;
@@ -108,14 +106,9 @@ sample.controller("sampleController", [
     }
     
 
-
     // $scope.onExit = function() {
     //   return ('bye bye');
     // };
-
-
-
-   
 
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
 
