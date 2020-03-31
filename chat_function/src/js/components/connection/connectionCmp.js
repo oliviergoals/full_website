@@ -1,7 +1,13 @@
 angular.module("sample").component("rbxConnection", {
+  transclude: true,
+    require: {
+      ctrlButts: '^?rbxController'
+    },
   bindings: {
-    name: "@"
+    name: "@",
+    testDisplay: "<"
   },
+  
   controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval) {
     $scope.isConnected = false;
     $scope.isLoading = false;
@@ -16,7 +22,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'POST',
         // url: 'http://localhost:3000/checkQueueStatusbeta/',
-        url: 'http://localhost:3000/checkQueueStatusbeta/',
+        url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
         dataType: 'json',
         data:
         {
@@ -70,7 +76,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'GET',
         // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
-        url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
+        url: 'http://10.12.205.128:3000/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
         // this function will be called when the request is success
@@ -90,7 +96,7 @@ angular.module("sample").component("rbxConnection", {
             $http({
               method: 'POST',
               // url: 'http://localhost:3000/getRequiredCSAbeta',
-              url: 'http://localhost:3000/getRequiredCSAbeta',
+              url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
               dataType: 'json',
               data:
               {
@@ -133,6 +139,8 @@ angular.module("sample").component("rbxConnection", {
                   });
                 }
                 else if(choiceOfChat == "Audio"){
+                  $rootScope.open_audio = "true";
+                  console.log("choose audio");
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInAudio(selectedContact);
                   } else {
@@ -144,13 +152,13 @@ angular.module("sample").component("rbxConnection", {
 
               }
               // if no jid -> means not ready and on queue. So we do circular post ddos style
-              else {
+              else {           
                 let cassimir = $interval(
                   function () {
                     $http({
                       method: 'POST',
                       // url: 'http://localhost:3000/checkQueueStatusbeta/',
-                      url: 'http://localhost:3000/checkQueueStatusbeta/',
+                      url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
                       dataType: 'json',
                       data:
                       {
@@ -185,11 +193,13 @@ angular.module("sample").component("rbxConnection", {
                           });
                         }
                         else if(choiceOfChat == "Audio"){
+                          $rootScope.open_audio = "true";
                           if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                             rainbowSDK.webRTC.callInAudio(selectedContact);
                           } else {
                             console.log("DEMO :: Your browser can't make audio and video call!");
                           }
+                          console.log("choose audio");
                         }
 
 

@@ -47,6 +47,13 @@ body {
 	/* height: calc(100% - 75px); */
 }
 
+.app-container-test {
+	float: left;
+	width: 350px;
+	margin-bottom: 60px;
+	/* height: calc(100% - 75px); */
+}
+
 .app-user {
 	float: right;
 	width: 350px;
