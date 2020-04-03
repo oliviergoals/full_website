@@ -15,7 +15,7 @@ sample.controller("sampleController", [
     $rootScope.chat_val = "Open Chat" 
     $rootScope.open_chat = false;
     $rootScope.open_form = false;  
-    $rootScope.open_audio = true;
+    $rootScope.open_audio = false;
     console.log("rootscope vals changed")
     console.log("[DEMO] :: Rainbow IM Application");
 

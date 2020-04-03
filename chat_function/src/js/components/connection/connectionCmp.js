@@ -72,16 +72,7 @@ angular.module("sample").component("rbxConnection", {
       rainbowSDK.connection
         .signin("tinkit@swaggy.com", "@Tinkit123")
         .then(async function (account) { 
-
-          
-
-
-
-
-
-
-
-
+    
           $rootScope.open_audio = "true";
 
           console.log("choose audio");
@@ -92,7 +83,6 @@ angular.module("sample").component("rbxConnection", {
             method: 'GET',
             // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
             url: 'http://10.12.205.128:3000/createguestdynamic?name=' + "testname",
-
           }).then(function success(response) {
             // this function will be called when the request is success
             console.log("zw GuestID " + JSON.stringify(response.data.guestID));
@@ -100,7 +90,6 @@ angular.module("sample").component("rbxConnection", {
           }).catch(function(err){
             console.log("fail to post");
           })
-
 
           if(choiceOfChat == "Audio"){
             if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {

@@ -4,19 +4,15 @@ angular.module("sample").component("rbxController", {
     name: "@"
   },
   templateUrl: "./src/js/components/controller/controllerCmp.template.html",
-  controller: function rbcPhoneCtrl(rainbowSDK, $rootScope, $scope, Call, $timeout) {
+  controller: function rbcPhoneCtrl(rainbowSDK, $rootScope, $scope, Call) {
     
     "use strict";
 
-
-
-// // ---------------------------------------------------------------------------
 
     $scope.isConnected = false;
 
     $scope.isInCommunication = false;
 
-    //-----------------------------------
 
     $scope.isPIPDisplayed = true;
 
