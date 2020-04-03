@@ -49,9 +49,10 @@ body {
 
 .app-container-test {
 	float: left;
-	width: 350px;
+	width: 40%;
 	margin-bottom: 60px;
 	/* height: calc(100% - 75px); */
+	height: 100%;
 }
 
 .app-user {

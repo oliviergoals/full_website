@@ -1,3 +1,19 @@
+div.audioCmp-area{
+    position: fixed;
+    height: 85%;
+    width: 350px;
+    overflow: scroll;
+    border: 1px solid #E9E9E9;
+    margin-top: 10px;
+    margin-right: 10px;
+    background: #fff;
+    padding: 4px;
+    margin-left:0px ;
+    float:right;
+    border-radius: 6px;
+}
+
+
 div.controllerCmp-area {
     position: relative;
     overflow: hidden;
@@ -6,8 +22,11 @@ div.controllerCmp-area {
     margin-top: 10px;
     margin-right: 10px;
     background: #fff;
-    height: 100px;
+    height: 100%;
 }
+
+
+
 
 div.controllerCmp-border {
     width: 100%;
@@ -34,7 +53,8 @@ div.controllerCmp-title {
 .controllerCmp-webrtc-video {
    position: absolute;
     top: -50%;
-    left: -50%;
+/*     left: -50%; */
+    left: -100%;
     width: 200%;
     height: 200%;
 }
@@ -59,6 +79,7 @@ div.controllerCmp-title {
 .controllerCmp-webrtc-area {
     height: 100%;
     width: 100%;
+    
 }
 
 .controllerCmp-btn {
@@ -96,7 +117,8 @@ div.controllerCmp-title {
 
 #minivideo {
     position: relative;
-    width: auto;
+    width: 80%;
+    left: 20%;
     height: 12%;
     transform: scale(-1, 1);
     z-index: 2;
@@ -141,5 +163,3 @@ div.controllerCmp-deviceSubtitle {
     padding: 8px 6px;
     border-radius: 25px;
 }
-
-
