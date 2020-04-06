@@ -12,8 +12,6 @@
 	<link rel="stylesheet" href="./src/styles/sdkSampleApp.css">
 	<link rel="stylesheet" href="./src/js/components/connection/connectionCmp.css">
 
-	
-
 
 	<link rel="stylesheet" href="./src/js/components/contacts/contactsCmp.css">
 	<link rel="stylesheet" href="./src/js/components/contacts/contactCmp.css">
@@ -24,9 +22,11 @@
 	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="//cdn.jsdelivr.net/momentjs/2.15.1/moment-with-locales.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular.min.js"></script>
-	<script src="./node_modules/rainbow-web-sdk/dist/lib/vendors-sdk.min.js"></script>
-	<script src="./node_modules/rainbow-web-sdk/dist/lib/rainbow-sdk.min.js"></script>
+	<script src="./node_modules/rainbow-web-sdk/dist-legacy/vendors-sdk.min.js"></script>
+	<script src="./node_modules/rainbow-web-sdk/dist-legacy/rainbow-sdk.min.js"></script>
 	<script src="./src/js/sdkSampleApp-noLoader.js"></script>
+	<script src="./src/angular-animate.min.js"></script>
+	<script src="./node_modules/angular-recaptcha/release/angular-recaptcha.js"></script>
 
 	<script src="./src/js/components/connection/connectionCmp.js"></script>
 	<!-- <script src="./src/js/components/connection/oldconnectionComp.js"></script>    -->
@@ -54,14 +54,14 @@
 
 </head>
 
-<!-- <style>
+<style>
 	body {
 		background-image: url('./res/sutd_background.png');
-		background-size: cover;
+		background-size:cover;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 	}
-</style> -->
+</style>
 
 <body>
 
@@ -74,15 +74,17 @@
 		<!-- <md-button class="md-primary md-raised" ng-click="showAdvanced()">
 				Open Chat
 			</md-button> -->
-		<button class="open_chat_button" ng-click="butt_val_changer()">
-			{{chat_val}}
+		<button class="open_chat_button" ng-click="butt_val_changer()" href="#">
+			<i id="chaticon" class = "zmdi zmdi-comment-outline zmdi-hc-3x" ng-if="!chat_val"></i>
+			<i id="xicon" class = "zmdi zmdi-close zmdi-hc-3x" ng-if="chat_val"></i>
 		</button>
+
 
 		<div class="app-container-test" ng-if = "open_audio">
 			<rbx-controller name="rbxController"></rbx-controller>
 		</div>
 
-		<div class="app-user" ng-if="open_form">
+		<div class="app-user">
 			<rbx-connection name="rbxConnection"></rbx-connection>
 		</div>
 

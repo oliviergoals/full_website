@@ -1,4 +1,4 @@
-var sample = angular.module("sample", ["sdk"]);
+var sample = angular.module("sample", ["sdk", 'ngAnimate','vcRecaptcha']);
 // const {parse, stringify} = require('flatted/cjs');
 
 sample.controller("sampleController", [
@@ -7,12 +7,12 @@ sample.controller("sampleController", [
   "$http",
   "$window",
   "$scope",
-  function($rootScope, sdk, $http, $window, $scope) {
+  function($rootScope, sdk, $http, $window, $scope, vcRecaptchaService) {
     "use strict";    
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
-    $rootScope.chat_val = "Open Chat" 
+    $rootScope.chat_val = false; //"open chat"
     $rootScope.open_chat = false;
     $rootScope.open_form = false;  
     $rootScope.open_audio = false;
@@ -59,7 +59,7 @@ sample.controller("sampleController", [
       // });
       if ($rootScope.open_form==false && $rootScope.open_chat==false){
         $rootScope.open_form = true;
-        $rootScope.chat_val = "Close Chat";
+        $rootScope.chat_val = true; //"close chat"
       }
       else if($rootScope.open_chat == true){
 
@@ -91,7 +91,7 @@ sample.controller("sampleController", [
           // ----------------------------------------------------------------  
           $rootScope.open_chat = false;
           console.log("closing chat");
-          $rootScope.chat_val = "Open Chat";
+          $rootScope.chat_val = false; //"open chat"
         }
         else{
           console.log("wanna stay");
@@ -101,7 +101,7 @@ sample.controller("sampleController", [
       else{
         $rootScope.open_form = false;
         $rootScope.open_chat = false;
-        $rootScope.chat_val = "Open Chat";
+        $rootScope.chat_val = false; //"Open Chat"
       }
       
     }

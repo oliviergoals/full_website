@@ -1,12 +1,52 @@
-<div class="connectionCmp-area">
-	<div class="connectionCmp-title">Connection</div>
-	<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="200" height="200">
+<!-- <script src="../../../angular-animate.min.js"></script> -->
+<div class="connectionCmp-area" ng-if="$root.open_form">
+	<div class = "introduction" ng-if="introduction">
+		<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="225" height="225" >
+		<div class="connectionCmp-title">Welcome!</div>
+		<p class = "intro-text"> bringing you the customer service you deserve</p>
+		
+		<div class ="intro-features">
+			<i class = "zmdi zmdi-n-1-square zmdi-hc-3x mdc-text-blue"></i>
+			<p class="intro-features-desc">Communicate the way you want to!</p>
+			<em class="intro-features-grey">Choose between audio, chat and video call</em>
+			<br>
+			<i class = "zmdi zmdi-n-2-square zmdi-hc-3x mdc-text-blue"></i>
+			<p class="intro-features-desc">Skip the needless waiting!</p>
+			<em class="intro-features-grey">Directly choose your department of choice</em>
+			<br>
+			<i class = "zmdi zmdi-n-3-square zmdi-hc-3x mdc-text-blue"></i>
+			<p class="intro-features-desc">No more long queues!</p>
+			<em class="intro-features-grey">Live updates from our transparent and smart queuing system</em>
+		</div>
+		
+		<div class = "intro-captcha-text">
+			<em >but first, prove you're not a robot!</em>
+			<i class = "zmdi zmdi-bug animated infinite wobble zmdi-hc-fw mdc-text-red-700"></i>
+		</div>
+		<!-- <label id="intro-label">Prove You're Not a Robot!</label> -->
+		<form id="intro-form" name="intro-form" ng-submit ="read_intro()" autocomplete="off" class="intro-form" >
+		<div
+		vc-recaptcha
+		class ="intro-captcha"
+		theme="light"
+		key="model.key"
+		on-create="setWidgetId(widgetId)"
+		on-success="setResponse(response)"
+		on-expire="cbExpiration()"
+		></div>
+		<button class = "next-butt"  ng-disabled="!gRecaptchaResponse">
+			<i class = "zmdi zmdi-check zmdi-hc-3x"></i>
+		</button>
+		</form>
+	</div>
 
-
-	<form id="form" name="form" autocomplete="off" class="connectionCmp-form" novalidate >
+	<div class="form" ng-if = "form">
+	<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="225" height="225" >
+	<div class="form-title" ng-if="!submit_success">Fill in & Submit!</div>
+	<form id="form" name="form" autocomplete="off" class="connectionCmp-form" novalidate ng-if="!submit_success">
 		<!-- Name -->
 		<div class="form-group">
-			<label id="label">Name: </label>
+			<label id="label">Name </label>
 			<input id="username" class="form-control" type="text" name="user" ng-model="user.name"  placeholder="Enter First Name" required>
 			<span class="msg" ng-show="form.user.$dirty && form.user.$invalid">
 				<span ng-show="form.user.$error.required">Name is required.</span>
@@ -14,10 +54,10 @@
 				<!-- pattern="/^[a-zA-Z0-9.\-\s]+$/i" -->
 			</span>
 		</div>
-
+		
 		<!-- Email -->
 		<div class="form-group">
-			<label id="label">Email:</label>
+			<label id="label">Email </label>
 			<input id="email" class="form-control" ng-model="user.email" type="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email" placeholder="Enter Email Address" required/>
 			<span class="msg" ng-show="form.email.$dirty && form.email.$invalid">
 				<span class="msg" ng-show="form.email.$error.required"> Email is required. </span>
@@ -35,7 +75,7 @@
 			</select>
 			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
 		</div>
-
+		
 		<!-- Chat type -->
 		<div class="form-group">
 			<label id="label">Select chat type</label>
@@ -46,7 +86,7 @@
 			</select>
 			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
 		</div>
-
+		
 		<!-- Problem -->
 		<div class="form-group">
 			<label id="label" class="form-control" class="control-label">Select problem category</label>
@@ -57,19 +97,24 @@
 			</select>
 			<span class="msg" ng-show="form.cont.$error.required">Select a value</span>
 		</div>
-
+		
 		<button class="connectionCmp-btn" ng-disabled="form.$invalid && !isConnected " ng-click="signin()">Submit
 		</button>
-
-		<img class="connectionCmp-loader" src="./res/progress.gif" ng-if="isLoading" />
+		
 	</form>
 	
-	<div class="connectionCmp-state-result">
+	<div class="connectionCmp-state-result" ng-if= "submit_success">
+		<i class="zmdi zmdi-settings zmdi-hc-spin zmdi-hc-5x"  ng-if="isLoading" />
 		<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
 		<div class="connectionCmp-state">Queue Number: <b class="connectionCmp-state-value">{{queueStatus}}</b></div>
-		<div class="connectionCmp-state">Queue Position: <b class="connectionCmp-state-value">{{queueInFront}}</b></div>
+		<div class="connectionCmp-state">Number of People In Front: <b class="connectionCmp-state-value">{{queueInFront}}</b></div>
+	</div>
+	
+
 	</div>
 </div>
+
+
 
 
 		<!-- ------------------------------------------------------------------- -->

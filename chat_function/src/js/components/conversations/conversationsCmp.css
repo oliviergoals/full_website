@@ -1,5 +1,8 @@
+@import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
+
 .conversationsCmp-area {
     /* display: flex; */
     /* flex-flow: row wrap; */
+    transition: all .2s ease-in-out;
     position: fixed;
 }
