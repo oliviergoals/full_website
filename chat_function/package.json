@@ -4,7 +4,7 @@
   "description": "Rainbow Web SDK Angular Sample",
   "main": "index.js",
   "scripts": {
-    "start": "http-server -S -C cert.pem -o index.html -p 8787"
+    "start": "http-server -S -C cert.pem -o -p 8080"
   },
   "repository": {
     "type": "git",

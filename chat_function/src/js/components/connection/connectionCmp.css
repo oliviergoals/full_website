@@ -2,7 +2,7 @@ div.connectionCmp-area {
     position: fixed;
     height: 85%;
     width: 350px;
-    overflow: scroll;
+    overflow: auto;
     border: 1px solid #E9E9E9;
     margin-top: 10px;
     margin-right: 10px;

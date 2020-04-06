@@ -16,6 +16,7 @@ sample.controller("sampleController", [
     $rootScope.open_chat = false;
     $rootScope.open_form = false;  
     $rootScope.open_audio = false;
+    $rootScope.open_video = false;
     console.log("rootscope vals changed")
     console.log("[DEMO] :: Rainbow IM Application");
 
@@ -73,7 +74,7 @@ sample.controller("sampleController", [
           // console.log(convoHist);
           $http({
             method: 'POST',
-            url: 'http://localhost:3000/endChatInstance',
+            url: 'https://poc-open-rainbow-swaggy.herokuapp.com/endChatInstance',
             //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
             dataType: 'json',
             data:
@@ -82,7 +83,7 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               queueNumber: $rootScope.queueStatus,
               convoID: $rootScope.convoID_global,
-              detailsOfConvo: fuckCircularJson
+              // detailsOfConvo: fuckCircularJson
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {

@@ -1,18 +1,14 @@
 angular.module("sample").component("rbxController", {
-  // transclude: true,
   bindings: {
     name: "@"
   },
   templateUrl: "./src/js/components/controller/controllerCmp.template.html",
   controller: function rbcPhoneCtrl(rainbowSDK, $rootScope, $scope, Call) {
-    
     "use strict";
-
 
     $scope.isConnected = false;
 
     $scope.isInCommunication = false;
-
 
     $scope.isPIPDisplayed = true;
 
@@ -29,6 +25,24 @@ angular.module("sample").component("rbxController", {
     $scope.title = "Please wait...";
 
     $scope.message = "The browser is checking your audio and video devices";
+
+
+
+    //-----------------------------------------------
+    $scope.showAudio = $rootScope.open_audio;
+
+    $scope.showVideo = $rootScope.open_video;
+
+
+    if($scope.showAudio){
+      $scope.callType = "Audio Call"; 
+    };
+    
+    if($scope.showVideo){
+      $scope.callType = "Video Call";
+    };
+
+    //-----------------------------------------------
 
     var currentCall = null;
 
@@ -78,7 +92,6 @@ angular.module("sample").component("rbxController", {
         $scope.isCheckedDisplayed = false;
       });
     };
-
 
     var onDeviceCheckFailed = function onDeviceCheckFailed() {
       $scope.title = "WARNING !";
@@ -242,6 +255,8 @@ angular.module("sample").component("rbxController", {
 
     $scope.release = function release() {
       rainbowSDK.webRTC.release(currentCall);
+      $rootScope.open_audio = false;
+      $rootScope.open_video = false;
     };
 
     $scope.showSpectrum = function showSpectrum() {
