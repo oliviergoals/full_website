@@ -1,3 +1,5 @@
+@import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
+
 html {
     height: 100%;
 }
@@ -42,7 +44,7 @@ body {
 
 .app-container {
 	float: right;
-	width: 350px;
+	width: 400px;
 	margin-bottom: 60px;
 	/* height: calc(100% - 75px); */
 }
@@ -57,24 +59,72 @@ body {
 
 .app-user {
 	float: right;
-	width: 350px;
+	width: 400px;
+	margin-right: 100px;
 }
 
 .app-contacts {
 	float: left;
-	width: 300px;
+	width: 400px;
 	height: calc(100% - 75px);
 }
 
 .open_chat_button{
-	position: fixed;
-	margin-right: 5px;
 	bottom: 0px;
 	right: 0px;
-	width: 350px;
-	height: 50px;
-	font-size: larger;
-	color: #fff;
-	background-color: #0087cf ;
-	border-radius: 12px;
+	display: block;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	text-align: center;
+	color: #f0f0f0;
+	margin-right: 25px;
+	margin-bottom: 25px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+	cursor: pointer;
+	-webkit-transition: all .1s ease-out;
+	transition: all 0.1s ease-out;
+	position: fixed;
+	z-index: 998;
+	overflow: hidden;
+	background: #42a5f5;
+	font-size: 2em;
+	
 }
+
+.open_chat_button:hover{
+	color: #42a5f5;
+	background-color:#f0f0f0;
+}
+
+.open_chat_button > i {
+	font-size: 2em;
+	line-height: 100px;
+	-webkit-transition: all .2s ease-out;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+
+/* ANIMATIONS */
+
+
+.open_chat_button >i .ng-leave{
+	opacity: 1;
+	transition: 0.2s linear all;
+	transform: rotate(0deg);
+}
+.open_chat_button > i.ng-leave.ng-leave-active{
+	opacity: 0;
+	transform: rotate(180deg);
+}
+.open_chat_button > i.ng-enter{
+	opacity: 1;
+	transition: 0.2s linear all;
+	transform: rotate(0deg);
+}
+.open_chat_button > i.ng-enter.ng-enter-active{
+	opacity: 0;
+	transform: rotate(180deg);
+}
+
+
