@@ -1,9 +1,10 @@
-package com.example.escproject_testing;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 
 public class Injection_Test {
@@ -15,12 +16,29 @@ public class Injection_Test {
                                     "<a href=\"javascript\\x00:javascript:alert(1)\" id=\"fuzzelement1\">test</a>", };
 
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-
-        driver.get("http://127.0.0.1:5501/index.html");
-
         for(int i = 0; i < injection.length; i++) {
+
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--allow-insecure-localhost");
+            DesiredCapabilities caps = DesiredCapabilities.chrome();
+            caps.setCapability(ChromeOptions.CAPABILITY, options);
+            caps.setCapability("acceptInsecureCerts", true);
+
+
+            System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
+            WebDriver driver = new ChromeDriver(caps);
+
+
+
+
+    //        driver.get("http://127.0.0.1:5501/index.html");
+            driver.get("https://127.0.0.1:8080/");
+//            Thread.sleep(5000);
+
+
+
+//            driver.get("https://127.0.0.1:8080/");
+//            Thread.sleep(5000);
 
             WebElement openChatButt = driver.findElement(By.className("open_chat_button"));
             openChatButt.click();
@@ -51,7 +69,9 @@ public class Injection_Test {
             WebElement submitButt = driver.findElement(By.className("connectionCmp-btn"));
             submitButt.click();
 
-            driver.close();
+//            Thread.sleep(10000);
+
+//            driver.close();
         }
     }
 }
