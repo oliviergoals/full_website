@@ -33,8 +33,10 @@ angular.module("sample").component("rbxController", {
 
     $scope.showVideo = $rootScope.open_video;
 
+    console.log($rootScope.csaName + "here in controller");
 
     if($scope.showAudio){
+      $scope.naMe = $rootScope.csaName;
       $scope.callType = "Audio Call"; 
     };
     

@@ -237,7 +237,7 @@
     background: #656565;
 }
 
-input#username, input#email {
+input#username, input#email{
     margin-bottom: 15px;
     width: 80%;
     height: 24px;
@@ -252,7 +252,27 @@ input#username, input#email {
     font-size: 20px;
 }
 
-select#department, select#type, select#problem{
+textarea#problem{
+    margin-bottom: 15px;
+    width: 76%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid rgba(73, 98, 171, 0.22);
+    color: #656565;
+    background: #FBFBFB;
+    -webkit-transition: all 0.30s ease-in-out;
+    transition: all 0.30s ease-in-out;
+    border-radius: 6px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+::placeholder {
+    font-size: 18px;
+    font-family: Arial;
+}
+
+select#department, select#type {
     margin-bottom: 15px;
     width: 82%;
     height: 40px;
@@ -275,7 +295,6 @@ span.msg{
 label#label{
     font-size: 18px;
 }
-
 
 
 select#host {

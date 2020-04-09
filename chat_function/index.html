@@ -29,7 +29,6 @@
 	<script src="./node_modules/angular-recaptcha/release/angular-recaptcha.js"></script>
 
 	<script src="./src/js/components/connection/connectionCmp.js"></script>
-	<!-- <script src="./src/js/components/connection/oldconnectionComp.js"></script>    -->
 
 	<script src="./src/js/components/contacts/contactsCmp.js"></script>
 	<script src="./src/js/components/contacts/contactCmp.js"></script>
@@ -80,7 +79,7 @@
 		</button>
 
 
-		<div class="app-container-test" ng-if = "open_audio">
+		<div class="app-container-test" ng-if = "open_audio || open_video">
 			<rbx-controller name="rbxController"></rbx-controller>
 		</div>
 

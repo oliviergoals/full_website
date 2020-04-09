@@ -74,7 +74,7 @@ sample.controller("sampleController", [
           // console.log(convoHist);
           $http({
             method: 'POST',
-            url: 'https://poc-open-rainbow-swaggy.herokuapp.com/endChatInstance',
+            url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
             //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
             dataType: 'json',
             data:

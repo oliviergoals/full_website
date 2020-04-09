@@ -3,7 +3,7 @@ angular.module("sample").component("rbxConnection", {
     name: "@",
   },
 
-  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval,vcRecaptchaService) {
+  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval, vcRecaptchaService) {
     $scope.isConnected = false;
     $scope.isLoading = false;
     $scope.queueInFront = "none";
@@ -13,58 +13,63 @@ angular.module("sample").component("rbxConnection", {
     $scope.response = null;
     $scope.widgetId = null;
     $scope.gRecaptchaResponse = false;
+    
+
+    $scope.user = {
+      name: null,
+      email: null,
+      department: null,
+      communication: null,
+      problem: null,
+    };
+
     console.log("reached");
     $scope.model = {
-        key: '6LddGecUAAAAAOrgzaN55luxwze-M9EQUXz8THWS'
+      key: '6LddGecUAAAAAOrgzaN55luxwze-M9EQUXz8THWS'
     };
 
     $scope.setResponse = function (response) {
-        console.info('Response available');
-        $scope.response = response;
-        $scope.gRecaptchaResponse = true;
-
-
+      console.info('Response available');
+      $scope.response = response;
+      $scope.gRecaptchaResponse = true;
     };
 
     $scope.setWidgetId = function (widgetId) {
-        console.info('Created widget ID: %s', widgetId);
-
-        $scope.widgetId = widgetId;
+      console.info('Created widget ID: %s', widgetId);
+      $scope.widgetId = widgetId;
     };
 
-    $scope.cbExpiration = function() {
-        console.info('Captcha expired. Resetting response object');
+    $scope.cbExpiration = function () {
+      console.info('Captcha expired. Resetting response object');
+      vcRecaptchaService.reload($scope.widgetId);
+      $scope.response = null;
+    };
 
-        vcRecaptchaService.reload($scope.widgetId);
+    //     $scope.submit = function () {
+    //         var valid;
 
-        $scope.response = null;
-     };
+    //         /**
+    //          * SERVER SIDE VALIDATION
+    //          *
+    //          * You need to implement your server side validation here.
+    //          * Send the reCaptcha response to the server and use some of the server side APIs to validate it
+    //          * See https://developers.google.com/recaptcha/docs/verify
+    //          */
+    //         console.log('sending the captcha response to the server', $scope.response);
 
-//     $scope.submit = function () {
-//         var valid;
+    //         if (valid) {
+    //             console.log('Success');
+    //         } else {
+    //             console.log('Failed validation');
 
-//         /**
-//          * SERVER SIDE VALIDATION
-//          *
-//          * You need to implement your server side validation here.
-//          * Send the reCaptcha response to the server and use some of the server side APIs to validate it
-//          * See https://developers.google.com/recaptcha/docs/verify
-//          */
-//         console.log('sending the captcha response to the server', $scope.response);
+    //             // In case of a failed validation you need to reload the captcha
+    //             // because each response can be checked just once
+    //             vcRecaptchaService.reload($scope.widgetId);
+    //         }
+    //     };
+    // });
 
-//         if (valid) {
-//             console.log('Success');
-//         } else {
-//             console.log('Failed validation');
-
-//             // In case of a failed validation you need to reload the captcha
-//             // because each response can be checked just once
-//             vcRecaptchaService.reload($scope.widgetId);
-//         }
-//     };
-// });
-
-    $scope.read_intro = function(){
+    $scope.read_intro = function () {
       console.log("button pressed")
       $scope.form = true;
       $scope.introduction = false;
@@ -78,7 +83,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'POST',
         // url: 'http://localhost:3000/checkQueueStatusbeta/',
-        url: 'http://10.12.205.128:3000/checkQueueStatusbeta/',
+        url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/checkQueueStatus',
         dataType: 'json',
         data:
         {
@@ -112,7 +117,7 @@ angular.module("sample").component("rbxConnection", {
     // TODO: Sheikh
     //-----------------------------------------------
 
-    var contactJId;
+
     $scope.signin = function () {
 
       $scope.isLoading = true;
@@ -122,20 +127,22 @@ angular.module("sample").component("rbxConnection", {
 
       $scope.server = angular.copy($scope.user);
       $scope.submit_success = true;
-      choiceOfChat = $scope.user.communication;
+      console.log($scope.user.communication);
+      let choiceOfChat = $scope.user.communication;
+      console.log($scope.user.department);
 
 
       // //----------------------------------------------------------
       // rainbowSDK.connection
       //   .signin("tinkit@swaggy.com", "@Tinkit123")
       //   .then(async function (account) { 
-    
-          
+
+
 
       //     console.log("choose audio");
       //     let callPersonJID = "4c33fa55637949768b4d2dbc417c69da@sandbox-all-in-one-rbx-prod-1.rainbow.sbg";
       //     let callPersonCont =  await rainbowSDK.contacts.searchByJid(callPersonJID);
-      
+
 
       //     // $http({
       //     //   method: 'GET',
@@ -168,7 +175,7 @@ angular.module("sample").component("rbxConnection", {
       //         console.log("DEMO :: Your browser can't make audio and video call!");
       //       };
       //     }
-            
+
 
 
       //   })
@@ -193,7 +200,7 @@ angular.module("sample").component("rbxConnection", {
       $http({
         method: 'GET',
         // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
-        url: 'https://poc-open-rainbow-swaggy.herokuapp.com/createguestdynamic?name=' + $scope.user.name,
+        url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
         // this function will be called when the request is success
@@ -213,7 +220,7 @@ angular.module("sample").component("rbxConnection", {
             $http({
               method: 'POST',
               // url: 'http://localhost:3000/getRequiredCSAbeta',
-              url: 'https://poc-open-rainbow-swaggy.herokuapp.com/getRequiredCSAbeta',
+              url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/getRequiredCSA',
               dataType: 'json',
               data:
               {
@@ -236,6 +243,8 @@ angular.module("sample").component("rbxConnection", {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 $scope.queueInFront = "It's You're Turn!"
                 console.log("this is queue status" + $rootScope.queueInFront);
+                $rootScope.csaName = selectedContact.firstname;
+                console.log($rootScope.csaName);
 
                 if (choiceOfChat == "Chat") {
                   rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
@@ -245,7 +254,7 @@ angular.module("sample").component("rbxConnection", {
 
                     setTimeout(function () { $rootScope.open_form = false }, 5000);
                     $rootScope.open_chat = true;
-                    rainbowSDK.im.sendMessageToConversation(conversation, "Request support!!!!!");
+                    rainbowSDK.im.sendMessageToConversation(conversation, $scope.user.problem);
                     console.log("ZW Sent messgage");
 
                   }).catch(function (err) {
@@ -265,7 +274,7 @@ angular.module("sample").component("rbxConnection", {
                   };
                 }
                 else{
-                  $rootScope.open_video = true;
+                  $rootScope.open_video = "true";
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInVideo(selectedContact);
                   } else {
@@ -282,7 +291,7 @@ angular.module("sample").component("rbxConnection", {
                     $http({
                       method: 'POST',
                       // url: 'http://localhost:3000/checkQueueStatusbeta/',
-                      url: 'https://poc-open-rainbow-swaggy.herokuapp.com/checkQueueStatusbeta/',
+                      url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/checkQueueStatus',
                       dataType: 'json',
                       data:
                       {
@@ -299,6 +308,8 @@ angular.module("sample").component("rbxConnection", {
                         let newjid = result.data.jid;
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
+                        $rootScope.csaName = selectedContact.firstname;
+                        console.log($rootScope.csaName);
 
                         if (choiceOfChat == "Chat") {
                           rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
@@ -309,7 +320,7 @@ angular.module("sample").component("rbxConnection", {
                             console.log(conversation1);
                             $rootScope.convoID_global = conversation1.id;
 
-                            rainbowSDK.im.sendMessageToConversation(conversation1, "Request support and this is queueed!!!!!");
+                            rainbowSDK.im.sendMessageToConversation(conversation1, $scope.user.problem);
 
                           }).catch(function (err) {
                             //Something when wrong with the server. Handle the trouble here
@@ -329,7 +340,7 @@ angular.module("sample").component("rbxConnection", {
                           console.log("choose audio");
                         }
                         else{
-                          $rootScope.open_video = true;
+                          $rootScope.open_video = "true";
                           if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                             rainbowSDK.webRTC.callInVideo(selectedContact);
                           } else {
