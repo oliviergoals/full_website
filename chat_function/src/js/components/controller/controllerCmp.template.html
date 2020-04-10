@@ -1,12 +1,12 @@
-<div class="controllerCmp-area">
+<div class="controllerCmp-area" ng-if="$root.open_audio || $root.open_video">
 
-	<div class="controllerCmp-title">{{callType}}</div>
+	<div class="controllerCmp-title"> {{$root.callType}} </div>
 
 	<div class="controllerCmp-border">
 
-		<div class="controllerCmp-onAudioOnly" ng-if="showAudio && isInCommunication">
+		<div class="controllerCmp-onAudioOnly" ng-if="($root.open_audio && isInCommunication)">
 			<div class="csa-info">Audio calling with</div>
-			<div class="csa-info-name">{{naMe}}</div>
+			<div class="csa-info-name">{{$root.csaName}}</div>
 			<img id="img-audio" src="/res/call.png">
 		</div>
 

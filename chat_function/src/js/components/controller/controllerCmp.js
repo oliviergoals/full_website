@@ -26,29 +26,21 @@ angular.module("sample").component("rbxController", {
 
     $scope.message = "The browser is checking your audio and video devices";
 
+    console.log( "scope has been initiated");
 
+    // -----------------------------------------------
 
-    //-----------------------------------------------
-    $scope.showAudio = $rootScope.open_audio;
-
-    $scope.showVideo = $rootScope.open_video;
-
-    console.log($rootScope.csaName + "here in controller");
-
-    if($scope.showAudio){
-      $scope.naMe = $rootScope.csaName;
-      $scope.callType = "Audio Call"; 
-    };
-    
-    if($scope.showVideo){
-      $scope.callType = "Video Call";
-    };
+    // console.log( $rootScope.open_audio + " open_aud val changed");
+    // console.log( $scope.showAudio + " showAud val has changed");
+    // console.log( $scope.callType +  "Calltype has changed");
 
     //-----------------------------------------------
 
     var currentCall = null;
 
     this.$onInit = function() {
+
+      
       // Subscribe to XMPP connection change
       document.addEventListener(
         rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
@@ -128,6 +120,10 @@ angular.module("sample").component("rbxController", {
 
     var onWebRTCCallChanged = function onWebRTCCallChanged(event, call) {
       var call = event.detail;
+      console.log($rootScope.callType + "scope call type");
+      console.log($rootScope.open_audio + "scope audio type");
+      console.log($scope.isInCommunication + "scope comm type");
+
       console.log(
         "[DEMO] :: WebRTC Call state changed to " + call.status.value,
         call
@@ -155,6 +151,7 @@ angular.module("sample").component("rbxController", {
             hideLocalVideo(call);
           }
           $scope.isInCommunication = true;
+          console.log($scope.isInCommunication + "scope comm type");
           break;
 
         case Call.Status.UNKNOWN.value:

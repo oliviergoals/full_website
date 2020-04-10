@@ -244,7 +244,7 @@ angular.module("sample").component("rbxConnection", {
                 $scope.queueInFront = "It's You're Turn!"
                 console.log("this is queue status" + $rootScope.queueInFront);
                 $rootScope.csaName = selectedContact.firstname;
-                console.log($rootScope.csaName);
+                console.log($rootScope.csaName + "this is csa name");
 
                 if (choiceOfChat == "Chat") {
                   rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
@@ -265,7 +265,8 @@ angular.module("sample").component("rbxConnection", {
                 }
                 else if (choiceOfChat == "Audio") {
                   $rootScope.open_form = false;
-                  $rootScope.open_audio = "true";
+                  $rootScope.open_audio = true;
+                  $rootScope.callType = "Audio Call";
                   $scope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     console.log("before call");
@@ -278,7 +279,8 @@ angular.module("sample").component("rbxConnection", {
                 }
                 else{
                   $rootScope.open_form = false;
-                  $rootScope.open_video = "true";
+                  $rootScope.open_video = true;
+                  $rootScope.callType = "Video Call"; 
                   $scope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInVideo(selectedContact);
@@ -314,7 +316,7 @@ angular.module("sample").component("rbxConnection", {
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
                         $rootScope.csaName = selectedContact.firstname;
-                        console.log($rootScope.csaName);
+                        console.log($rootScope.csaName + "this is csa name");
 
                         if (choiceOfChat == "Chat") {
                           rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
@@ -333,7 +335,8 @@ angular.module("sample").component("rbxConnection", {
                           });
                         }
                         else if (choiceOfChat == "Audio") {
-                          $rootScope.open_audio = "true";
+                          $rootScope.open_audio = true;
+                          $rootScope.callType = "Audio Call";
                           if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                             console.log("before call");
                             rainbowSDK.webRTC.callInAudio(selectedContact);
@@ -345,7 +348,8 @@ angular.module("sample").component("rbxConnection", {
                           console.log("choose audio");
                         }
                         else{
-                          $rootScope.open_video = "true";
+                          $rootScope.open_video = true;
+                          $rootScope.callType = "Audio Call";
                           if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                             rainbowSDK.webRTC.callInVideo(selectedContact);
                           } else {
