@@ -252,8 +252,9 @@ angular.module("sample").component("rbxConnection", {
                     console.log(conversation);
                     $rootScope.convoID_global = conversation.id;
 
-                    setTimeout(function () { $rootScope.open_form = false }, 5000);
+                    $rootScope.open_form = false;
                     $rootScope.open_chat = true;
+                    $scope.submit_success = false;
                     rainbowSDK.im.sendMessageToConversation(conversation, $scope.user.problem);
                     console.log("ZW Sent messgage");
 
@@ -263,7 +264,9 @@ angular.module("sample").component("rbxConnection", {
                   });
                 }
                 else if (choiceOfChat == "Audio") {
+                  $rootScope.open_form = false;
                   $rootScope.open_audio = "true";
+                  $scope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     console.log("before call");
                     rainbowSDK.webRTC.callInAudio(selectedContact);
@@ -274,7 +277,9 @@ angular.module("sample").component("rbxConnection", {
                   };
                 }
                 else{
+                  $rootScope.open_form = false;
                   $rootScope.open_video = "true";
+                  $scope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInVideo(selectedContact);
                   } else {

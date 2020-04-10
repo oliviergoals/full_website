@@ -1,4 +1,4 @@
-<div class="conversationCmp-area">
+<div class="conversationCmp-area"  ng-if="$root.open_chat">
 	<div class="conversationCmp-title">
 		Conversation 
 	</div>
@@ -14,11 +14,14 @@
 	<form ng-submit="onSend()">
 		<input 	
 			class="conversationCmp-editor"
+			ng-model="message"
 			name="message"
 			type="text" 
 			id="messageField"
 			placeholder="Your message..." 
-			ng-model="message"
 			autofocus/>
-	</form>
+		<button class="conversationCmp-upload">
+			<i class="zmdi zmdi-long-arrow-up "></i>
+		</button>
+		</form>
 </div>

@@ -78,19 +78,17 @@
 			<i id="xicon" class = "zmdi zmdi-close zmdi-hc-3x" ng-if="chat_val"></i>
 		</button>
 
-
-		<div class="app-container-test" ng-if = "open_audio || open_video">
-			<rbx-controller name="rbxController"></rbx-controller>
-		</div>
-
-		<div class="app-user">
+		
+		<div class="app-user" >
 			<rbx-connection name="rbxConnection"></rbx-connection>
 		</div>
-
-
-		<div class="app-container" ng-if="open_chat">
+		
+		<div class="app-container">
 			<rbx-conversations name="rbxConversations"></rbx-conversations>
+			<rbx-controller name="rbxController"></rbx-controller>
 		</div>
+		
+
 		<!-- <div ng-if="status" id="status">
 			<b layout="row" layout-align="center center" class="md-padding">
 				{{status}}

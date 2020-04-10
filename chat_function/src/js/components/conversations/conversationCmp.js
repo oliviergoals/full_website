@@ -10,6 +10,8 @@ angular.module("sample").component("rbxConversation", {
     $scope.message = "";
 
     $scope.onSend = function() {
+      console.log("button pressed");
+
       rainbowSDK.im.sendMessageToConversation(
         $scope.conversation,
         $scope.message

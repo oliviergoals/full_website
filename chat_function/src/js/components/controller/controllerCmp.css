@@ -6,9 +6,31 @@ div.controllerCmp-area {
     margin-top: 10px;
     margin-right: 10px;
     background: #fff;
-    height: 100%;
+	height : 85%;
     border-radius: 6px;
     padding: 4px;
+}
+
+.controllerCmp-area.ng-enter{
+	transition: 0.5s linear all;
+    opacity: 0;
+    transform: translateX(30px)
+}
+
+.controllerCmp-area.ng-enter.ng-enter-active{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.controllerCmp-area.ng-leave{
+	transition: 0.5s linear all;
+    opacity: 1;
+    transform: translateY(0px)
+}
+
+.controllerCmp-area.ng-leave.ng-leave-active{
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 div.controllerCmp-title {
@@ -20,6 +42,17 @@ div.controllerCmp-title {
     background: #9e9e9e;
     font-weight: 700;
     color: #eee;
+    /* width: 100%;
+    text-align: center;
+    font-size: 30px;
+    height: 40px;
+    line-height: 50px;
+    font-weight: 700;
+    color: #004d8d;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 10px;
+    margin-left:0px  */
 }
 
 div.controllerCmp-border {
@@ -47,6 +80,8 @@ div.controllerCmp-header {
     line-height: 24px;
     font-weight: 700;
     color: black;
+	/* color: #666;
+	font-size: 20px; */
 }
 .csa-info-name{
     width: 100%;
@@ -57,7 +92,12 @@ div.controllerCmp-header {
     font-weight: 700;
     color: black;
     margin-top: 10%;
+    /* font-weight: 700;
+    font-size: 20px;
+    color:#004d8d;
+    margin-top: 10%; */
 }
+
 
 #img-audio{
     display: block;
@@ -66,7 +106,6 @@ div.controllerCmp-header {
     margin-right: auto;
     width:50%;
 }
-
 
 #img-call{
     display: block;

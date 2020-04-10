@@ -46,7 +46,7 @@ sample.controller("sampleController", [
       console.log("button pressed");    
       // $http({
       //   method: 'POST',
-      //   url: 'http://localhost:3000/endChatInstance',
+        // url: 'https://localhost:3000/endChatInstance',
       //   //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
       //   dataType: 'json',
       //   data:
@@ -58,11 +58,11 @@ sample.controller("sampleController", [
       // }).then(async function(result){
       //     console.log("Status of Chat Closing " + result.data.status);
       // });
-      if ($rootScope.open_form==false && $rootScope.open_chat==false){
+      if ($rootScope.open_form==false && $rootScope.open_chat==false && $rootScope.open_audio==false && $rootScope.open_video == false){
         $rootScope.open_form = true;
         $rootScope.chat_val = true; //"close chat"
       }
-      else if($rootScope.open_chat == true){
+      else if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true){
 
         //------------------- When Chat is open and press close chat, alert will be displayed   ---------------------------------
         const confirmedClose = $window.confirm("Are u sure you want to close the chat?\nClosing will end your chat with CAS!")
@@ -75,7 +75,7 @@ sample.controller("sampleController", [
           $http({
             method: 'POST',
             url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-            //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
+            //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
             dataType: 'json',
             data:
             {
@@ -91,8 +91,11 @@ sample.controller("sampleController", [
           });
           // ----------------------------------------------------------------  
           $rootScope.open_chat = false;
+          $rootScope.open_audio = false;
+          $rootScope.open_video = false;
           console.log("closing chat");
           $rootScope.chat_val = false; //"open chat"
+          
         }
         else{
           console.log("wanna stay");

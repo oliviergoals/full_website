@@ -1,6 +1,7 @@
 div.contactCmp-area {
-	width: 100%;
-	margin-bottom: 8px;
+    width: 100%;
+    text-align: center;
+    margin: 18px auto 8px 12px;
 }
 
 div.contactCmp-main {
@@ -17,22 +18,25 @@ div.contactCmp-extra {
 
 img.contactCmp-avatar {
     border: 1px solid #EEE;
-    border-radius: 4px;
+    border-radius: 50%;
+}
+
+div.contactCmp-details{
+    line-height: 20px;
 }
 
 div.contactCmp-name {
 	font-weight: 700;
 	margin-left: 8px;
-	font-size: 10px
+    font-size: 20px;
+    color:#004d8d;
+    margin-top: 8px;
 }
 
 .contactCmp-data {
 	color: #666;
 	margin-left: 8px;
-	font-size: 10px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+	font-size: 20px;
 }
 
 div.contactCmp-presence {

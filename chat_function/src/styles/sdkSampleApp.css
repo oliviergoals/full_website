@@ -46,15 +46,16 @@ body {
 	float: right;
 	width: 400px;
 	margin-bottom: 60px;
+	margin-right: 100px;
 	/* height: calc(100% - 75px); */
 }
 
 .app-container-test {
-	float: left;
-	width: 32%;
+
+	float: right;
+	width: 400px;
 	margin-bottom: 60px;
-	/* height: calc(100% - 75px); */
-	height: 95%;
+	margin-right: 100px;
 }
 
 .app-user {
