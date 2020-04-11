@@ -3,7 +3,7 @@ angular.module("sample").component("rbxConnection", {
     name: "@",
   },
 
-  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval, vcRecaptchaService) {
+  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval, $window,vcRecaptchaService) {
     $scope.isConnected = false;
     $scope.isLoading = false;
     $scope.queueInFront = "none";
@@ -117,6 +117,7 @@ angular.module("sample").component("rbxConnection", {
     // TODO: Sheikh
     //-----------------------------------------------
 
+    //let flatten = $window.Flatted.stringify()
 
     $scope.signin = function () {
 
@@ -217,6 +218,7 @@ angular.module("sample").component("rbxConnection", {
 
             console.log("ZW, Successfully signed to Rainbow and the SDK is started completely. Proceeding to retrieve CSA");
             /* ---------------------- Retireving the right CSA via POST request --------------*/
+            
             $http({
               method: 'POST',
               // url: 'http://localhost:3000/getRequiredCSAbeta',
@@ -235,14 +237,15 @@ angular.module("sample").component("rbxConnection", {
               console.log("retieved queueNumber " + result.data.queueNumber + " and jid " + result.data.jid);
               // does logical check for queuingstatus and JID returned
               let contactJID = result.data.jid;
-              let queueStatus = result.data.queueNumber;
-              $scope.queueStatus = result.data.queueNumber;
+              let queueNumber = result.data.queueNumber;
+              let queueStatus = result.data.queueStatus;
+              $scope.queueNumber = result.data.queueNumber;
               $rootScope.contactJID = result.data.jid;
-              console.log("this is queue status" + $rootScope.queueStatus);
-              if (contactJID != null) {
+              console.log("this is queue status" + queueStatus);
+              if (result.data.queueStatus == "ready") {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 $scope.queueInFront = "It's You're Turn!"
-                console.log("this is queue status" + $rootScope.queueInFront);
+                console.log("this is queue status" + $scope.queueInFront);
                 $rootScope.csaName = selectedContact.firstname;
                 console.log($rootScope.csaName + "this is csa name");
 
@@ -292,7 +295,10 @@ angular.module("sample").component("rbxConnection", {
             //---------------------------------------------------------------------    
               }
               // if no jid -> means not ready and on queue. So we do circular post ddos style
-              else {           
+
+              else {
+                console.log("this is the queue status" + queueStatus);
+                // while(result.data.queueStatus == "enqueued"){
                 let cassimir = $interval(
                   function () {
                     $http({
@@ -307,14 +313,16 @@ angular.module("sample").component("rbxConnection", {
                         department: $rootScope.user.department,
                         communication: $scope.user.communication,
                         problem: $scope.user.problem,
-                        queueNumber: queueStatus
+                        queueNumber: queueNumber
                       },
                       headers: { "Content-Type": "application/json" }
                     }).then(async function (result) {
-                      if (result.data.jid != null) {
+                      if (result.data.queueStatus == "ready") {
                         let newjid = result.data.jid;
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
+                        $scope.queueInFront = "It's You're Turn!"
+                        console.log("this is queue status" + $scope.queueInFront);
                         $rootScope.csaName = selectedContact.firstname;
                         console.log($rootScope.csaName + "this is csa name");
 
@@ -356,19 +364,25 @@ angular.module("sample").component("rbxConnection", {
                             console.log("DEMO :: Your browser can't make audio and video call!");
                           };
                         }
-
+                        
+                        if(result.data.queueStatus == "ready"){
                         $interval.cancel(cassimir);
+                          }
+
                       }
                       else {
                         $scope.queueInFront = result.data.position;
+                        let queueStatus = result.data.queueStatus;
                         console.log("OMG PLS WORK FFS");
-                        console.log(result.data.position);
+                        console.log("Queue Status Update: " + queueStatus);
+                        console.log("this is the queue position" + result.data.position);
                         // this part is where queue number update happens
                       }
                     });
                   }, 10000);
 
               }
+            // }
 
             }).catch(async function (err) {
               console.log("[DEMO] :: Error when posting for CSA", err);
