@@ -24,6 +24,7 @@
   "dependencies": {
     "angular-recaptcha": "^4.2.0",
     "angularjs-livechat": "0.0.4",
+    "flat-angular": "^1.6.0",
     "flatted": "^2.0.2",
     "json-stringify-safe": "^5.0.1",
     "rainbow-web-sdk": "^1.69.0"

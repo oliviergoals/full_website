@@ -1,5 +1,6 @@
 var sample = angular.module("sample", ["sdk", 'ngAnimate','vcRecaptcha']);
 // const {parse, stringify} = require('flatted/cjs');
+//var stringify = require('json-stringify-safe');
 
 sample.controller("sampleController", [
   "$rootScope",
@@ -7,11 +8,13 @@ sample.controller("sampleController", [
   "$http",
   "$window",
   "$scope",
-  function($rootScope, sdk, $http, $window, $scope, vcRecaptchaService) {
+  function($rootScope, sdk, $http, $window, $scope, vcRecaptchaService ) {
     "use strict";    
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
+    
+
     $rootScope.chat_val = false; //"open chat"
     $rootScope.open_chat = false;
     $rootScope.open_form = false;  
@@ -40,6 +43,39 @@ sample.controller("sampleController", [
         });
     };
 
+    
+    /*********************************************************/
+    /**                  PARSING STUFF                      **/
+    /*********************************************************/
+    $scope.stringify = function(obj, replacer, spaces, cycleReplacer) {
+      return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
+    }
+    
+    function serializer(replacer, cycleReplacer) {
+      var stack = [], keys = []
+      
+      if (cycleReplacer == null) cycleReplacer = function(key, value) {
+        if (stack[0] === value) return "[Circular ~]"
+        return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]"
+      }
+      
+      return function(key, value) {
+        if (stack.length > 0) {
+          var thisPos = stack.indexOf(this)
+          ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
+          ~thisPos ? keys.splice(thisPos, Infinity, key) : keys.push(key)
+          if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value)
+        }
+        else stack.push(value)
+        
+        return replacer == null ? value : replacer.call(this, key, value)
+      }
+    }
+    /*********************************************************/
+    /**                  PARSING STUFF                      **/
+    /*********************************************************/
+    
+
 
     // TODO: Shake
     $rootScope.butt_val_changer = function(){  
@@ -63,15 +99,20 @@ sample.controller("sampleController", [
         $rootScope.chat_val = true; //"close chat"
       }
       else if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true){
+        console.log("this is the value of open chat" +$rootScope.open_chat );
+        console.log("this is the value of open audio" +$rootScope.open_audio );
+        console.log("this is the value of open video" +$rootScope.open_video );
 
         //------------------- When Chat is open and press close chat, alert will be displayed   ---------------------------------
         const confirmedClose = $window.confirm("Are u sure you want to close the chat?\nClosing will end your chat with CAS!")
         if (confirmedClose) {
-          console.log("pressed wanna close");
-
-          //------------------------------- Post JSON to drop queue-----------------------------
-          let blabla = sdk.conversations.getConversationById($rootScope.convoID_global);
-          // console.log(convoHist);
+          if($rootScope.open_chat == true){
+            let convoHist = sdk.conversations.getConversationById($rootScope.convoID_global).messages;
+            console.log(convoHist);
+            //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
+            let convoHistFlat = $scope.stringify(convoHist);
+            console.log(convoHistFlat);
+            $scope.convoHistFlatFinal = convoHistFlat;}
           $http({
             method: 'POST',
             url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
@@ -83,7 +124,7 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               queueNumber: $rootScope.queueStatus,
               convoID: $rootScope.convoID_global,
-              // detailsOfConvo: fuckCircularJson
+              detailsOfConvo: $scope.convoHistFlatFinal
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -109,6 +150,41 @@ sample.controller("sampleController", [
       }
       
     }
+
+    $window.onbeforeunload = function(){
+      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true){
+        console.log("pressed wanna close");
+          //------------------------------- Post JSON to drop queue-----------------------------
+          if($rootScope.open_chat == true){
+          let convoHist = sdk.conversations.getConversationById($rootScope.convoID_global).messages;
+          console.log(convoHist);
+            //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
+          let convoHistFlat = $scope.stringify(convoHist);
+          console.log(convoHistFlat);
+          $scope.convoHistFlatFinal = convoHistFlat;}
+          // console.log(convoHist);
+          $http({
+            method: 'POST',
+            url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+            //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
+            dataType: 'json',
+            data:
+            {
+              department: $rootScope.user.department,
+              jid: $rootScope.contactJID,
+              queueNumber: $rootScope.queueStatus,
+              convoID: $rootScope.convoID_global,
+              detailsOfConvo: $scope.convoHistFlatFinal
+            },
+            headers: { "Content-Type": "application/json" }
+          }).then(async function (result) {
+            console.log("Status of Chat Closing " + result.data.status);
+          });
+          // ----------------------------------------------------------------  
+          
+        }
+      }
+  
     
 
     // $scope.onExit = function() {
@@ -132,3 +208,59 @@ sample.controller("sampleController", [
     return true;
   }
 ]);
+
+    /*********************************************************/
+    /**                Parsing stuff                        **/
+    /*********************************************************/
+    
+  // $scope.parse = function(text, reviver) {
+  //   var input = JSON.parse(text, Primitives).map(primitives);
+  //   var value = input[0];
+  //   var $ = reviver || noop;
+  //   var tmp = typeof value === 'object' && value ?
+  //               revive(input, new Set, value, $) :
+  //               value;
+  //   return $.call({'': tmp}, '', tmp);
+  //   }
+
+  //   function noop(key, value) {
+  //     return value;
+  //   }
+  
+  //   function revive(input, parsed, output, $) {
+  //     return Object.keys(output).reduce(
+  //       function (output, key) {
+  //         var value = output[key];
+  //         if (value instanceof Primitive) {
+  //           var tmp = input[value];
+  //           if (typeof tmp === 'object' && !parsed.has(tmp)) {
+  //             parsed.add(tmp);
+  //             output[key] = $.call(output, key, revive(input, parsed, tmp, $));
+  //           } else {
+  //             output[key] = $.call(output, key, tmp);
+  //           }
+  //         } else
+  //           output[key] = $.call(output, key, value);
+  //         return output;
+  //       },
+  //       output
+  //     );
+  //   }
+  
+  //   function set(known, input, value) {
+  //     var index = Primitive(input.push(value) - 1);
+  //     known.set(value, index);
+  //     return index;
+  //   }
+  
+    // the two kinds of primitives
+    //  1. the real one
+    //  2. the wrapped one
+  
+    // function primitives(value) {
+    //   return value instanceof Primitive ? Primitive(value) : value;
+    // }
+  
+    // function Primitives(key, value) {
+    //   return typeof value === primitive ? new Primitive(value) : value;
+    // }
