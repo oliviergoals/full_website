@@ -1,3 +1,4 @@
+package com.example.escproject_testing;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,12 +30,9 @@ public class Injection_Test {
             WebDriver driver = new ChromeDriver(caps);
 
 
-
-
     //        driver.get("http://127.0.0.1:5501/index.html");
             driver.get("https://127.0.0.1:8080/");
 //            Thread.sleep(5000);
-
 
 
 //            driver.get("https://127.0.0.1:8080/");
@@ -69,9 +67,10 @@ public class Injection_Test {
             WebElement submitButt = driver.findElement(By.className("connectionCmp-btn"));
             submitButt.click();
 
-//            Thread.sleep(10000);
+//            openChatButt.click();
 
-//            driver.close();
+            Thread.sleep(10000);
+            driver.close();
         }
     }
 }

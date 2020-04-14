@@ -1,3 +1,5 @@
+package com.example.escproject_testing;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +16,7 @@ public class SubmitButtTest {
 
     public static void main(String[] args) throws InterruptedException {
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 4; i++) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--allow-insecure-localhost");
             DesiredCapabilities caps = DesiredCapabilities.chrome();
