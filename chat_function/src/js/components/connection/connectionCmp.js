@@ -3,7 +3,7 @@ angular.module("sample").component("rbxConnection", {
     name: "@",
   },
 
-  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval, $window,vcRecaptchaService) {
+  controller: function rbcConnectionCtrl(rainbowSDK, $rootScope, $scope, $http, $interval, $window, vcRecaptchaService) {
     $scope.isConnected = false;
     $scope.isLoading = false;
     $scope.queueInFront = "none";
@@ -13,7 +13,7 @@ angular.module("sample").component("rbxConnection", {
     $scope.response = null;
     $scope.widgetId = null;
     $scope.gRecaptchaResponse = false;
-    
+
 
     $scope.user = {
       name: null,
@@ -88,9 +88,9 @@ angular.module("sample").component("rbxConnection", {
         data:
         {
           name: $scope.user.name,
-          email: $scope.user.email,
+          email: $rootScope.user.email,
           department: $rootScope.user.department,
-          communication: $scope.user.communication,
+          communication: $rootScope.user.communication,
           problem: $scope.user.problem,
           queueNumber: queueValue
         },
@@ -129,9 +129,11 @@ angular.module("sample").component("rbxConnection", {
       // ---------------------------------------------------------------------------
 
       $scope.server = angular.copy($scope.user);
-      console.log($scope.user.communication);
-      let choiceOfChat = $scope.user.communication;
-      console.log($scope.user.department);
+      let choiceOfChat = $rootScope.user.communication;
+      console.log($rootScope.user.email);
+      console.log($rootScope.user.communication);
+      console.log($rootScope.user.department);
+      console.log("passssssssssssssssssssssssssssssssssssssssssss")
 
 
       // //----------------------------------------------------------
@@ -219,7 +221,7 @@ angular.module("sample").component("rbxConnection", {
 
             console.log("ZW, Successfully signed to Rainbow and the SDK is started completely. Proceeding to retrieve CSA");
             /* ---------------------- Retireving the right CSA via POST request --------------*/
-            
+
             $http({
               method: 'POST',
               // url: 'http://localhost:3000/routing/getRequiredCSA',
@@ -228,9 +230,9 @@ angular.module("sample").component("rbxConnection", {
               data:
               {
                 name: $scope.user.name,
-                email: $scope.user.email,
+                email: $rootScope.user.email,
                 department: $rootScope.user.department,
-                communication: $scope.user.communication,
+                communication: $rootScope.user.communication,
                 problem: $scope.user.problem
               },
               headers: { "Content-Type": "application/json" }
@@ -242,11 +244,11 @@ angular.module("sample").component("rbxConnection", {
               let queueStatus = result.data.queueStatus;
               $rootScope.queueNumber = result.data.queueNumber;
               $rootScope.contactJID = result.data.jid;
-              console.log("this is queue status" + queueStatus);
-              if (result.data.queueStatus === "ready" && result.data.jid!=null) {
+              console.log("this is queue status " + queueStatus);
+              if (result.data.queueStatus === "ready" && result.data.jid != null) {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 $scope.queueInFront = "It's You're Turn!"
-                console.log("this is queue status" + $scope.queueInFront);
+                console.log("this is queue status " + $scope.queueInFront);
                 $rootScope.csaName = selectedContact.firstname;
                 console.log($rootScope.csaName + "this is csa name");
 
@@ -254,7 +256,7 @@ angular.module("sample").component("rbxConnection", {
                   rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
                     console.log("zzzzzz");
                     console.log(conversation);
-                    console.log(conversation.id);
+                    console.log("converstation id: " + conversation.id);
                     $rootScope.convoID_global = conversation.id;
 
                     $rootScope.open_form = false;
@@ -282,10 +284,10 @@ angular.module("sample").component("rbxConnection", {
                     console.log("after ur browser cannot call");
                   };
                 }
-                else{
+                else {
                   $rootScope.open_form = false;
                   $rootScope.open_video = true;
-                  $rootScope.callType = "Video Call"; 
+                  $rootScope.callType = "Video Call";
                   $rootScope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInVideo(selectedContact);
@@ -293,13 +295,12 @@ angular.module("sample").component("rbxConnection", {
                     console.log("DEMO :: Your browser can't make audio and video call!");
                   };
                 }
-
-            //---------------------------------------------------------------------    
               }
-
+              //---------------------------------------------------------------------    
+              
               // if no jid -> means not ready and on queue. So we do circular post ddos style
 
-              else if(result.data.queueStatus === "enqueued" || result.data.jid===null) {
+              else if (result.data.queueStatus === "enqueued" || result.data.jid === null) {
                 console.log("this is the queue status" + result.data.queueStatus);
                 console.log("this is the queue jid" + result.data.jid);
                 // while(result.data.queueStatus == "enqueued"){
@@ -313,20 +314,20 @@ angular.module("sample").component("rbxConnection", {
                       data:
                       {
                         name: $scope.user.name,
-                        email: $scope.user.email,
+                        email: $rootScope.user.email,
                         department: $rootScope.user.department,
-                        communication: $scope.user.communication,
+                        communication: $rootScope.user.communication,
                         problem: $scope.user.problem,
                         queueNumber: queueNumber
                       },
                       headers: { "Content-Type": "application/json" }
                     }).then(async function (result) {
-                      if (result.data.queueStatus == "ready" && result.data.jid!=null) {
+                      if (result.data.queueStatus == "ready" && result.data.jid != null) {
                         let newjid = result.data.jid;
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
                         $scope.queueInFront = "It's You're Turn!"
-                        console.log("this is queue status" + $scope.queueInFront);
+                        console.log("this is queue status " + $scope.queueInFront);
                         $rootScope.csaName = selectedContact.firstname;
                         console.log($rootScope.csaName + "this is csa name");
                         if (choiceOfChat == "Chat") {
@@ -337,7 +338,7 @@ angular.module("sample").component("rbxConnection", {
                             console.log("zzzzzz");
                             console.log(conversation1);
                             console.log(conversation1.id);
-                            
+
                             $rootScope.convoID_global = conversation1.id;
 
                             rainbowSDK.im.sendMessageToConversation(conversation1, $scope.user.problem);
@@ -360,7 +361,7 @@ angular.module("sample").component("rbxConnection", {
                           };
                           console.log("choose audio");
                         }
-                        else{
+                        else {
                           $rootScope.open_video = true;
                           $rootScope.callType = "Audio Call";
                           if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
@@ -369,10 +370,10 @@ angular.module("sample").component("rbxConnection", {
                             console.log("DEMO :: Your browser can't make audio and video call!");
                           };
                         }
-                        
-                        if(result.data.queueStatus == "ready"){
-                        $interval.cancel(cassimir);
-                          }
+
+                        if (result.data.queueStatus == "ready") {
+                          $interval.cancel(cassimir);
+                        }
 
                       }
                       else {
@@ -386,85 +387,112 @@ angular.module("sample").component("rbxConnection", {
                       }
                     });
                   }, 10000);
+                }
+                // when all csa are offline
+                else if (result.data.queueStatus === "botActive"){
+                  console.log("in here botActive");
+                  let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
+                  console.log(selectedContact);
+                  if (choiceOfChat == "Chat") {
+                    console.log("in chat choice");
+                    rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
+                      console.log("zzzzzz");
+                      console.log(conversation);
+                      console.log("converstation id: " + conversation.id);
+                      $rootScope.convoID_global = conversation.id;
+  
+                      $rootScope.open_form = false;
+                      $rootScope.open_chat = true;
+                      $rootScope.submit_success = false;
+                      rainbowSDK.im.sendMessageToConversation(conversation, $scope.user.problem);
+                      console.log("ZW Sent messgage");
+  
+                    }).catch(function (err) {
+                      //Something when wrong with the server. Handle the trouble here
+                      console.log("ZW Error in opening conversation and sending")
+                    });
+                  }
+                }
+              
+              
 
-              }
             // }
               
             }).catch(async function (err) {
-              console.log("[DEMO] :: Error when posting for CSA", err);
-              // $scope.isLoading = false;
-              // $scope.isConnected = false;
-            })
-              .catch(function (err) {
-                console.log("[DEMO] :: Error when sign-in", err);
-                // $scope.isLoading = false;
-                // $scope.isConnected = false;
-              });
+                    console.log("[DEMO] :: Error when posting for CSA", err);
+                    // $scope.isLoading = false;
+                    // $scope.isConnected = false;
+                  })
+          .catch(function (err) {
+            console.log("[DEMO] :: Error when sign-in", err);
+            // $scope.isLoading = false;
+            // $scope.isConnected = false;
           });
-      }).catch(function (err) {
-        console.log("[DEMO] :: Error when getting login credentials", err);
       });
+    }).catch(function (err) {
+      console.log("[DEMO] :: Error when getting login credentials", err);
+    });
 
     };
 
-    $rootScope.signout = function () {
-      $scope.isLoading = true;
+$rootScope.signout = function () {
+  $scope.isLoading = true;
 
-      rainbowSDK.connection.signout().then(function () {
-        $scope.isLoading = false;
-        $scope.isConnected = false;
-      });
-    };
+  rainbowSDK.connection.signout().then(function () {
+    $scope.isLoading = false;
+    $scope.isConnected = false;
+  });
+};
 
-    var saveToStorage = function () {
-      sessionStorage.connection = angular.toJson($scope.user);
-      sessionStorage.host = angular.toJson($scope.selectedItem);
-    };
+var saveToStorage = function () {
+  sessionStorage.connection = angular.toJson($scope.user);
+  sessionStorage.host = angular.toJson($scope.selectedItem);
+};
 
-    var readFromStorage = function () {
-      if (sessionStorage.connection) {
-        $scope.user = angular.fromJson(sessionStorage.connection);
-      } else {
-        // $scope.user = { name: "", password: "" };
-      }
+var readFromStorage = function () {
+  if (sessionStorage.connection) {
+    $scope.user = angular.fromJson(sessionStorage.connection);
+  } else {
+    // $scope.user = { name: "", password: "" };
+  }
 
-      if (sessionStorage.host) {
-        $scope.selectedItem =
-          $scope.hosts[angular.fromJson(sessionStorage.host).id];
-      } else {
-        $scope.selectedItem = $scope.hosts[0];
-      }
-    };
+  if (sessionStorage.host) {
+    $scope.selectedItem =
+      $scope.hosts[angular.fromJson(sessionStorage.host).id];
+  } else {
+    $scope.selectedItem = $scope.hosts[0];
+  }
+};
 
-    var onConnectionStateChangeEvent = function onConnectionStateChangeEvent(
-      event
-    ) {
-      $scope.state = rainbowSDK.connection.getState();
-    };
+var onConnectionStateChangeEvent = function onConnectionStateChangeEvent(
+  event
+) {
+  $scope.state = rainbowSDK.connection.getState();
+};
 
-    this.$onInit = function () {
-      // Subscribe to XMPP connection change
-      handlers.push(
-        document.addEventListener(
-          rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
-          onConnectionStateChangeEvent
-        )
-      );
-    };
+this.$onInit = function () {
+  // Subscribe to XMPP connection change
+  handlers.push(
+    document.addEventListener(
+      rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
+      onConnectionStateChangeEvent
+    )
+  );
+};
 
-    this.$onDestroy = function () {
-      var handler = handlers.pop();
-      while (handler) {
-        handler();
-        handler = handlers.pop();
-      }
-    };
+this.$onDestroy = function () {
+  var handler = handlers.pop();
+  while (handler) {
+    handler();
+    handler = handlers.pop();
+  }
+};
 
-    var initialize = function () {
-      readFromStorage();
-    };
+var initialize = function () {
+  readFromStorage();
+};
 
-    initialize();
+initialize();
   },
-  templateUrl: "./src/js/components/connection/connectionCmp.template.html"
+templateUrl: "./src/js/components/connection/connectionCmp.template.html"
 });

@@ -56,7 +56,7 @@
 			<!-- Email -->
 			<div class="form-group">
 				<label id="label">Email </label>
-				<input id="email" class="form-control" ng-model="user.email" type="email"
+				<input id="email" class="form-control" ng-model="$root.user.email" type="email"
 					ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" name="email" placeholder="Enter Email Address"
 					required />
 				<span class="msg" ng-show="form.email.$dirty && form.email.$invalid">
@@ -81,7 +81,7 @@
 			<!-- Chat type -->
 			<div class="form-group">
 				<label id="label">Select chat type</label>
-				<select id="type" class="form-control" ng-model="user.communication" name="communication" required>
+				<select id="type" class="form-control" ng-model="$root.user.communication" name="communication" required>
 					<option>Chat</option>
 					<option>Audio</option>
 					<option>Video</option>
@@ -90,7 +90,7 @@
 			</div>
 
 			<!-- Problem -->
-			<div class="form-group" ng-if="user.communication == 'Chat'">
+			<div class="form-group" ng-if="$root.user.communication == 'Chat'">
 				<label id="label" class="form-control" class="control-label">Select problem category</label>
 				<textarea id="problem" rows="10" cols="30" class="form-control" type="text" name="problem"
 					ng-model="user.problem" placeholder="Please specify your problem." required> </textarea>

@@ -107,12 +107,17 @@ sample.controller("sampleController", [
         const confirmedClose = $window.confirm("Are u sure you want to close the chat?\nClosing will end your chat with CAS!")
         if (confirmedClose) {
           if($rootScope.open_chat == true){
-            let convoHist = sdk.conversations.getConversationById($rootScope.convoID_global).messages;
+            let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global);
+            let convoHist = entireConvo.messages;
             console.log(convoHist);
             //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
             let convoHistFlat = $scope.stringify(convoHist);
             console.log(convoHistFlat);
-            $scope.convoHistFlatFinal = convoHistFlat;}
+            $scope.convoHistFlatFinal = convoHistFlat;
+
+            rainbowSDK.conversations.closeConversation(entireConvo);
+
+          }
           else if($rootScope.open_audio == true || $rootScope.open_video==true){
             rainbowSDK.webRTC.release($rootScope.currentCallR);
           }
@@ -124,11 +129,12 @@ sample.controller("sampleController", [
             data:
             {
               department: $rootScope.user.department,
-              jid: $rootScope.contactJID,
+              communication: $rootScope.user.communication,
               queueNumber: $rootScope.queueNumber,
-              convoID: $rootScope.convoID_global,
-              detailsOfConvo: $scope.convoHistFlatFinal,
-              flag: false
+              jid: $rootScope.contactJID,
+              convoHistory: $scope.convoHistFlatFinal,
+              clientEmail: $rootScope.user.email,
+              queueDropped: false
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -165,21 +171,23 @@ sample.controller("sampleController", [
         console.log("pressed wanna close");
           //------------------------------- Post JSON to drop queue-----------------------------
           if($rootScope.open_chat == true){
-          let convoHist = sdk.conversations.getConversationById($rootScope.convoID_global).messages;
-          console.log(convoHist);
-            //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
-          var convoHistFlat = $scope.stringify(convoHist);
-          console.log(convoHistFlat);
-          var flag = false;
-          // $scope.convoHistFlatFinal = convoHistFlat;
-          // console.log($scope.convoHistFlatFinal);
+            let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global)
+            let convoHist = entireConvo.messages;
+            console.log(convoHist);
+              //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
+            var convoHistFlat = $scope.stringify(convoHist);
+            console.log(convoHistFlat);
+            var queueDropped = false;
+            // $scope.convoHistFlatFinal = convoHistFlat;
+            // console.log($scope.convoHistFlatFinal);
+            rainbowSDK.conversations.closeConversation(entireConvo);
         }
         else if($rootScope.open_audio == true || $rootScope.open_video==true){
           rainbowSDK.webRTC.release($rootScope.currentCallR);
-          var flag = false;
+          var queueDropped = false;
         }
         else if( $rootScope.submit_success == true){
-          var flag = true;
+          var queueDropped = true;
         }
 
           // console.log(convoHist);
@@ -192,11 +200,12 @@ sample.controller("sampleController", [
             data:
             {
               department: $rootScope.user.department,
-              jid: $rootScope.contactJID,
+              communication: $rootScope.user.communication,
               queueNumber: $rootScope.queueNumber,
-              convoID: $rootScope.convoID_global,
-              detailsOfConvo: convoHistFlat,
-              flag: flag
+              jid: $rootScope.contactJID,
+              convoHistory: convoHistFlat,
+              clientEmail: $rootScope.user.email,
+              queueDropped: queueDropped,
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -209,23 +218,12 @@ sample.controller("sampleController", [
   
     
 
-    // $scope.onExit = function() {
-    //   return ('bye bye');
-    // };
-
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
 
     document.addEventListener(sdk.RAINBOW_ONLOADED, onLoaded);
 
 
-
     sdk.load();
-    // $window.onbeforeunload =  $scope.onExit;
-    // $window.onbeforeunload = function (event) {
-    //   return 'Are you sure you want to leave without saving?';
-    // }
-    
-
 
     return true;
   }

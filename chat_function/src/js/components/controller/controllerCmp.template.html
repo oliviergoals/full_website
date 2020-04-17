@@ -21,16 +21,6 @@
 		<br>
 		
 
-		<!-- 			<div class="controllerCmp-webrtc-topbar" ng-show="true">
-				<button class="controllerCmp-btn-topbar" ng-show="hasLocalVideo && isPIPDisplayed" ng-click="hidePIP()"><i class="fa fa-user-times controllerCmp-btn-topbar-icon"></i></button>
-				<button class="controllerCmp-btn-topbar" ng-show="hasLocalVideo && !isPIPDisplayed" ng-click="showPIP()"><i class="fa fa-user-plus controllerCmp-btn-topbar-icon"></i></button>
-				<button class="controllerCmp-btn-topbar" ng-show="hasRemoteVideo && isRemoteVideoDisplayed" ng-click="hideRemote()"><i class="fa fa-window-close-o controllerCmp-btn-topbar-icon"></i></button>
-				<button class="controllerCmp-btn-topbar" ng-show="hasRemoteVideo && !isRemoteVideoDisplayed" ng-click="showRemote()"><i class="fa fa-video-camera controllerCmp-btn-topbar-icon"></i></button>
-				<button class="controllerCmp-btn-topbar" ng-show="isSpectrumDisplayed" ng-click="hideSpectrum()"><i class="fa fa-times controllerCmp-btn-topbar-icon"></i></button>
-				<button class="controllerCmp-btn-topbar" ng-show="!isSpectrumDisplayed" ng-click="showSpectrum()"><i class="fa fa-signal controllerCmp-btn-topbar-icon"></i></button>
-			</div> -->
-
-
 		<div class="controllerCmp-webrtc-bar">
 			<div class="controllerCmp-buttons-area">
 
@@ -48,7 +38,7 @@
 		</div>
 
 
-		<div class="controllerCmp-webrtc-area" ng-if="($root.open_video && isInCommunication")>
+		<div class="controllerCmp-webrtc-area" ng-show="($root.open_video && isInCommunication")>
 			<div class="controllerCmp-webrtc-video">
 				<video id="largevideo" autoplay></video>
 				<video id="minivideo" autoplay muted></video>
