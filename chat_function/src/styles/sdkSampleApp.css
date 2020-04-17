@@ -44,24 +44,27 @@ body {
 
 .app-container {
 	float: right;
-	width: 400px;
-	margin-bottom: 60px;
-	margin-right: 100px;
-	/* height: calc(100% - 75px); */
+	width: 19vw;
+	margin-right: 5vw;
+	margin-bottom: 10vh;
+	height: 90vh;
 }
 
 .app-container-test {
 
 	float: right;
-	width: 400px;
-	margin-bottom: 60px;
-	margin-right: 100px;
+	width: 19vw;
+	margin-right: 5vw;
+	margin-bottom: 10vh;
+	height: 90vh;
 }
 
 .app-user {
 	float: right;
-	width: 400px;
-	margin-right: 100px;
+	width: 19vw;
+	margin-right: 5vw;
+	margin-bottom: 10vh;
+	height: 90vh;
 }
 
 .app-contacts {
@@ -74,13 +77,13 @@ body {
 	bottom: 0px;
 	right: 0px;
 	display: block;
-	width: 100px;
-	height: 100px;
+	width: 7.5vh;
+	height: 7.5vh;
 	border-radius: 50%;
 	text-align: center;
 	color: #f0f0f0;
-	margin-right: 25px;
-	margin-bottom: 25px;
+	margin-right: 1.5vw;
+	margin-bottom: 1.5vw;
 	box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
 	cursor: pointer;
 	-webkit-transition: all .1s ease-out;
@@ -99,8 +102,7 @@ body {
 }
 
 .open_chat_button > i {
-	font-size: 2em;
-	line-height: 100px;
+	font-size: 4vh;
 	-webkit-transition: all .2s ease-out;
 	-webkit-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;

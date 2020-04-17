@@ -3,16 +3,14 @@
 /* area section */
 .connectionCmp-area {
     position: fixed;
-    height: 85%;
-    width: 400px;
+    height: 85vh;
+    width: 21vw;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 2vh;
+    margin-right: 2vw;
     background: #fff;
     padding: 4px;
-    margin-left:0px ;
-    float:right;
     border-radius: 10px;
     text-align: center;
 
@@ -56,19 +54,18 @@
     width: auto;
     display: block;
     text-align: center;
+    width: 25vh;
+    height: 25vh;
 }
 
 .connectionCmp-title {
     width: 100%;
     text-align: center;
-    font-size: 70px;
-    height: 55px;
-    line-height: 50px;
+    font-size: 6.5vh;
     font-weight: 900;
     color: #004d8d;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin-top: 15px;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
 }
 .intro-text{
     margin-left: auto;
@@ -76,19 +73,12 @@
     position: relative;
     width: 70%;
     text-align: center;
-    font-size: 20px;
+    font-size: 2vh;
     font-weight: 500;
     color: #42a5f5;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     line-height: normal;
-}
-.intro-text > i{
-    position: relative;
-    text-align: center;
-    font-size:medium;
-    color: #42a5f5;
-    padding-top: 8px;
 }
 
 .intro-features{
@@ -96,22 +86,31 @@
     margin-right:auto;
     position: relative;
     width: 80%;
-}
-
-.intro-features > p{
-    margin-bottom: 0px;
+    line-height: initial;
 }
 
 .intro-features-desc{
-    font-size: 18px;
+    font-size: 1.5vh;
     font-weight: 500;
-    color: #000000
+    color: #000000;
+    margin-bottom: 0vh;
 }
 
+.intro-features-grey{
+    font-size: 1.5vh;
+    font-weight: 300;
+    color: #000000;
+    margin-bottom: 0vh;
+    margin-top: 0vh;
+}
+
+.intro-features > i{
+    font-size: 3vh;
+}
 
 .intro-captcha > div{
-    margin-left: auto;
-    margin-right:auto;
+    margin-left: 2.5vw;
+
 }
 
 .intro-captcha-text{
@@ -125,13 +124,14 @@
     color: #004d8d;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-top: 30px;
+    margin-top: 2vh;
+    font-size: 1.5vh;
 }
 
 .next-butt{
 	display: block;
-	width: 50px;
-	height: 50px;
+	width: 5vh;
+	height: 5vh;
 	border-radius: 50%;
 	text-align: center;
 	color: #f0f0f0;
@@ -140,10 +140,9 @@
 	position: relative;
 	overflow: hidden;
 	background: #42a5f5;
-    font-size: 1em;
+    font-size: 1vh;
     margin-left: auto;
     margin-right:auto;
-    margin-top: 40px;
 	
 }
 
@@ -186,16 +185,11 @@
 .form-title{
     width: 100%;
     text-align: center;
-    font-size: 40px;
-    height: 55px;
-    line-height: 50px;
+    font-size: 3.5vh;
     font-weight: 900;
     color: #004d8d;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right:auto;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
 }
 
 
@@ -214,13 +208,13 @@
 }
 
 .connectionCmp-btn {
-    margin-top: 20px;
+    margin-top: 1vh;
     border: none;
     padding: 8px;
-    line-height: 32px;
+    line-height: 3vh;
     text-align: center;
     border-radius: 15px;
-    font-size: 20px;
+    font-size: 2vh;
     font-weight: 500;
     
 }
@@ -237,9 +231,9 @@
 }
 
 input#username, input#email{
-    margin-bottom: 15px;
+    margin-bottom: 1.25vh;
     width: 80%;
-    height: 24px;
+    height: 1.5vh;
     padding: 10px;
     border: 1px solid rgba(73, 98, 171, 0.22);
     color: #656565;
@@ -248,13 +242,13 @@ input#username, input#email{
     transition: all 0.30s ease-in-out;
     border-radius: 6px;
     margin-left: 20px;
-    font-size: 20px;
+    font-size: 2vh;
 }
 
 textarea#problem{
     margin-bottom: 15px;
-    width: 76%;
-    height: 60px;
+    width: 80%;
+    height: 6vh;
     padding: 10px;
     border: 1px solid rgba(73, 98, 171, 0.22);
     color: #656565;
@@ -263,18 +257,19 @@ textarea#problem{
     transition: all 0.30s ease-in-out;
     border-radius: 6px;
     margin-left: 20px;
-    font-size: 18px;
+    font-size: 2vh;
+    font-family:Roboto, Noto Sans, Helvetica Neue, Helvetica, Arial, sans-serif ;
 }
 
 ::placeholder {
-    font-size: 18px;
+    font-size: 2vh;
     font-family: Arial;
 }
 
 select#department, select#type {
     margin-bottom: 15px;
-    width: 82%;
-    height: 40px;
+    width: 90%;
+    height: 4vh;
     padding: 5px;
     border: 1px solid rgba(73, 98, 171, 0.22);
     color: #656565;
@@ -283,7 +278,8 @@ select#department, select#type {
     transition: all 0.30s ease-in-out;
     border-radius: 6px;
     margin-left: 20px;
-    font-size: 20px;
+    font-size: 2vh;
+    padding: 0.5vh;
 }
 
 
@@ -292,7 +288,8 @@ span.msg{
 }
 
 label#label{
-    font-size: 18px;
+    font-size: 2vh;
+    padding: 1vh;
 }
 
 
@@ -312,7 +309,7 @@ select#host {
 .connectionCmp-state {
     margin-top: 15px;
     margin-bottom: 8px;
-    font-size: 20px;
+    font-size: 2vh;
     font-weight: 400;
     color: #004d8d;
 }

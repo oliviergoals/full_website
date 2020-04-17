@@ -19,7 +19,7 @@ div.conversationCmp-area {
     flex-direction: column;
     flex-wrap: nowrap; */
 
-    position: fixed;
+    /* position: fixed;
     height: 85%;
     width: 400px;
     overflow: hidden;
@@ -29,12 +29,31 @@ div.conversationCmp-area {
     padding: 4px;
     margin-left:0px ;
     float:right;
-    border-radius: 10px;
+    border-radius: 10px; */
 
+    position: fixed;
+    height: 85vh;
+    width: 21vw;
+    overflow: hidden;
+    margin-top: 2vh;
+    margin-right: 2vw;
+    background: #fff;
+    padding: 4px;
+    border-radius: 10px;
+    /* text-align: center; */
 
 }
 
-.conversationCmp-area.ng-enter{
+.conversationCmp-area.ng-show{
+	transition: 0.5s linear all;
+    opacity: 1;
+    transform: translateX(30px)
+}
+.conversationCmp-area.ng-hide{
+	transition: 0.5s linear all;
+    opacity: 0;
+}
+/* .conversationCmp-area.ng-enter{
 	transition: 0.5s linear all;
     opacity: 0;
     transform: translateX(30px)
@@ -54,12 +73,11 @@ div.conversationCmp-area {
 .conversationCmp-area.ng-leave.ng-leave-active{
     opacity: 0;
     transform: translateY(30px);
-}
+} */
 
 div.conversationCmp-recipient {
-    margin: 8px;
-    font-size: 20px;
-    line-height: 15px;
+    margin-bottom: 1vh;
+
 }
 
 div.conversationCmp-title {
@@ -71,7 +89,7 @@ div.conversationCmp-title {
     font-weight: 700;
     color: #eee; */
     
-    width: 100%;
+    /* width: 100%;
     text-align: center;
     font-size: 30px;
     height: 40px;
@@ -81,72 +99,54 @@ div.conversationCmp-title {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-top: 10px;
-    margin-left:0px 
+    margin-left:0px  */
 
-}
-
-div.conversationCmp-state {
-    margin-bottom: 8px;
-    margin-bottom: 16px;
-    font-size: 10px;
-    color: #666;
-}
-
-b.conversationCmp-state-value {
-    color: #009688;
-}
-
-div.conversationCmp-state-result {
-    margin: 0 auto;
     width: 100%;
     text-align: center;
+    font-size: 4vh;
+    font-weight: 900;
+    color: #004d8d;
+    margin-top: 3vh;
+    margin-bottom: 1vh;
 }
 
+
 div.conversationCmp-messages {
-    margin: 8px;
-    height: 75%;
+    height: 60vh;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 20px;
-    margin-left: 15px;
-    margin-right:15px;
-    font-size: 15px;
-    -webkit-font-smoothing: antialiased;
-    border: none;
-    outline: none;
+    display: block;
 }
 
 .conversationCmp-editor {
-    margin: 10px 8px 0px 8px;
-    width: 70%;
-    height: 12%;
-    padding: 15px;
-    border: 1px solid rgba(73, 98, 171, 0.22);
+    display: block;
+    position: absolute;
+    height: 6vh;
     color: #656565;
-    background: #FBFBFB;
-    border-radius: 12px;
-    /* color: #656565;
-    width: 100%;
-    display: inline-block;
-    padding: 8px;
-    font-size: 15px;
-    background: #fff;
-    border-top: 1px solid #eee;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px; */
+    /* background: #ffffff none repeat scroll 0 0; */
+    bottom: 0;
+    width: 75%;
+    border-left-color: #fff;
+    border: 1px;
+    padding : 1vh;
+    padding-right: 20%;
+    border-top: 1px dotted #42a5f5;
+    overflow-y: auto;
+    font-family:Roboto, Noto Sans, Helvetica Neue, Helvetica, Arial, sans-serif ;
+    font-size: 1.5vh;
+    font-weight: 450;
 }
 .conversationCmp-upload{
-    display: inline-block;
-    border-radius: 50%;
-    align-items: center;
-    font-weight: 800;
-    text-align: center;
-    color: #f0f0f0;
-    cursor: pointer;
-    position: relative;
+    position: absolute;
+    border-top: 1px dotted #42a5f5;
+    color: #42a5f5;
     overflow: hidden;
-    height: 40px;
-    background: #42a5f5;
-    font-size: 1.5em;
-    width: 40px
+    background: #fff;
+    font-size: 4.5vh;
+    border: 0px; 
+    bottom: 0;
+    right: 0;
+    height: 8vh;
+    width: 20%;
+    
 }

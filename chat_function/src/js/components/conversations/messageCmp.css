@@ -1,24 +1,37 @@
 @import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
 
 .messageCmp-content {
-    font-size: 15px;
+    font-size: 1.5vh;
     font-weight: 500;
+    line-height: 2vh;
 
 }
 
 .messageCmp-timestamp {
-	margin-top: 8px;
-	font-size: 9px;
+	margin-top: 5px;
+	font-size: 1vh;
 }
 
 .messageCmp-area-L {
 	background: #efefef;
-    color: #46464a;
+/*     color: #46464a;
     max-width: 55%;
     border-radius: 20px;
     margin-bottom: 10px;
-    padding: 10px
+    padding: 10px; */
+    
+    border-radius: 10px;
+    color: #000;
+    margin: 5px 0 0 5px;
+    padding: 1vh 1vw;
+    position: relative;
+    word-break: keep-all;
+    text-align: left;
+    max-width: 70%;
+    display: inline-block !important;
+    word-wrap: break-word;
 }
+
 
 .messageCmp-area-L.ng-enter{
 	transition: 0.2s linear all;
@@ -38,12 +51,24 @@
 }
 
 .messageCmp-area-R {
-	background:  #0085ca;
+/* 	
     color: #fff;
     max-width: 55%;
     border-radius: 20px;
     margin-bottom: 10px;
     margin-left:auto; 
     margin-right:0;
-    padding: 10px
+    padding: 10px */
+    float: right;
+    background:  #0085ca;
+    border-radius: 10px;
+    color: #fff;
+    margin: 5px 5px 0px 5px;
+    align-self: right;
+    padding: 1vh 1vw;
+    position: relative;
+    word-break: keep-all;
+    max-width: 70%;
+    display: inline-block !important;
+    word-wrap: break-word;
 }

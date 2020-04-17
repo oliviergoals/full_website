@@ -2,7 +2,7 @@
 <div class="connectionCmp-area" ng-if="$root.open_form">
 	<div class="introduction" ng-if="introduction">
 
-		<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="225" height="225">
+		<img src="../../../../res/logo_rainbow.png" alt="" class="center">
 		<div class="connectionCmp-title">Welcome!</div>
 		<p class="intro-text"> bringing you the customer service you deserve</p>
 
@@ -26,7 +26,8 @@
 		</div>
 	<!-- <label id="intro-label">Prove You're Not a Robot!</label> -->
 	<form id="intro-form" name="intro-form" ng-submit="read_intro()" autocomplete="off" class="intro-form">
-			<div vc-recaptcha class="intro-captcha" theme="light" key="model.key" on-create="setWidgetId(widgetId)"
+			
+		<div vc-recaptcha class="intro-captcha" theme="light" key="model.key" on-create="setWidgetId(widgetId)"  style="transform:scale(0.70);transform-origin:0 0"
 				on-success="setResponse(response)" on-expire="cbExpiration()"></div>
 			<button class="next-butt" ng-disabled="!gRecaptchaResponse">
 				<i class="zmdi zmdi-check zmdi-hc-3x"></i>
@@ -38,8 +39,8 @@
 	<!-- <div class="form" ng-if="true"> -->
 
 		<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="225" height="225">
-		<div class="form-title" ng-if="!submit_success">Fill in & Submit!</div>
-		<form id="form" name="form" autocomplete="off" class="connectionCmp-form" novalidate ng-if="!submit_success">
+		<div class="form-title" ng-if="!$root.submit_success">Fill in & Submit!</div>
+		<form id="form" name="form" autocomplete="off" class="connectionCmp-form" novalidate ng-if="!$root.submit_success">
 			<!-- Name -->
 			<div class="form-group">
 				<label id="label">Name </label>
@@ -106,10 +107,10 @@
 
 		</form>
 
-		<div class="connectionCmp-state-result" ng-if="submit_success">
+		<div class="connectionCmp-state-result" ng-if="$root.submit_success">
 			<i class="zmdi zmdi-settings zmdi-hc-spin zmdi-hc-5x" ng-if="isLoading" />
 			<div class="connectionCmp-state">State: <b class="connectionCmp-state-value">{{state}}</b></div>
-			<div class="connectionCmp-state">Queue Number: <b class="connectionCmp-state-value">{{queueNumber}}</b>
+			<div class="connectionCmp-state">Queue Number: <b class="connectionCmp-state-value">{{$root.queueNumber}}</b>
 			</div>
 			<div class="connectionCmp-state">Number of people in front of you: <b
 					class="connectionCmp-state-value">{{queueInFront}}</b></div>

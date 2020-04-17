@@ -7,19 +7,21 @@
 		<rbx-contact item="contact"></rbx-contact>
 	</div>
 
-	<div class="conversationCmp-messages conversation-{{$ctrl.item.dbId}}">
+	<div class="conversationCmp-messages conversation-{{$ctrl.item.dbId}}" >
 		<rbx-message ng-repeat="item in $ctrl.item.messages" item="item"></rbx-message>
 	</div>
 	
 	<form ng-submit="onSend()">
-		<input 	
+		<textarea 	
 			class="conversationCmp-editor"
 			ng-model="message"
 			name="message"
 			type="text" 
 			id="messageField"
 			placeholder="Your message..." 
-			autofocus/>
+			autofocus
+			ng-enter="onSend()">
+		</textarea>
 		<button class="conversationCmp-upload">
 			<i class="zmdi zmdi-long-arrow-up "></i>
 		</button>

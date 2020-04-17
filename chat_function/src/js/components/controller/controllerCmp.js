@@ -3,7 +3,7 @@ angular.module("sample").component("rbxController", {
     name: "@"
   },
   templateUrl: "./src/js/components/controller/controllerCmp.template.html",
-  controller: function rbcPhoneCtrl(rainbowSDK, $rootScope, $scope, Call) {
+  controller: function rbcPhoneCtrl(rainbowSDK, $rootScope, $scope, Call, $window, $http) {
     "use strict";
 
     $scope.isConnected = false;
@@ -253,10 +253,37 @@ angular.module("sample").component("rbxController", {
     };
 
     $scope.release = function release() {
-      rainbowSDK.webRTC.release(currentCall);
-      $rootScope.open_audio = false;
-      $rootScope.open_video = false;
-    };
+      console.log("release button pressed");
+      const confirmedClose = $window.confirm("Are u sure you want to end the call?\nClosing will end your chat with " + $rootScope.csaName)
+      if (confirmedClose) {
+        rainbowSDK.webRTC.release(currentCall);
+        console.log("pressed wanna close");      
+        let blabla = rainbowSDK.conversations.getConversationById($rootScope.convoID_global);
+            // console.log(convoHist);
+            $http({
+              method: 'POST',
+              // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+              url: 'https://localhost:3000/routing/endChatInstance',
+              //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
+              dataType: 'json',
+              data:
+              {
+                department: $rootScope.user.department,
+                jid: $rootScope.contactJID,
+                queueNumber: $rootScope.queueStatus,
+                convoID: $rootScope.convoID_global,
+                // detailsOfConvo: fuckCircularJson
+              },
+              headers: { "Content-Type": "application/json" }
+            }).then(async function (result) {
+              console.log("Status of Chat Closing " + result.data.status);
+            });
+        $rootScope.open_audio = false;
+        $rootScope.open_video = false;
+        console.log("closing chat");
+        $rootScope.chat_val = false; //"open chat"
+      };
+    }
 
     $scope.showSpectrum = function showSpectrum() {
       $scope.isSpectrumDisplayed = true;

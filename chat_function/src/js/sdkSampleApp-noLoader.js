@@ -122,7 +122,7 @@ sample.controller("sampleController", [
             {
               department: $rootScope.user.department,
               jid: $rootScope.contactJID,
-              queueNumber: $rootScope.queueStatus,
+              queueNumber: $rootScope.queueNumber,
               convoID: $rootScope.convoID_global,
               detailsOfConvo: $scope.convoHistFlatFinal
             },
@@ -152,29 +152,32 @@ sample.controller("sampleController", [
     }
 
     $window.onbeforeunload = function(){
-      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true){
+      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true || $rootScope.submit_success){
         console.log("pressed wanna close");
           //------------------------------- Post JSON to drop queue-----------------------------
           if($rootScope.open_chat == true){
           let convoHist = sdk.conversations.getConversationById($rootScope.convoID_global).messages;
           console.log(convoHist);
             //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
-          let convoHistFlat = $scope.stringify(convoHist);
+          var convoHistFlat = $scope.stringify(convoHist);
           console.log(convoHistFlat);
-          $scope.convoHistFlatFinal = convoHistFlat;}
+          // $scope.convoHistFlatFinal = convoHistFlat;
+          // console.log($scope.convoHistFlatFinal);
+        }
           // console.log(convoHist);
           $http({
             method: 'POST',
             url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+            // url: 'https://localhost:3000/routing/endChatInstance',
             //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
             dataType: 'json',
             data:
             {
               department: $rootScope.user.department,
               jid: $rootScope.contactJID,
-              queueNumber: $rootScope.queueStatus,
+              queueNumber: $rootScope.queueNumber,
               convoID: $rootScope.convoID_global,
-              detailsOfConvo: $scope.convoHistFlatFinal
+              detailsOfConvo: convoHistFlat
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -208,6 +211,35 @@ sample.controller("sampleController", [
     return true;
   }
 ]);
+
+sample.directive('ngEnter', function() {
+  return function(scope, element, attrs) {
+      element.bind("keydown", function(e) {
+          if(e.which === 13) {
+              scope.$apply(function(){
+                  scope.$eval(attrs.ngEnter, {'e': e});
+              });
+              e.preventDefault();
+          }
+      });
+  };
+});
+
+sample.directive('scrollBottom', function () {
+  return {
+    scope: {
+      scrollBottom: "="
+    },
+    link: function (scope, element) {
+      scope.$watchCollection('scrollBottom', function (newValue) {
+        if (newValue)
+        {
+          $(element).scrollTop($(element)[0].scrollHeight);
+        }
+      });
+    }
+  }
+})
 
     /*********************************************************/
     /**                Parsing stuff                        **/

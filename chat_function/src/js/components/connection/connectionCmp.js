@@ -82,7 +82,7 @@ angular.module("sample").component("rbxConnection", {
     function rigorousPolling(queueValue) {
       $http({
         method: 'POST',
-        // url: 'http://localhost:3000/checkQueueStatusbeta/',
+        // url: 'http://localhost:3000/routing/checkQueueStatus/',
         url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/checkQueueStatus',
         dataType: 'json',
         data:
@@ -113,21 +113,22 @@ angular.module("sample").component("rbxConnection", {
 
     var handlers = [];
 
-    $scope.submit_success = false;
+    $rootScope.submit_success = false;
     // TODO: Sheikh
     //-----------------------------------------------
 
     //let flatten = $window.Flatted.stringify()
 
     $scope.signin = function () {
-
+      $rootScope.queueNumber = "";
+      $scope.queueInFront = "";
       $scope.isLoading = true;
+      $rootScope.submit_success = true;
 
       saveToStorage();
       // ---------------------------------------------------------------------------
 
       $scope.server = angular.copy($scope.user);
-      $scope.submit_success = true;
       console.log($scope.user.communication);
       let choiceOfChat = $scope.user.communication;
       console.log($scope.user.department);
@@ -200,7 +201,7 @@ angular.module("sample").component("rbxConnection", {
       // The following code should be commented out WHEN TESTING AND NOT IN SCHOOL!
       $http({
         method: 'GET',
-        // url: 'http://localhost:3000/createguestdynamic?name=' + $scope.user.name,
+        // url: 'http://localhost:3000/routing/createguestdynamic?name=' + $scope.user.name,
         url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/createguestdynamic?name=' + $scope.user.name,
 
       }).then(function success(response) {
@@ -221,7 +222,7 @@ angular.module("sample").component("rbxConnection", {
             
             $http({
               method: 'POST',
-              // url: 'http://localhost:3000/getRequiredCSAbeta',
+              // url: 'http://localhost:3000/routing/getRequiredCSA',
               url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/getRequiredCSA',
               dataType: 'json',
               data:
@@ -239,10 +240,10 @@ angular.module("sample").component("rbxConnection", {
               let contactJID = result.data.jid;
               let queueNumber = result.data.queueNumber;
               let queueStatus = result.data.queueStatus;
-              $scope.queueNumber = result.data.queueNumber;
+              $rootScope.queueNumber = result.data.queueNumber;
               $rootScope.contactJID = result.data.jid;
               console.log("this is queue status" + queueStatus);
-              if (result.data.queueStatus == "ready") {
+              if (result.data.queueStatus === "ready" && result.data.jid!=null) {
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 $scope.queueInFront = "It's You're Turn!"
                 console.log("this is queue status" + $scope.queueInFront);
@@ -253,11 +254,12 @@ angular.module("sample").component("rbxConnection", {
                   rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
                     console.log("zzzzzz");
                     console.log(conversation);
+                    console.log(conversation.id);
                     $rootScope.convoID_global = conversation.id;
 
                     $rootScope.open_form = false;
                     $rootScope.open_chat = true;
-                    $scope.submit_success = false;
+                    $rootScope.submit_success = false;
                     rainbowSDK.im.sendMessageToConversation(conversation, $scope.user.problem);
                     console.log("ZW Sent messgage");
 
@@ -270,7 +272,7 @@ angular.module("sample").component("rbxConnection", {
                   $rootScope.open_form = false;
                   $rootScope.open_audio = true;
                   $rootScope.callType = "Audio Call";
-                  $scope.submit_success = false;
+                  $rootScope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     console.log("before call");
                     rainbowSDK.webRTC.callInAudio(selectedContact);
@@ -284,7 +286,7 @@ angular.module("sample").component("rbxConnection", {
                   $rootScope.open_form = false;
                   $rootScope.open_video = true;
                   $rootScope.callType = "Video Call"; 
-                  $scope.submit_success = false;
+                  $rootScope.submit_success = false;
                   if (rainbowSDK.webRTC.canMakeAudioVideoCall()) {
                     rainbowSDK.webRTC.callInVideo(selectedContact);
                   } else {
@@ -294,16 +296,18 @@ angular.module("sample").component("rbxConnection", {
 
             //---------------------------------------------------------------------    
               }
+
               // if no jid -> means not ready and on queue. So we do circular post ddos style
 
-              else {
-                console.log("this is the queue status" + queueStatus);
+              else if(result.data.queueStatus === "enqueued" || result.data.jid===null) {
+                console.log("this is the queue status" + result.data.queueStatus);
+                console.log("this is the queue jid" + result.data.jid);
                 // while(result.data.queueStatus == "enqueued"){
                 let cassimir = $interval(
                   function () {
                     $http({
                       method: 'POST',
-                      // url: 'http://localhost:3000/checkQueueStatusbeta/',
+                      // url: 'http://localhost:3000/routing/checkQueueStatus/',
                       url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/checkQueueStatus',
                       dataType: 'json',
                       data:
@@ -317,7 +321,7 @@ angular.module("sample").component("rbxConnection", {
                       },
                       headers: { "Content-Type": "application/json" }
                     }).then(async function (result) {
-                      if (result.data.queueStatus == "ready") {
+                      if (result.data.queueStatus == "ready" && result.data.jid!=null) {
                         let newjid = result.data.jid;
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
@@ -325,7 +329,6 @@ angular.module("sample").component("rbxConnection", {
                         console.log("this is queue status" + $scope.queueInFront);
                         $rootScope.csaName = selectedContact.firstname;
                         console.log($rootScope.csaName + "this is csa name");
-
                         if (choiceOfChat == "Chat") {
                           rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
                             $rootScope.open_form = false;
@@ -333,6 +336,8 @@ angular.module("sample").component("rbxConnection", {
 
                             console.log("zzzzzz");
                             console.log(conversation1);
+                            console.log(conversation1.id);
+                            
                             $rootScope.convoID_global = conversation1.id;
 
                             rainbowSDK.im.sendMessageToConversation(conversation1, $scope.user.problem);
@@ -375,6 +380,7 @@ angular.module("sample").component("rbxConnection", {
                         let queueStatus = result.data.queueStatus;
                         console.log("OMG PLS WORK FFS");
                         console.log("Queue Status Update: " + queueStatus);
+                        console.log("this is the queue jid" + result.data.jid);
                         console.log("this is the queue position" + result.data.position);
                         // this part is where queue number update happens
                       }
@@ -383,7 +389,7 @@ angular.module("sample").component("rbxConnection", {
 
               }
             // }
-
+              
             }).catch(async function (err) {
               console.log("[DEMO] :: Error when posting for CSA", err);
               // $scope.isLoading = false;

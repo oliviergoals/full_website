@@ -5,14 +5,21 @@
 	<div class="controllerCmp-border">
 
 		<div class="controllerCmp-onAudioOnly" ng-if="($root.open_audio && isInCommunication)">
-			<div class="csa-info">Audio calling with</div>
+			<div class="csa-info">You are now talking to:</div>
 			<div class="csa-info-name">{{$root.csaName}}</div>
-			<img id="img-audio" src="/res/call.png">
+			<img id="img-audio" src="/res/Ringing-phone.gif">
+			<div class="audio-features">
+				<i class="zmdi zmdi-n-2-square zmdi-hc-3x mdc-text-red"></i>
+				<p class="intro-features-desc">Please remember to be nice! Any abusive language will result in an immediate disconnection from the chat</p>
+			</div>
 		</div>
-
-
-		<img id="img-call" src="/res/calling.gif" ng-if="!isInCommunication">
-
+		
+		
+		<img id="img-call" src="/res/blue_loading_circle.gif" ng-if="!isInCommunication">
+		<i class="zmdi zmdi-n-1-square zmdi-hc-3x mdc-text-red" ng-if="!isInCommunication"></i>
+		<p class="audio-features-desc"  ng-if="!isInCommunication">Enable your mic and speakers! <br>We want to hear you loud and clear</p>
+		<br>
+		
 
 		<!-- 			<div class="controllerCmp-webrtc-topbar" ng-show="true">
 				<button class="controllerCmp-btn-topbar" ng-show="hasLocalVideo && isPIPDisplayed" ng-click="hidePIP()"><i class="fa fa-user-times controllerCmp-btn-topbar-icon"></i></button>
@@ -41,7 +48,7 @@
 		</div>
 
 
-		<div class="controllerCmp-webrtc-area" ng-show="showVideo && isInCommunication">
+		<div class="controllerCmp-webrtc-area" ng-if="($root.open_video && isInCommunication")>
 			<div class="controllerCmp-webrtc-video">
 				<video id="largevideo" autoplay></video>
 				<video id="minivideo" autoplay muted></video>

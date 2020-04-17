@@ -1,5 +1,5 @@
 div.controllerCmp-area {
-    position: relative;
+    /* position: relative;
     overflow: hidden;
     border: 1px solid #E9E9E9;
     width: 100%;
@@ -8,7 +8,18 @@ div.controllerCmp-area {
     background: #fff;
 	height : 85%;
     border-radius: 6px;
+    padding: 4px; */
+
+    position: fixed;
+    height: 85vh;
+    width: 21vw;
+    overflow: hidden;
+    margin-top: 2vh;
+    margin-right: 2vw;
+    background: #fff;
     padding: 4px;
+    border-radius: 10px;
+    text-align: center;
 }
 
 .controllerCmp-area.ng-enter{
@@ -42,7 +53,7 @@ div.controllerCmp-title {
     background: #9e9e9e;
     font-weight: 700;
     color: #eee; */
-    width: 100%;
+    /* width: 100%;
     text-align: center;
     font-size: 30px;
     height: 40px;
@@ -52,7 +63,38 @@ div.controllerCmp-title {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-top: 10px;
-    margin-left:0px 
+    margin-left:0px  */
+
+    width: 100%;
+    text-align: center;
+    font-size: 4vh;
+    font-weight: 900;
+    color: #004d8d;
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
+.audio-features{
+    margin-left: auto;
+    margin-right:auto;
+    position: relative;
+    width: 80%;
+    line-height: initial;
+}
+
+.audio-features-desc{
+    font-size: 1.5vh;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 0vh;
+}
+
+.audio-features-grey{
+    font-size: 1.5vh;
+    font-weight: 300;
+    color: #000000;
+    margin-bottom: 0vh;
+    margin-top: 0vh;
 }
 
 div.controllerCmp-border {
@@ -74,23 +116,22 @@ div.controllerCmp-header {
 .csa-info{
     width: 100%;
     text-align: center;
-    font-size: 14px;
-    height: 24px;
-    line-height: 24px;
-    font-weight: 700;
-    color: black;
+    line-height: 1vh;
 	/* color: #666;
-	font-size: 20px; */
+    font-size: 20px; */
+    color: #666;
+    font-weight: 500;
+    font-size: 1.5vh;
+    padding: 0.75vh;
+    margin-top: 1vh;
+
 }
 .csa-info-name{
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
-    height: 24px;
-    line-height: 24px;
-    font-weight: 700;
-    color: black;
-    margin-top: 10%;
+	font-weight: 700;
+    font-size: 3vh;
+    color:#004d8d;
+    padding: 0.75vh;
+    margin-top: 0.5vh;
     /* font-weight: 700;
     font-size: 20px;
     color:#004d8d;
