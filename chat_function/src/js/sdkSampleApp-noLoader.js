@@ -14,7 +14,7 @@ sample.controller("sampleController", [
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
     
-
+    var queueDropped;
     $rootScope.chat_val = false; //"open chat"
     $rootScope.open_chat = false;
     $rootScope.open_form = false;  
@@ -71,6 +71,25 @@ sample.controller("sampleController", [
         return replacer == null ? value : replacer.call(this, key, value)
       }
     }
+
+    $scope.parseLogs = function(conversation) {
+      let value;
+      let finalObj = {};
+      console.log("this is the convo" + conversation);
+      console.log("length" + conversation.length);
+      console.log("lenght key" +Object.keys(conversation).length );
+      for (var i = 0; i< conversation.length; i++) {
+        value = conversation[i].data;
+        console.log("This is value" + value );
+        if (conversation[i].side == "R") {
+          finalObj[i] = {"user" : value}
+        }
+        else if (conversation[i].side == "L") {
+          finalObj[i] = {"agent" : value}
+        }
+      }
+      return finalObj
+    }
     /*********************************************************/
     /**                  PARSING STUFF                      **/
     /*********************************************************/
@@ -109,12 +128,10 @@ sample.controller("sampleController", [
           if($rootScope.open_chat == true){
             let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global);
             let convoHist = entireConvo.messages;
-            console.log(convoHist);
-            //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
-            let convoHistFlat = $scope.stringify(convoHist);
-            console.log(convoHistFlat);
-            $scope.convoHistFlatFinal = convoHistFlat;
-
+            var convoHistObj = $scope.parseLogs(convoHist);
+            console.log(convoHistObj);
+            //let convoHistFlat = $scope.stringify(convoHist);
+            // console.log(convoHistObj);
             rainbowSDK.conversations.closeConversation(entireConvo);
 
           }
@@ -132,7 +149,7 @@ sample.controller("sampleController", [
               communication: $rootScope.user.communication,
               queueNumber: $rootScope.queueNumber,
               jid: $rootScope.contactJID,
-              convoHistory: $scope.convoHistFlatFinal,
+              convoHistory: convoHistObj,
               clientEmail: $rootScope.user.email,
               queueDropped: false
             },
@@ -173,21 +190,19 @@ sample.controller("sampleController", [
           if($rootScope.open_chat == true){
             let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global)
             let convoHist = entireConvo.messages;
-            console.log(convoHist);
-              //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
-            var convoHistFlat = $scope.stringify(convoHist);
-            console.log(convoHistFlat);
-            var queueDropped = false;
-            // $scope.convoHistFlatFinal = convoHistFlat;
-            // console.log($scope.convoHistFlatFinal);
+            var convoHistObj = $scope.parseLogs(convoHist);
+            console.log(convoHistObj);
+            //let convoHistFlat = $scope.stringify(convoHist);
+            // console.log(convoHistObj);
             rainbowSDK.conversations.closeConversation(entireConvo);
+            queueDropped = false;
         }
         else if($rootScope.open_audio == true || $rootScope.open_video==true){
           rainbowSDK.webRTC.release($rootScope.currentCallR);
-          var queueDropped = false;
+          queueDropped = false;
         }
         else if( $rootScope.submit_success == true){
-          var queueDropped = true;
+          queueDropped = true;
         }
 
           // console.log(convoHist);
@@ -203,7 +218,7 @@ sample.controller("sampleController", [
               communication: $rootScope.user.communication,
               queueNumber: $rootScope.queueNumber,
               jid: $rootScope.contactJID,
-              convoHistory: convoHistFlat,
+              convoHistory: convoHistObj,
               clientEmail: $rootScope.user.email,
               queueDropped: queueDropped,
             },
