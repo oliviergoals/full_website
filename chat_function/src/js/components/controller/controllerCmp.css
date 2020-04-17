@@ -209,10 +209,10 @@ div.controllerCmp-header {
 }
 
 #largevideo {
-    /* border: 1px solid black; */
-    margin: 2.5%;
+    margin: 2%;
     position: relative;
-    height: 35%;
+    /* height: 35%; */
+    width: 90%;
 }
 
 /* #CSA-info {
@@ -228,10 +228,10 @@ div.controllerCmp-header {
 
 #minivideo {
     position: relative;
-    /* border: 1px solid red; */
     transform: scale(-1, 1);
-    height: 35%;
-    margin: 2.5%;
+    /* height: 35%; */
+    margin: 2%;
+    width: 90%;
 }
 
 div.controllerCmp-deviceChecker {

@@ -1,10 +1,12 @@
 package com.example.escproject_testing;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 
@@ -16,14 +18,19 @@ public class SubmitButtTest {
 
     public static void main(String[] args) throws InterruptedException {
 
+	//TODO: comment out the recaptcha in the html and set forms to true
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--allow-insecure-localhost");
+        DesiredCapabilities caps = DesiredCapabilities.chrome();
+        caps.setCapability(ChromeOptions.CAPABILITY, options);
+        caps.setCapability("acceptInsecureCerts", true);
+
+//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
+//        WebDriver driver = new ChromeDriver(caps);
+
+
         for (int i = 0; i < 4; i++) {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--allow-insecure-localhost");
-            DesiredCapabilities caps = DesiredCapabilities.chrome();
-            caps.setCapability(ChromeOptions.CAPABILITY, options);
-            caps.setCapability("acceptInsecureCerts", true);
-
-
             System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
             WebDriver driver = new ChromeDriver(caps);
 
@@ -53,15 +60,19 @@ public class SubmitButtTest {
             Thread.sleep(1000);
 
             WebElement problem = driver.findElement(By.id("problem"));
-//            problem.selectByVisibleText("problem 1");
             problem.sendKeys(problemInfo);
 
             Thread.sleep(1000);
 
             WebElement submitButt = driver.findElement(By.className("connectionCmp-btn"));
             submitButt.click();
+
+            Thread.sleep(20000);
+
+            // Switching to Alert
+            Alert alert = driver.switchTo().alert();
+            driver.switchTo().alert().accept();
         }
 
     }
-
 }

@@ -1,5 +1,6 @@
 package com.example.escproject_testing;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Injection_Test {
 
@@ -14,9 +16,12 @@ public class Injection_Test {
     static String userEmailVal = "johnny@gg.com";
     static String problemInfo = "I need to ask about the admission criteria";
     static String[] injection = {"<script>alert(123)</script>", "</script><script>alert(123)</script>", "ABC<div style=\"x:\\x00expression(javascript:alert(1)\">DEF",
-                                    "<a href=\"javascript\\x00:javascript:alert(1)\" id=\"fuzzelement1\">test</a>", };
+                                    "<a href=\"javascript\\x00:javascript:alert(1)\" id=\"fuzzelement1\">test</a>", "<plaintext>" };
 
     public static void main(String[] args) throws InterruptedException {
+
+	//TODO: comment out the recaptcha in the html and set forms to true
+
         for(int i = 0; i < injection.length; i++) {
 
             ChromeOptions options = new ChromeOptions();
@@ -59,8 +64,8 @@ public class Injection_Test {
             Thread.sleep(1000);
 
             WebElement problem = driver.findElement(By.id("problem"));
-//            problem.selectByVisibleText("problem 1");
-            problem.sendKeys(problemInfo);
+            problem.sendKeys(injection[i]);
+
 
             Thread.sleep(1000);
 
@@ -69,8 +74,11 @@ public class Injection_Test {
 
 //            openChatButt.click();
 
-            Thread.sleep(10000);
-            driver.close();
+            Thread.sleep(20000);
+
+            // Switching to Alert
+            Alert alert = driver.switchTo().alert();
+            driver.switchTo().alert().accept();
         }
     }
 }
