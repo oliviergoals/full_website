@@ -26,7 +26,7 @@ angular.module("sample").component("rbxController", {
 
     $scope.message = "The browser is checking your audio and video devices";
 
-    console.log( "scope has been initiated");
+    console.log("scope has been initiated");
 
     // -----------------------------------------------
 
@@ -39,9 +39,9 @@ angular.module("sample").component("rbxController", {
     var currentCall = null;
     $rootScope.currentCallR;
 
-    this.$onInit = function() {
+    this.$onInit = function () {
 
-      
+
       // Subscribe to XMPP connection change
       document.addEventListener(
         rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
@@ -69,7 +69,7 @@ angular.module("sample").component("rbxController", {
       );
 
       document.addEventListener(
-        rainbowSDK.callsLog.RAINBOW_ONCALLLOGUPDATED, 
+        rainbowSDK.callsLog.RAINBOW_ONCALLLOGUPDATED,
         onCallLogUpdated
       );
 
@@ -80,7 +80,7 @@ angular.module("sample").component("rbxController", {
       $rootScope.$on("DEMO_ON_CHECK_DEVICES_FAILED", onDeviceCheckFailed);
     };
 
-    this.$onDestroy = function() {};
+    this.$onDestroy = function () { };
 
     var onCallLogUpdated = function onCallLogUpdated() {
       var logHistory = rainbowSDK.callsLog.getAll();
@@ -93,7 +93,7 @@ angular.module("sample").component("rbxController", {
     };
 
     var onDeviceCheckEnd = function onDeviceCheckEnd() {
-      $scope.$apply(function() {
+      $scope.$apply(function () {
         console.log("[DEMO] :: Devices checking finished!");
         $scope.isCheckedDisplayed = false;
       });
@@ -141,6 +141,37 @@ angular.module("sample").component("rbxController", {
         call
       );
 
+
+      // when CSA release call
+      if (call.status.value === "Unknown") {
+        console.log("csa release call");
+        $http({
+          method: 'POST',
+          // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+          url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+          //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
+          dataType: 'json',
+          data:
+          {
+            department: $rootScope.user.department,
+            communication: $rootScope.user.communication,
+            queueNumber: $rootScope.queueNumber,
+            jid: $rootScope.contactJID,
+            convoHistory: "No history",
+            clientEmail: $rootScope.user.email,
+            queueDropped: false,
+          },
+          headers: { "Content-Type": "application/json" }
+        }).then(async function (result) {
+          console.log("Status of Chat Closing " + result.data.status);
+        });
+        $rootScope.open_audio = false;
+        $rootScope.open_video = false;
+        console.log("closing chat");
+        $rootScope.chat_val = false; //"open chat"
+
+      }
+
       switch (call.status.value) {
         case Call.Status.RINGING_INCOMMING.value:
           if (call.remoteMedia & Call.Media.VIDEO) {
@@ -185,9 +216,9 @@ angular.module("sample").component("rbxController", {
       var call = event.detail;
       console.log(
         "[DEMO] :: WebRTC Track changed local|remote " +
-          call.localMedia +
-          "|" +
-          call.remoteMedia
+        call.localMedia +
+        "|" +
+        call.remoteMedia
       );
       // Manage remote video
       if (call.remoteMedia & Call.Media.VIDEO) {
@@ -270,31 +301,35 @@ angular.module("sample").component("rbxController", {
       const confirmedClose = $window.confirm("Are u sure you want to end the call?\nClosing will end your chat with " + $rootScope.csaName)
       if (confirmedClose) {
         rainbowSDK.webRTC.release(currentCall);
-        console.log("pressed wanna close");      
-        // console.log("this is call log array: " + $scope.callHis[0]);
+        console.log("pressed wanna close");
+        // console.log("this is call log array0: " + rainbowSDK.callsLog.getAll());
+        // console.log("this is call log array1: " + rainbowSDK.callsLog.getAll()[0]);
+        // console.log("this is call log array: " + JSON.stringify($scope.callHis));
+
+
         console.log("changed");
         let blabla = rainbowSDK.conversations.getConversationById($rootScope.convoID_global);
-            // console.log(convoHist);
-            $http({
-              method: 'POST',
-              // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-              url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-              //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
-              dataType: 'json',
-              data:
-              {
-                department: $rootScope.user.department,
-                communication: $rootScope.user.communication,
-                queueNumber: $rootScope.queueNumber,
-                jid: $rootScope.contactJID,
-                convoHistory: "No history",
-                clientEmail: $rootScope.user.email,
-                queueDropped: false,
-              },
-              headers: { "Content-Type": "application/json" }
-            }).then(async function (result) {
-              console.log("Status of Chat Closing " + result.data.status);
-            });
+        // console.log(convoHist);
+        $http({
+          method: 'POST',
+          // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+          url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+          //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
+          dataType: 'json',
+          data:
+          {
+            department: $rootScope.user.department,
+            communication: $rootScope.user.communication,
+            queueNumber: $rootScope.queueNumber,
+            jid: $rootScope.contactJID,
+            convoHistory: "No history",
+            clientEmail: $rootScope.user.email,
+            queueDropped: false,
+          },
+          headers: { "Content-Type": "application/json" }
+        }).then(async function (result) {
+          console.log("Status of Chat Closing " + result.data.status);
+        });
         $rootScope.open_audio = false;
         $rootScope.open_video = false;
         console.log("closing chat");

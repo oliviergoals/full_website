@@ -26,13 +26,11 @@
 
 				<img class="controllerCmp-btn" src="./res/bt_held_blue.png" ng-show="!isMuted" alt="Mute"
 					ng-click="mute()" />
-
+					
 				<img class="controllerCmp-btn" src="./res/bt_retreive_blue.png" ng-show="isMuted" alt="Unmute"
 					ng-click="unmute()" />
 
-
 				<img class="controllerCmp-btn" src="./res/bt_hangout.png" ng-click="release()" alt="Stop the call" />
-
 
 			</div>
 		</div>
@@ -40,6 +38,8 @@
 
 		<div class="controllerCmp-webrtc-area" ng-show="($root.open_video && isInCommunication")>
 			<div class="controllerCmp-webrtc-video">
+				<div class="csa-info">You are now talking to:</div>
+				<div class="csa-info-name">{{$root.csaName}}</div>
 				<video id="largevideo" autoplay></video>
 				<video id="minivideo" autoplay muted></video>
 				<video id="globalVideoTag" autoplay style="display:none;"></video>

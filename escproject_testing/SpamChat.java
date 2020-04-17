@@ -1,5 +1,6 @@
 package com.example.escproject_testing;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,10 +31,14 @@ public class SpamChat {
     static String userNameVal = "Johnny Tan";
     static String userEmailVal = "johnny@gg.com";
     static String problemInfo = "I need to ask about the admission criteria";
+    static int numMsgSpam = 20;
     public static final String SOURCES =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !@'#$%^&*()_+|}{:<>?/.,[];'`~=";
 
     public static void main(String[] args) throws InterruptedException {
+
+	//TODO: comment out the recaptcha in the html and set forms to true
+	
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-insecure-localhost");
         options.addArguments("--disable-web-security");
@@ -40,19 +46,26 @@ public class SpamChat {
         DesiredCapabilities caps = DesiredCapabilities.chrome();
         caps.setCapability(ChromeOptions.CAPABILITY, options);
         caps.setCapability("acceptInsecureCerts", true);
+        caps.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
-
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver(caps);
-
-
-//        System.setProperty("webdriver.gecko.driver","C:\\Users\\User\\Downloads\\geckodriver-v0.26.0-win64\\geckodriver.exe");
-//        WebDriver driver = new FirefoxDriver();
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--headless", "--window-size=1920,1200","--ignore-certificate-errors");
 
 
 
-//        driver.get("https://127.0.0.1:8080/");
-        driver.get("http://127.0.0.1:5501/index.html");
+
+
+//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
+//        WebDriver driver = new ChromeDriver(caps);
+
+
+        System.setProperty("webdriver.gecko.driver","C:\\Users\\User\\Downloads\\geckodriver-v0.26.0-win64\\geckodriver.exe");
+        WebDriver driver = new FirefoxDriver();
+
+
+
+        driver.get("https://127.0.0.1:8080/");
+//        driver.get("http://127.0.0.1:5501/index.html");
 
         try {
             login(driver);
@@ -62,15 +75,22 @@ public class SpamChat {
             System.out.println("Interrupted exception error");
         }
 
+        Thread.sleep(10000);
 
-        WebDriverWait waitChat = new WebDriverWait(driver, 30);
+        // Switching to Alert
+        Alert alert = driver.switchTo().alert();
+        driver.switchTo().alert().accept();
+
+        WebDriverWait waitChat = new WebDriverWait(driver, 60);
         WebElement chatInput = waitChat.until(ExpectedConditions.visibilityOfElementLocated(By.className("conversationCmp-editor")));
 
 
+
 //        WebElement chatInput = driver.findElement(By.className("conversationCmp-editor"));
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < numMsgSpam; i++){
             chatInput.sendKeys(generateString(new Random(), SOURCES, ThreadLocalRandom.current().nextInt(1, 150 + 1)));
             WebElement pressEnter = driver.findElement(By.cssSelector("button[class='conversationCmp-upload']"));
+            Thread.sleep(1000);
             pressEnter.click();
             Thread.sleep(1000);
         }
@@ -108,11 +128,6 @@ public class SpamChat {
 
         System.out.println("before pressed click");
         submitButt.click();
-        System.out.println("pressed click");
-        submitButt.click();
-        System.out.println("pressed click");
-        submitButt.click();
-        System.out.println("pressed click");
         Thread.sleep(2000);
     }
 

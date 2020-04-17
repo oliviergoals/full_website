@@ -297,7 +297,7 @@ angular.module("sample").component("rbxConnection", {
                 }
               }
               //---------------------------------------------------------------------    
-              
+
               // if no jid -> means not ready and on queue. So we do circular post ddos style
 
               else if (result.data.queueStatus === "enqueued" || result.data.jid === null) {
@@ -387,12 +387,15 @@ angular.module("sample").component("rbxConnection", {
                       }
                     });
                   }, 10000);
-                }
-                // when all csa are offline
-                else if (result.data.queueStatus === "botActive"){
-                  console.log("in here botActive");
-                  let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
-                  console.log(selectedContact);
+              }
+              // when all csa are offline, bot jid returned
+              else if (result.data.jid === "b8d2b078c90e4964a9b81af9be94119d@sandbox-all-in-one-rbx-prod-1.rainbow.sbg") {
+                console.log("in here botActive");
+                let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
+                console.log(selectedContact);
+
+                const confirmedClose = $window.confirm("Sorry, all are CSA agents are currently unavailable.\nPlease proceed if you would like to be serviced by our \nintelligent bot, Smarty Swaggy.")
+                if (confirmedClose) {
                   if (choiceOfChat == "Chat") {
                     console.log("in chat choice");
                     rainbowSDK.conversations.openConversationForContact(selectedContact).then(function (conversation) {
@@ -400,99 +403,97 @@ angular.module("sample").component("rbxConnection", {
                       console.log(conversation);
                       console.log("converstation id: " + conversation.id);
                       $rootScope.convoID_global = conversation.id;
-  
                       $rootScope.open_form = false;
                       $rootScope.open_chat = true;
                       $rootScope.submit_success = false;
                       rainbowSDK.im.sendMessageToConversation(conversation, $scope.user.problem);
                       console.log("ZW Sent messgage");
-  
                     }).catch(function (err) {
                       //Something when wrong with the server. Handle the trouble here
                       console.log("ZW Error in opening conversation and sending")
                     });
                   }
                 }
-              
-              
+              }
 
-            // }
-              
+
+              // }
+
             }).catch(async function (err) {
-                    console.log("[DEMO] :: Error when posting for CSA", err);
-                    // $scope.isLoading = false;
-                    // $scope.isConnected = false;
-                  })
-          .catch(function (err) {
-            console.log("[DEMO] :: Error when sign-in", err);
-            // $scope.isLoading = false;
-            // $scope.isConnected = false;
+              console.log("[DEMO] :: Error when posting for CSA", err);
+              // $scope.isLoading = false;
+              // $scope.isConnected = false;
+            })
+              .catch(function (err) {
+                console.log("[DEMO] :: Error when sign-in", err);
+                // $scope.isLoading = false;
+                // $scope.isConnected = false;
+              });
           });
+      }).catch(function (err) {
+        console.log("[DEMO] :: Error when getting login credentials", err);
       });
-    }).catch(function (err) {
-      console.log("[DEMO] :: Error when getting login credentials", err);
-    });
 
     };
 
-$rootScope.signout = function () {
-  $scope.isLoading = true;
+    $rootScope.signout = function () {
+      $scope.isLoading = true;
 
-  rainbowSDK.connection.signout().then(function () {
-    $scope.isLoading = false;
-    $scope.isConnected = false;
-  });
-};
+      rainbowSDK.connection.signout().then(function () {
+        $scope.isLoading = false;
+        $scope.isConnected = false;
+      });
+    };
 
-var saveToStorage = function () {
-  sessionStorage.connection = angular.toJson($scope.user);
-  sessionStorage.host = angular.toJson($scope.selectedItem);
-};
+    var saveToStorage = function () {
+      sessionStorage.connection = angular.toJson($scope.user);
+      sessionStorage.host = angular.toJson($scope.selectedItem);
+    };
 
-var readFromStorage = function () {
-  if (sessionStorage.connection) {
-    $scope.user = angular.fromJson(sessionStorage.connection);
-  } else {
-    // $scope.user = { name: "", password: "" };
-  }
+    var readFromStorage = function () {
+      if (sessionStorage.connection) {
+        $scope.user = angular.fromJson(sessionStorage.connection);
+      } else {
+        // $scope.user = { name: "", password: "" };
+      }
 
-  if (sessionStorage.host) {
-    $scope.selectedItem =
-      $scope.hosts[angular.fromJson(sessionStorage.host).id];
-  } else {
-    $scope.selectedItem = $scope.hosts[0];
-  }
-};
+      if (sessionStorage.host) {
+        $scope.selectedItem =
+          $scope.hosts[angular.fromJson(sessionStorage.host).id];
+      } else {
+        $scope.selectedItem = $scope.hosts[0];
+      }
+    };
 
-var onConnectionStateChangeEvent = function onConnectionStateChangeEvent(
-  event
-) {
-  $scope.state = rainbowSDK.connection.getState();
-};
+    var onConnectionStateChangeEvent = function onConnectionStateChangeEvent(
+      event
+    ) {
+      $scope.state = rainbowSDK.connection.getState();
+    };
 
-this.$onInit = function () {
-  // Subscribe to XMPP connection change
-  handlers.push(
-    document.addEventListener(
-      rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
-      onConnectionStateChangeEvent
-    )
-  );
-};
+    this.$onInit = function () {
+      // Subscribe to XMPP connection change
+      handlers.push(
+        document.addEventListener(
+          rainbowSDK.connection.RAINBOW_ONCONNECTIONSTATECHANGED,
+          onConnectionStateChangeEvent
+        )
+      );
+    };
 
-this.$onDestroy = function () {
-  var handler = handlers.pop();
-  while (handler) {
-    handler();
-    handler = handlers.pop();
-  }
-};
+    this.$onDestroy = function () {
+      var handler = handlers.pop();
+      while (handler) {
+        handler();
+        handler = handlers.pop();
+      }
+    };
 
-var initialize = function () {
-  readFromStorage();
-};
+    var initialize = function () {
+      readFromStorage();
+    };
 
-initialize();
+    initialize();
   },
-templateUrl: "./src/js/components/connection/connectionCmp.template.html"
+  templateUrl: "./src/js/components/connection/connectionCmp.template.html"
 });
