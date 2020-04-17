@@ -68,6 +68,11 @@ angular.module("sample").component("rbxController", {
         onConversationChanged
       );
 
+      document.addEventListener(
+        rainbowSDK.callsLog.RAINBOW_ONCALLLOGUPDATED, 
+        onCallLogUpdated
+      );
+
       $rootScope.$on("DEMO_ON_CHECK_DEVICES_START", onDeviceCheckStart);
 
       $rootScope.$on("DEMO_ON_CHECK_DEVICES_END", onDeviceCheckEnd);
@@ -76,6 +81,12 @@ angular.module("sample").component("rbxController", {
     };
 
     this.$onDestroy = function() {};
+
+    var onCallLogUpdated = function onCallLogUpdated() {
+      var logHistory = rainbowSDK.callsLog.getAll();
+      // Do something with the log history
+      $scope.callHis = logHistory;
+    };
 
     var onDeviceCheckStart = function onDeviceCheckStart() {
       console.log("[DEMO] :: Start checking devices...");
@@ -260,6 +271,8 @@ angular.module("sample").component("rbxController", {
       if (confirmedClose) {
         rainbowSDK.webRTC.release(currentCall);
         console.log("pressed wanna close");      
+        // console.log("this is call log array: " + $scope.callHis[0]);
+        console.log("changed");
         let blabla = rainbowSDK.conversations.getConversationById($rootScope.convoID_global);
             // console.log(convoHist);
             $http({
@@ -271,10 +284,12 @@ angular.module("sample").component("rbxController", {
               data:
               {
                 department: $rootScope.user.department,
+                communication: $rootScope.user.communication,
+                queueNumber: $rootScope.queueNumber,
                 jid: $rootScope.contactJID,
-                queueNumber: $rootScope.queueStatus,
-                convoID: $rootScope.convoID_global,
-                // detailsOfConvo: fuckCircularJson
+                convoHistory: "No history",
+                clientEmail: $rootScope.user.email,
+                queueDropped: false,
               },
               headers: { "Content-Type": "application/json" }
             }).then(async function (result) {
