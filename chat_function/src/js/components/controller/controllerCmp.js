@@ -37,6 +37,7 @@ angular.module("sample").component("rbxController", {
     //-----------------------------------------------
 
     var currentCall = null;
+    $rootScope.currentCallR;
 
     this.$onInit = function() {
 
@@ -166,6 +167,7 @@ angular.module("sample").component("rbxController", {
       }
 
       currentCall = call;
+      $rootScope.currentCallR = call;
     };
 
     var onWebRTCTrackChanged = function onWebRTCTrackChanged(event) {

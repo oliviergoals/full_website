@@ -113,6 +113,9 @@ sample.controller("sampleController", [
             let convoHistFlat = $scope.stringify(convoHist);
             console.log(convoHistFlat);
             $scope.convoHistFlatFinal = convoHistFlat;}
+          else if($rootScope.open_audio == true || $rootScope.open_video==true){
+            rainbowSDK.webRTC.release($rootScope.currentCallR);
+          }
           $http({
             method: 'POST',
             url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
@@ -124,7 +127,8 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               queueNumber: $rootScope.queueNumber,
               convoID: $rootScope.convoID_global,
-              detailsOfConvo: $scope.convoHistFlatFinal
+              detailsOfConvo: $scope.convoHistFlatFinal,
+              flag: false
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -151,8 +155,13 @@ sample.controller("sampleController", [
       
     }
 
-    $window.onbeforeunload = function(){
-      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true || $rootScope.submit_success){
+    window.addEventListener('beforeunload', function (e) { 
+      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true || $rootScope.submit_success == true){
+      e.preventDefault(); 
+      $scope.closeWindow();}
+  }); 
+
+    $scope.closeWindow = function(){
         console.log("pressed wanna close");
           //------------------------------- Post JSON to drop queue-----------------------------
           if($rootScope.open_chat == true){
@@ -161,9 +170,18 @@ sample.controller("sampleController", [
             //let convoHistFlat = $window.Flatted.Flatted.parse(convoHist)
           var convoHistFlat = $scope.stringify(convoHist);
           console.log(convoHistFlat);
+          var flag = false;
           // $scope.convoHistFlatFinal = convoHistFlat;
           // console.log($scope.convoHistFlatFinal);
         }
+        else if($rootScope.open_audio == true || $rootScope.open_video==true){
+          rainbowSDK.webRTC.release($rootScope.currentCallR);
+          var flag = false;
+        }
+        else if( $rootScope.submit_success == true){
+          var flag = true;
+        }
+
           // console.log(convoHist);
           $http({
             method: 'POST',
@@ -177,7 +195,8 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               queueNumber: $rootScope.queueNumber,
               convoID: $rootScope.convoID_global,
-              detailsOfConvo: convoHistFlat
+              detailsOfConvo: convoHistFlat,
+              flag: flag
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -186,7 +205,7 @@ sample.controller("sampleController", [
           // ----------------------------------------------------------------  
           
         }
-      }
+      
   
     
 
