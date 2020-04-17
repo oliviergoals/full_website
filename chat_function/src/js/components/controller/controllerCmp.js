@@ -264,8 +264,8 @@ angular.module("sample").component("rbxController", {
             // console.log(convoHist);
             $http({
               method: 'POST',
-              // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-              url: 'https://localhost:3000/routing/endChatInstance',
+              url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+              // url: 'https://localhost:3000/routing/endChatInstance',
               //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
               dataType: 'json',
               data:
