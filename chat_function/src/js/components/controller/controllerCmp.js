@@ -160,6 +160,7 @@ angular.module("sample").component("rbxController", {
             convoHistory: "No history",
             clientEmail: $rootScope.user.email,
             queueDropped: false,
+            ticketNumber: $rootScope.ticketNumber
           },
           headers: { "Content-Type": "application/json" }
         }).then(async function (result) {
@@ -325,6 +326,7 @@ angular.module("sample").component("rbxController", {
             convoHistory: "No history",
             clientEmail: $rootScope.user.email,
             queueDropped: false,
+            ticketNumber: $rootScope.ticketNumber
           },
           headers: { "Content-Type": "application/json" }
         }).then(async function (result) {

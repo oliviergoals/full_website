@@ -1,4 +1,4 @@
-var sample = angular.module("sample", ["sdk", 'ngAnimate','vcRecaptcha']);
+var sample = angular.module("sample", ["sdk", 'ngAnimate', 'vcRecaptcha']);
 // const {parse, stringify} = require('flatted/cjs');
 //var stringify = require('json-stringify-safe');
 
@@ -8,8 +8,8 @@ sample.controller("sampleController", [
   "$http",
   "$window",
   "$scope",
-  function($rootScope, sdk, $http, $window, $scope, vcRecaptchaService ) {
-    "use strict";    
+  function ($rootScope, sdk, $http, $window, $scope, vcRecaptchaService) {
+    "use strict";
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
@@ -17,7 +17,7 @@ sample.controller("sampleController", [
     var queueDropped;
     $rootScope.chat_val = false; //"open chat"
     $rootScope.open_chat = false;
-    $rootScope.open_form = false;  
+    $rootScope.open_form = false;
     $rootScope.open_audio = false;
     $rootScope.open_video = false;
     console.log("rootscope vals changed")
@@ -35,31 +35,31 @@ sample.controller("sampleController", [
 
       sdk
         .initialize(appId, appSecret)
-        .then(function() {
+        .then(function () {
           console.log("[DEMO] :: Rainbow SDK is initialized!");
         })
-        .catch(function() {
+        .catch(function () {
           console.log("[DEMO] :: Something went wrong with the SDK...");
         });
     };
 
-    
+
     /*********************************************************/
     /**                  PARSING STUFF                      **/
     /*********************************************************/
-    $scope.stringify = function(obj, replacer, spaces, cycleReplacer) {
+    $scope.stringify = function (obj, replacer, spaces, cycleReplacer) {
       return JSON.stringify(obj, serializer(replacer, cycleReplacer), spaces)
     }
-    
+
     function serializer(replacer, cycleReplacer) {
       var stack = [], keys = []
-      
-      if (cycleReplacer == null) cycleReplacer = function(key, value) {
+
+      if (cycleReplacer == null) cycleReplacer = function (key, value) {
         if (stack[0] === value) return "[Circular ~]"
         return "[Circular ~." + keys.slice(0, stack.indexOf(value)).join(".") + "]"
       }
-      
-      return function(key, value) {
+
+      return function (key, value) {
         if (stack.length > 0) {
           var thisPos = stack.indexOf(this)
           ~thisPos ? stack.splice(thisPos + 1) : stack.push(this)
@@ -67,7 +67,7 @@ sample.controller("sampleController", [
           if (~stack.indexOf(value)) value = cycleReplacer.call(this, key, value)
         }
         else stack.push(value)
-        
+
         return replacer == null ? value : replacer.call(this, key, value)
       }
     }
@@ -93,15 +93,15 @@ sample.controller("sampleController", [
     /*********************************************************/
     /**                  PARSING STUFF                      **/
     /*********************************************************/
-    
+
 
 
     // TODO: Shake
-    $rootScope.butt_val_changer = function(){  
-      console.log("button pressed");    
+    $rootScope.butt_val_changer = function () {
+      console.log("button pressed");
       // $http({
       //   method: 'POST',
-        // url: 'https://localhost:3000/endChatInstance',
+      // url: 'https://localhost:3000/endChatInstance',
       //   //url: 'http://10.12.205.128:3000/getRequiredCSAbeta',
       //   dataType: 'json',
       //   data:
@@ -113,19 +113,19 @@ sample.controller("sampleController", [
       // }).then(async function(result){
       //     console.log("Status of Chat Closing " + result.data.status);
       // });
-      if ($rootScope.open_form==false && $rootScope.open_chat==false && $rootScope.open_audio==false && $rootScope.open_video == false){
+      if ($rootScope.open_form == false && $rootScope.open_chat == false && $rootScope.open_audio == false && $rootScope.open_video == false) {
         $rootScope.open_form = true;
         $rootScope.chat_val = true; //"close chat"
       }
-      else if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true){
-        console.log("this is the value of open chat" +$rootScope.open_chat );
-        console.log("this is the value of open audio" +$rootScope.open_audio );
-        console.log("this is the value of open video" +$rootScope.open_video );
+      else if ($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video == true) {
+        console.log("this is the value of open chat" + $rootScope.open_chat);
+        console.log("this is the value of open audio" + $rootScope.open_audio);
+        console.log("this is the value of open video" + $rootScope.open_video);
 
         //------------------- When Chat is open and press close chat, alert will be displayed   ---------------------------------
         const confirmedClose = $window.confirm("Are u sure you want to close the chat?\nClosing will end your chat with CAS!")
         if (confirmedClose) {
-          if($rootScope.open_chat == true){
+          if ($rootScope.open_chat == true) {
             let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global);
             let convoHist = entireConvo.messages;
             var convoHistObj = $scope.parseLogs(convoHist);
@@ -135,7 +135,7 @@ sample.controller("sampleController", [
             rainbowSDK.conversations.closeConversation(entireConvo);
 
           }
-          else if($rootScope.open_audio == true || $rootScope.open_video==true){
+          else if ($rootScope.open_audio == true || $rootScope.open_video == true) {
             rainbowSDK.webRTC.release($rootScope.currentCallR);
           }
           $http({
@@ -151,7 +151,8 @@ sample.controller("sampleController", [
               jid: $rootScope.contactJID,
               convoHistory: convoHistObj,
               clientEmail: $rootScope.user.email,
-              queueDropped: false
+              queueDropped: false,
+              ticketNumber: $rootScope.ticketNumber
             },
             headers: { "Content-Type": "application/json" }
           }).then(async function (result) {
@@ -163,26 +164,27 @@ sample.controller("sampleController", [
           $rootScope.open_video = false;
           console.log("closing chat");
           $rootScope.chat_val = false; //"open chat"
-          
+
         }
-        else{
+        else {
           console.log("wanna stay");
-        }       
+        }
         //--------------------------------------------------------------------------
       }
-      else{
+      else {
         $rootScope.open_form = false;
         $rootScope.open_chat = false;
         $rootScope.chat_val = false; //"Open Chat"
       }
-      
+
     }
 
-    window.addEventListener('beforeunload', function (e) { 
-      if($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video==true || $rootScope.submit_success == true){
-      e.preventDefault(); 
-      $scope.closeWindow();}
-  }); 
+    window.addEventListener('beforeunload', function (e) {
+      if ($rootScope.open_chat == true || $rootScope.open_audio == true || $rootScope.open_video == true || $rootScope.submit_success == true) {
+        e.preventDefault();
+        $scope.closeWindow();
+      }
+    });
 
     $scope.closeWindow = function(){
         console.log("pressed wanna close");
@@ -233,6 +235,11 @@ sample.controller("sampleController", [
   
     
 
+    }
+
+
+
+
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
 
     document.addEventListener(sdk.RAINBOW_ONLOADED, onLoaded);
@@ -244,16 +251,16 @@ sample.controller("sampleController", [
   }
 ]);
 
-sample.directive('ngEnter', function() {
-  return function(scope, element, attrs) {
-      element.bind("keydown", function(e) {
-          if(e.which === 13) {
-              scope.$apply(function(){
-                  scope.$eval(attrs.ngEnter, {'e': e});
-              });
-              e.preventDefault();
-          }
-      });
+sample.directive('ngEnter', function () {
+  return function (scope, element, attrs) {
+    element.bind("keydown", function (e) {
+      if (e.which === 13) {
+        scope.$apply(function () {
+          scope.$eval(attrs.ngEnter, { 'e': e });
+        });
+        e.preventDefault();
+      }
+    });
   };
 });
 
@@ -264,8 +271,7 @@ sample.directive('scrollBottom', function () {
     },
     link: function (scope, element) {
       scope.$watchCollection('scrollBottom', function (newValue) {
-        if (newValue)
-        {
+        if (newValue) {
           $(element).scrollTop($(element)[0].scrollHeight);
         }
       });
@@ -273,10 +279,10 @@ sample.directive('scrollBottom', function () {
   }
 })
 
-    /*********************************************************/
-    /**                Parsing stuff                        **/
-    /*********************************************************/
-    
+/*********************************************************/
+/**                Parsing stuff                        **/
+/*********************************************************/
+
   // $scope.parse = function(text, reviver) {
   //   var input = JSON.parse(text, Primitives).map(primitives);
   //   var value = input[0];
@@ -290,7 +296,7 @@ sample.directive('scrollBottom', function () {
   //   function noop(key, value) {
   //     return value;
   //   }
-  
+
   //   function revive(input, parsed, output, $) {
   //     return Object.keys(output).reduce(
   //       function (output, key) {
@@ -310,21 +316,21 @@ sample.directive('scrollBottom', function () {
   //       output
   //     );
   //   }
-  
+
   //   function set(known, input, value) {
   //     var index = Primitive(input.push(value) - 1);
   //     known.set(value, index);
   //     return index;
   //   }
-  
+
     // the two kinds of primitives
     //  1. the real one
     //  2. the wrapped one
-  
+
     // function primitives(value) {
     //   return value instanceof Primitive ? Primitive(value) : value;
     // }
-  
+
     // function Primitives(key, value) {
     //   return typeof value === primitive ? new Primitive(value) : value;
     // }

@@ -210,6 +210,7 @@ angular.module("sample").component("rbxConnection", {
         // this function will be called when the request is success
         console.log("zw GuestID " + JSON.stringify(response.data.guestID));
         console.log("zw GuestPW " + JSON.stringify(response.data.guestPass));
+        $rootScope.ticketNumber = response.data.ticketNumber;
 
         /* ----------------------- RainbowSDK sign in on success get JSON ---------------------------*/
         rainbowSDK.connection
@@ -233,7 +234,8 @@ angular.module("sample").component("rbxConnection", {
                 email: $rootScope.user.email,
                 department: $rootScope.user.department,
                 communication: $rootScope.user.communication,
-                problem: $scope.user.problem
+                problem: $scope.user.problem,
+                ticketNumber: $rootScope.ticketNumber
               },
               headers: { "Content-Type": "application/json" }
             }).then(async function (result) {
@@ -303,6 +305,8 @@ angular.module("sample").component("rbxConnection", {
               else if (result.data.queueStatus === "enqueued" || result.data.jid === null) {
                 console.log("this is the queue status" + result.data.queueStatus);
                 console.log("this is the queue jid" + result.data.jid);
+                $scope.queueInFront = result.data.position;
+
                 // while(result.data.queueStatus == "enqueued"){
                 let cassimir = $interval(
                   function () {
@@ -322,13 +326,15 @@ angular.module("sample").component("rbxConnection", {
                       },
                       headers: { "Content-Type": "application/json" }
                     }).then(async function (result) {
-                      if (result.data.queueStatus == "ready" && result.data.jid != null) {
+                      if (result.data.queueStatus === "successful" && result.data.jid != null) {
+                        console.log("----------------- when check queue status successful so should stop checking ");
+
                         let newjid = result.data.jid;
                         $scope.contactJID = result.data.jid;
                         let selectedContactRetry = await rainbowSDK.contacts.searchByJid(newjid);
                         $scope.queueInFront = "It's You're Turn!"
                         console.log("this is queue status " + $scope.queueInFront);
-                        $rootScope.csaName = selectedContact.firstname;
+                        $rootScope.csaName = selectedContactRetry.firstname;
                         console.log($rootScope.csaName + "this is csa name");
                         if (choiceOfChat == "Chat") {
                           rainbowSDK.conversations.openConversationForContact(selectedContactRetry).then(function (conversation1) {
@@ -371,13 +377,16 @@ angular.module("sample").component("rbxConnection", {
                           };
                         }
 
-                        if (result.data.queueStatus == "ready") {
+                        if (result.data.queueStatus === "successful") {
                           $interval.cancel(cassimir);
                         }
-
                       }
                       else {
-                        $scope.queueInFront = result.data.position;
+
+
+                        $scope.queueInFront = result.data.position + 1;
+                        // $scope.queueInFront = result.data.queueStatus;
+                        console.log(" -------------- when check queue status and still being enqueued, queue no: "+  result.data.position);
                         let queueStatus = result.data.queueStatus;
                         console.log("OMG PLS WORK FFS");
                         console.log("Queue Status Update: " + queueStatus);
@@ -389,8 +398,9 @@ angular.module("sample").component("rbxConnection", {
                   }, 10000);
               }
               // when all csa are offline, bot jid returned
-              else if (result.data.jid === "b8d2b078c90e4964a9b81af9be94119d@sandbox-all-in-one-rbx-prod-1.rainbow.sbg") {
-                console.log("in here botActive");
+              else  {
+                console.log(JSON.stringify(result.data.message));
+                console.log("-----------in here botActive------------");
                 let selectedContact = await rainbowSDK.contacts.searchByJid(result.data.jid);
                 console.log(selectedContact);
 
