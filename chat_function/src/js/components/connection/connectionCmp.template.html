@@ -1,6 +1,6 @@
 <!-- <script src="../../../angular-animate.min.js"></script> -->
 <div class="connectionCmp-area" ng-if="$root.open_form">
-	<div class="introduction" ng-if="introduction">
+	<!-- <div class="introduction" ng-if="introduction">
 
 		<img src="../../../../res/logo_rainbow.png" alt="" class="center">
 		<div class="connectionCmp-title">Welcome!</div>
@@ -23,9 +23,9 @@
 		<div class="intro-captcha-text">
 			<em>but first, prove you're not a robot!</em>
 			<i class="zmdi zmdi-bug animated infinite wobble zmdi-hc-fw mdc-text-red-700"></i>
-		</div>
+		</div> -->
 	<!-- <label id="intro-label">Prove You're Not a Robot!</label> -->
-	<form id="intro-form" name="intro-form" ng-submit="read_intro()" autocomplete="off" class="intro-form">
+	<!-- <form id="intro-form" name="intro-form" ng-submit="read_intro()" autocomplete="off" class="intro-form">
 			
 		<div vc-recaptcha class="intro-captcha" theme="light" key="model.key" on-create="setWidgetId(widgetId)"  style="transform:scale(0.70);transform-origin:0 0"
 				on-success="setResponse(response)" on-expire="cbExpiration()"></div>
@@ -33,10 +33,10 @@
 				<i class="zmdi zmdi-check zmdi-hc-3x"></i>
 			</button>
 		</form>
-	</div>
+	</div> -->
 
-	<div class="form" ng-if="form">
-	<!-- <div class="form" ng-if="true"> -->
+	<!-- <div class="form" ng-if="form"> -->
+	<div class="form" ng-if="true">
 
 		<img src="../../../../res/logo_rainbow.png" alt="" class="center" width="225" height="225">
 		<div class="form-title" ng-if="!$root.submit_success">Fill in & Submit!</div>

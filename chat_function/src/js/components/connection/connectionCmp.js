@@ -326,7 +326,7 @@ angular.module("sample").component("rbxConnection", {
                       },
                       headers: { "Content-Type": "application/json" }
                     }).then(async function (result) {
-                      if (result.data.queueStatus === "successful" && result.data.jid != null) {
+                      if (result.data.queueStatus === "ready" && result.data.jid != null) {
                         console.log("----------------- when check queue status successful so should stop checking ");
 
                         let newjid = result.data.jid;
@@ -377,13 +377,11 @@ angular.module("sample").component("rbxConnection", {
                           };
                         }
 
-                        if (result.data.queueStatus === "successful") {
+                        if (result.data.queueStatus === "ready") {
                           $interval.cancel(cassimir);
                         }
                       }
                       else {
-
-
                         $scope.queueInFront = result.data.position + 1;
                         // $scope.queueInFront = result.data.queueStatus;
                         console.log(" -------------- when check queue status and still being enqueued, queue no: "+  result.data.position);

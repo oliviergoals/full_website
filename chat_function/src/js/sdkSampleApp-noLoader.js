@@ -13,7 +13,7 @@ sample.controller("sampleController", [
     /*********************************************************/
     /**                INITIALIZATION STUFF                 **/
     /*********************************************************/
-    
+
     var queueDropped;
     $rootScope.chat_val = false; //"open chat"
     $rootScope.open_chat = false;
@@ -72,20 +72,20 @@ sample.controller("sampleController", [
       }
     }
 
-    $scope.parseLogs = function(conversation) {
+    $scope.parseLogs = function (conversation) {
       let value;
       let finalObj = {};
       console.log("this is the convo" + conversation);
       console.log("length" + conversation.length);
-      console.log("lenght key" +Object.keys(conversation).length );
-      for (var i = 0; i< conversation.length; i++) {
+      console.log("lenght key" + Object.keys(conversation).length);
+      for (var i = 0; i < conversation.length; i++) {
         value = conversation[i].data;
-        console.log("This is value" + value );
+        console.log("This is value" + value);
         if (conversation[i].side == "R") {
-          finalObj[i] = {"user" : value}
+          finalObj[i] = { "user": value }
         }
         else if (conversation[i].side == "L") {
-          finalObj[i] = {"agent" : value}
+          finalObj[i] = { "agent": value }
         }
       }
       return finalObj
@@ -186,58 +186,50 @@ sample.controller("sampleController", [
       }
     });
 
-    $scope.closeWindow = function(){
-        console.log("pressed wanna close");
-          //------------------------------- Post JSON to drop queue-----------------------------
-          if($rootScope.open_chat == true){
-            let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global)
-            let convoHist = entireConvo.messages;
-            var convoHistObj = $scope.parseLogs(convoHist);
-            console.log(convoHistObj);
-            //let convoHistFlat = $scope.stringify(convoHist);
-            // console.log(convoHistObj);
-            rainbowSDK.conversations.closeConversation(entireConvo);
-            queueDropped = false;
-        }
-        else if($rootScope.open_audio == true || $rootScope.open_video==true){
-          rainbowSDK.webRTC.release($rootScope.currentCallR);
-          queueDropped = false;
-        }
-        else if( $rootScope.submit_success == true){
-          queueDropped = true;
-        }
+    $scope.closeWindow = function () {
+      console.log("pressed wanna close");
+      //------------------------------- Post JSON to drop queue-----------------------------
+      if ($rootScope.open_chat == true) {
+        let entireConvo = sdk.conversations.getConversationById($rootScope.convoID_global)
+        let convoHist = entireConvo.messages;
+        var convoHistObj = $scope.parseLogs(convoHist);
+        console.log(convoHistObj);
+        //let convoHistFlat = $scope.stringify(convoHist);
+        // console.log(convoHistObj);
+        rainbowSDK.conversations.closeConversation(entireConvo);
+        queueDropped = false;
+      }
+      else if ($rootScope.open_audio == true || $rootScope.open_video == true) {
+        rainbowSDK.webRTC.release($rootScope.currentCallR);
+        queueDropped = false;
+      }
+      else if ($rootScope.submit_success == true) {
+        queueDropped = true;
+      }
 
-          // console.log(convoHist);
-          $http({
-            method: 'POST',
-            url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-            // url: 'https://localhost:3000/routing/endChatInstance',
-            //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
-            dataType: 'json',
-            data:
-            {
-              department: $rootScope.user.department,
-              communication: $rootScope.user.communication,
-              queueNumber: $rootScope.queueNumber,
-              jid: $rootScope.contactJID,
-              convoHistory: convoHistObj,
-              clientEmail: $rootScope.user.email,
-              queueDropped: queueDropped,
-            },
-            headers: { "Content-Type": "application/json" }
-          }).then(async function (result) {
-            console.log("Status of Chat Closing " + result.data.status);
-          });
-          // ----------------------------------------------------------------  
-          
-        }
-      
-  
-    
-
+      // console.log(convoHist);
+      $http({
+        method: 'POST',
+        url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
+        // url: 'https://localhost:3000/routing/endChatInstance',
+        //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
+        dataType: 'json',
+        data:
+        {
+          department: $rootScope.user.department,
+          communication: $rootScope.user.communication,
+          queueNumber: $rootScope.queueNumber,
+          jid: $rootScope.contactJID,
+          convoHistory: convoHistObj,
+          clientEmail: $rootScope.user.email,
+          queueDropped: queueDropped,
+        },
+        headers: { "Content-Type": "application/json" }
+      }).then(async function (result) {
+        console.log("Status of Chat Closing " + result.data.status);
+      });
+      // ----------------------------------------------------------------  
     }
-
-
 
 
     document.addEventListener(sdk.RAINBOW_ONREADY, onReady);
