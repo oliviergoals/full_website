@@ -27,6 +27,10 @@ This is the file that we're running on the browser, it calls the following js sc
 Each of these scripts will contain the code that has been changed and ammended such that it runs the program, the CSS of each page can be found in the respective folders. 
 
 
-** Here are the steps to execute the testing. **
+**Here are the steps to execute the testing.**  
+Selenium test:  
+1. Change working directory to `./escproject_testing`
+2. Change the path of the webdriver to the path that you have downloaded the webdriver for Selenium
+3. While running `npm start` for the web-application, run Injection_Test.java or SpamChat.java or SubmitButtTest.java
 
 
