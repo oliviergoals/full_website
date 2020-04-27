@@ -393,7 +393,7 @@ angular.module("sample").component("rbxConnection", {
                         // this part is where queue number update happens
                       }
                     });
-                  }, 10000);
+                  }, 4000);
               }
               // when all csa are offline, bot jid returned
               else  {
