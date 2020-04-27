@@ -147,9 +147,7 @@ angular.module("sample").component("rbxController", {
         console.log("csa release call");
         $http({
           method: 'POST',
-          // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
           url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-          //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
           dataType: 'json',
           data:
           {
@@ -303,19 +301,12 @@ angular.module("sample").component("rbxController", {
       if (confirmedClose) {
         rainbowSDK.webRTC.release(currentCall);
         console.log("pressed wanna close");
-        // console.log("this is call log array0: " + rainbowSDK.callsLog.getAll());
-        // console.log("this is call log array1: " + rainbowSDK.callsLog.getAll()[0]);
-        // console.log("this is call log array: " + JSON.stringify($scope.callHis));
-
 
         console.log("changed");
         let blabla = rainbowSDK.conversations.getConversationById($rootScope.convoID_global);
-        // console.log(convoHist);
         $http({
           method: 'POST',
-          // url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
           url: 'https://poc-open-rainbow-swaggy.herokuapp.com/routing/endChatInstance',
-          //url: 'https://10.12.205.128:3000/routing/getRequiredCSAbeta',
           dataType: 'json',
           data:
           {

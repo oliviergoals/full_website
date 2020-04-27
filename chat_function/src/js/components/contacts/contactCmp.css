@@ -42,14 +42,7 @@ div.contactCmp-name {
     padding: 0.75vh;
 	
 }
-/* div.contactCmp-presence {
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    margin-top: 38px;
-    margin-left: -9px;
-    border: 2px solid #eee;
-} */
+
 
 div.contactCmp-presence-online {
 	background: #4caf50;

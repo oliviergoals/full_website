@@ -36,9 +36,6 @@ public class SpamChat {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 !@'#$%^&*()_+|}{:<>?/.,[];'`~=";
 
     public static void main(String[] args) throws InterruptedException {
-
-	//TODO: comment out the recaptcha in the html and set forms to true
-	
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-insecure-localhost");
         options.addArguments("--disable-web-security");
@@ -52,16 +49,8 @@ public class SpamChat {
         options.addArguments("--headless", "--window-size=1920,1200","--ignore-certificate-errors");
 
 
-
-
-
-//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
-//        WebDriver driver = new ChromeDriver(caps);
-
-
         System.setProperty("webdriver.gecko.driver","C:\\Users\\User\\Downloads\\geckodriver-v0.26.0-win64\\geckodriver.exe");
         WebDriver driver = new FirefoxDriver();
-
 
 
         driver.get("https://127.0.0.1:8080/");
@@ -77,9 +66,7 @@ public class SpamChat {
 
         Thread.sleep(10000);
 
-        // Switching to Alert
-        Alert alert = driver.switchTo().alert();
-        driver.switchTo().alert().accept();
+
 
         WebDriverWait waitChat = new WebDriverWait(driver, 60);
         WebElement chatInput = waitChat.until(ExpectedConditions.visibilityOfElementLocated(By.className("conversationCmp-editor")));
@@ -88,11 +75,9 @@ public class SpamChat {
 
 //        WebElement chatInput = driver.findElement(By.className("conversationCmp-editor"));
         for(int i = 0; i < numMsgSpam; i++){
-            chatInput.sendKeys(generateString(new Random(), SOURCES, ThreadLocalRandom.current().nextInt(1, 150 + 1)));
+            chatInput.sendKeys(generateString(new Random(), SOURCES, ThreadLocalRandom.current().nextInt(1, 1500 + 1)));
             WebElement pressEnter = driver.findElement(By.cssSelector("button[class='conversationCmp-upload']"));
-            Thread.sleep(1000);
             pressEnter.click();
-            Thread.sleep(1000);
         }
     }
 
@@ -111,7 +96,7 @@ public class SpamChat {
         Thread.sleep(1000);
 
         Select selectDepartment = new Select(driver.findElement(By.name("department")));
-        selectDepartment.selectByVisibleText("General Enquiry");
+        selectDepartment.selectByVisibleText("Graduate Office");
         Thread.sleep(1000);
 
         Select selectChatType = new Select(driver.findElement(By.name("communication")));

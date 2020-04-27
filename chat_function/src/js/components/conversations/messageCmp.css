@@ -14,12 +14,7 @@
 
 .messageCmp-area-L {
 	background: #efefef;
-/*     color: #46464a;
-    max-width: 55%;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    padding: 10px; */
-    
+   
     border-radius: 10px;
     color: #000;
     margin: 5px 0 0 5px;
@@ -51,14 +46,6 @@
 }
 
 .messageCmp-area-R {
-/* 	
-    color: #fff;
-    max-width: 55%;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    margin-left:auto; 
-    margin-right:0;
-    padding: 10px */
     float: right;
     background:  #0085ca;
     border-radius: 10px;

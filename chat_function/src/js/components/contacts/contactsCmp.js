@@ -80,51 +80,7 @@ angular.module("sample").component("rbxContacts", {
     var onStarted = async function onReady() {
       $scope.contacts = rainbowSDK.contacts.getAll();
 
-      // var contactId = "5e3cd9e59f17bb3096c6a0c9";
-    //   var contactId = "5e3cd9e59f17bb3096c6a0c9";
-    //   var contactJId = "4c33fa55637949768b4d2dbc417c69da@sandbox-all-in-one-rbx-prod-1.rainbow.sbg"; 
 
-    //   console.log("ZW before search");
-    //   console.log("ZW " + rainbowSDK.contacts.searchById(contactId));
-      
-    //   console.log("ZW after search");
-    //   // console.log("ZW jid" + JSON.stringify(rainbowSDK.contacts.searchByJid(contactJId)));
-
-    //   // var selectedContact = await rainbowSDK.contacts.searchContactByJid(contactJId);
-
-
-    //   rainbowSDK.contacts.searchContactById(contactId).then(function(contact) {
-    //     selectedContact = contact;
-
-    //     if(selectedContact) {
-    //         // Ok, we have the contact object
-    //        console.log("zw if selected")
-    //     }
-    //     else {
-    //         // Strange, no contact with that Id. Are you sure that the id is correct?
-            
-    //     }
-
-    // }).catch(function(err) {
-    //     //Something when wrong with the server. Handle the trouble here
-        
-    // });
-
-      
-    //   rainbowSDK.conversations.openConversationForContact(selectedContact).then(function(conversation) {
-    //     console.log("ZW enter");
-    //     // associatedConversation = conversation;
-    //     // var lastMessage = conversation.lastMessageText;
-    //     // console.log("ZW last message: " + lastMessage);
-        
-    //     console.log("ZW Sent open conver");
-    //     rainbowSDK.im.sendMessageToConversation(conversation, "searchById");
-    //     console.log("ZW Sent messgage");
-      
-    //   }).catch(function (err) {
-    //     //Something when wrong with the server. Handle the trouble here
-    //     console.log("ZW Error in opening conversation and sending")
-    //   });
     };
 
     $scope.sendMessage = function(){
@@ -138,10 +94,7 @@ angular.module("sample").component("rbxContacts", {
       console.log("zw try to search");
       rainbowSDK.conversations.openConversationForContact(selectedContact).then(function(conversation) {
         console.log("ZW enter");
-        // associatedConversation = conversation;
-        // var lastMessage = conversation.lastMessageText;
-        // console.log("ZW last message: " + lastMessage);
-        
+   
         console.log("ZW Sent open conver");
         rainbowSDK.im.sendMessageToConversation(conversation, "searchById");
         console.log("ZW Sent messgage");

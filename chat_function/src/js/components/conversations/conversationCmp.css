@@ -1,36 +1,6 @@
 @import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
 
 div.conversationCmp-area {
-    /* position: fixed;
-    height: 90%;
-    width: 350px;
-    overflow: scroll;
-    border: 1px solid #E9E9E9;
-    margin-top: 10px;
-    margin-bottom: 60px;
-    margin-right: 5px;
-    background: #fff;
-    padding: 4px;
-    margin-left:0px ;
-    float:right;
-    border-radius: 6px; */
-    
-    /* display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap; */
-
-    /* position: fixed;
-    height: 85%;
-    width: 400px;
-    overflow: hidden;
-    margin-top: 10px;
-    margin-right: 10px;
-    background: #fff;
-    padding: 4px;
-    margin-left:0px ;
-    float:right;
-    border-radius: 10px; */
-
     position: fixed;
     height: 85vh;
     width: 21vw;
@@ -40,7 +10,6 @@ div.conversationCmp-area {
     background: #fff;
     padding: 4px;
     border-radius: 10px;
-    /* text-align: center; */
 
 }
 
@@ -53,27 +22,7 @@ div.conversationCmp-area {
 	transition: 0.5s linear all;
     opacity: 0;
 }
-/* .conversationCmp-area.ng-enter{
-	transition: 0.5s linear all;
-    opacity: 0;
-    transform: translateX(30px)
-}
 
-.conversationCmp-area.ng-enter.ng-enter-active{
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.conversationCmp-area.ng-leave{
-	transition: 0.5s linear all;
-    opacity: 1;
-    transform: translateY(0px)
-}
-
-.conversationCmp-area.ng-leave.ng-leave-active{
-    opacity: 0;
-    transform: translateY(30px);
-} */
 
 div.conversationCmp-recipient {
     margin-bottom: 1vh;
@@ -81,26 +30,6 @@ div.conversationCmp-recipient {
 }
 
 div.conversationCmp-title {
-    /* width: 100%;
-    text-align: center;
-    font-size: 12px;
-    height: 40px;
-    line-height: 40px;
-    font-weight: 700;
-    color: #eee; */
-    
-    /* width: 100%;
-    text-align: center;
-    font-size: 30px;
-    height: 40px;
-    line-height: 50px;
-    font-weight: 700;
-    color: #004d8d;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin-top: 10px;
-    margin-left:0px  */
-
     width: 100%;
     text-align: center;
     font-size: 4vh;
@@ -123,7 +52,6 @@ div.conversationCmp-messages {
     position: absolute;
     height: 6vh;
     color: #656565;
-    /* background: #ffffff none repeat scroll 0 0; */
     bottom: 0;
     width: 75%;
     border-left-color: #fff;

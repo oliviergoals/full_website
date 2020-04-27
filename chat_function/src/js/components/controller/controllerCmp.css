@@ -211,25 +211,14 @@ div.controllerCmp-header {
 #largevideo {
     margin: 2%;
     position: relative;
-    /* height: 35%; */
     width: 90%;
 }
 
-/* #CSA-info {
-    position: absolute;
-    z-index: 1;
-    width: auto;
-    height: 12%;
-    border-radius: 3px blue;
-    bottom: 8px;
-    left: 16px;
-} */
 
 
 #minivideo {
     position: relative;
     transform: scale(-1, 1);
-    /* height: 35%; */
     margin: 2%;
     width: 90%;
 }

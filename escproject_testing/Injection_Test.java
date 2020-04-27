@@ -6,9 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Random;
 
 public class Injection_Test {
 
@@ -20,8 +23,7 @@ public class Injection_Test {
 
     public static void main(String[] args) throws InterruptedException {
 
-	//TODO: comment out the recaptcha in the html and set forms to true
-
+        //TODO: comment out the recaptcha in the html and set forms to true
         for(int i = 0; i < injection.length; i++) {
 
             ChromeOptions options = new ChromeOptions();
@@ -31,17 +33,15 @@ public class Injection_Test {
             caps.setCapability("acceptInsecureCerts", true);
 
 
-            System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Downloads\\chromedriver_win32\\chromedriver.exe");
-            WebDriver driver = new ChromeDriver(caps);
+
+            System.setProperty("webdriver.gecko.driver","C:\\Users\\User\\Downloads\\geckodriver-v0.26.0-win64\\geckodriver.exe");
+            WebDriver driver = new FirefoxDriver();
+
 
 
     //        driver.get("http://127.0.0.1:5501/index.html");
             driver.get("https://127.0.0.1:8080/");
-//            Thread.sleep(5000);
 
-
-//            driver.get("https://127.0.0.1:8080/");
-//            Thread.sleep(5000);
 
             WebElement openChatButt = driver.findElement(By.className("open_chat_button"));
             openChatButt.click();
@@ -56,7 +56,7 @@ public class Injection_Test {
             Thread.sleep(1000);
 
             Select selectDepartment = new Select(driver.findElement(By.name("department")));
-            selectDepartment.selectByVisibleText("General Enquiry");
+            selectDepartment.selectByVisibleText("Graduate Office");
             Thread.sleep(1000);
 
             Select selectChatType = new Select(driver.findElement(By.name("communication")));
@@ -66,19 +66,20 @@ public class Injection_Test {
             WebElement problem = driver.findElement(By.id("problem"));
             problem.sendKeys(injection[i]);
 
-
             Thread.sleep(1000);
 
             WebElement submitButt = driver.findElement(By.className("connectionCmp-btn"));
             submitButt.click();
 
-//            openChatButt.click();
-
-            Thread.sleep(20000);
-
-            // Switching to Alert
-            Alert alert = driver.switchTo().alert();
-            driver.switchTo().alert().accept();
         }
+    }
+
+
+    public static String generateString(Random random, String characters, int length) {
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++) {
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        return new String(text);
     }
 }

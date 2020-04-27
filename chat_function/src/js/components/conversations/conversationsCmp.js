@@ -10,7 +10,7 @@ angular.module("sample").component("rbxConversations", {
     $timeout
   ) {
     $scope.conversations = [];
-    // TODO: Shake
+
     var getAllOneToOneConversations = function getAllOneToOneConversations() {
       var conversations = [];
       var singleConvo = rainbowSDK.conversations.getAllConversations();
@@ -42,10 +42,11 @@ angular.module("sample").component("rbxConversations", {
 
     var onConversationsListChanged = function onConversationsListChanged(
       event,
-      conversation
+      conversation,
     ) {
       $scope.conversations = $scope.conversations = getAllOneToOneConversations();
     };
+  
 
     var onConversationChanged = function(__event, conversationID) {
       $rootScope.$broadcast(conversationID, null);
