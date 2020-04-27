@@ -1,4 +1,4 @@
-Hello! Welcome to C2G1's Rainbow group project. 
+# Hello! Welcome to C2G1's Rainbow group project. 
 
 Here are the steps to load up the web-application 
 1) enter cd chat_function
@@ -9,7 +9,7 @@ Here are the steps to load up the web-application
 In the chat_function, you will file -> index.html
 This is the file that we're running on the browser, it calls the following js scripts
 1)./src/js/sdkSampleApp-noLoader.js
-2) 	./src/js/components/connection/connectionCmp.js
+<li>2) 	./src/js/components/connection/connectionCmp.js </li>
 3)	./src/js/components/contacts/contactsCmp.js
 4)	./src/js/components/contacts/contactCmp.js
 5)	./src/js/components/conversations/conversationsCmp.js
